@@ -1,0 +1,21 @@
+﻿{ 
+"EventsResult": [
+{"id":1,"idEvent":"1","idOption":"1","prob":100,"desc":"Recibes oro al comienzo y al final del viaje."},
+{"id":2,"idEvent":"1","idOption":"2","prob":100,"desc":"Tu barco se ve mejor que nunca para encarar este viaje"},
+{"id":3,"idEvent":"1","idOption":"3","prob":100,"desc":"Consigues un mapa de la ruta de tu viaje lo que te ayudará mucho a evitar los peligros que te esperan"},
+{"id":1,"idEvent":"2","idOption":"1","prob":20,"desc":"Encuentras un tesoro oculto. El tiempo gastado dio sus frutos"},
+{"id":2,"idEvent":"2","idOption":"1","prob":80,"desc":"Recorres la isla sin encontrar ningun tesoro, pero al menos encuentras algunas frutas para alimentar a tus marineros."},
+{"id":3,"idEvent":"2","idOption":"2","prob":100,"desc":"Continuas navegando ignorando la isla en tu camino"},
+{"id":3,"idEvent":"2","idOption":"3","prob":100,"desc":"Al matar al marinero demuestras tu tenasidad para mantenerte al mando. Tus hombres te temen más que nunca."},
+{"id":1,"idEvent":"3","idOption":"1","prob":100,"desc":"Pierdes 5 marineros que ya no estarán disponibles por el resto del viaje"},
+{"id":2,"idEvent":"3","idOption":"2","prob":100,"desc":"Tus reservas de comida sufren una grán reducción"},
+{"id":1,"idEvent":"4","idOption":"1","prob":1,"desc":"Matas al marinero, los demas marineros pensarán dos veces antes de intentar un nuevo motin."},
+{"id":2,"idEvent":"4","idOption":"2","prob":100,"desc":"El marinero queda aislado, pero los rumores sobre el botin siguen estando presentes en tu barco"},
+{"id":3,"idEvent":"4","idOption":"3","prob":100,"desc":"Matas a todos los relacionados con el botin. Tus demas tripulantes temen por sus vidas"},
+{"id":1,"idEvent":"5","idOption":"1","prob":1,"desc":"La voz y la niebla desaparece, todo parece listo para seguir navegando"},
+{"id":2,"idEvent":"5","idOption":"2","prob":1,"desc":"La niebla parece ponerse aun mas densa, el resto del viaje no parece muy tranquilo…"},
+{"id":3,"idEvent":"5","idOption":"3","prob":60,"desc":"La voz y la niebla desaparece, todo parece listo para seguir navegando"},
+{"id":4,"idEvent":"5","idOption":"3","prob":40,"desc":"La niebla parece ponerse aun mas densa, el resto del viaje no parece muy tranquilo…"},
+{"id":1,"idEvent":"6","idOption":"1","prob":1,"desc":"Entragas el oro y un extraño artefacto aparece ante tus ojos"},
+{"id":2,"idEvent":"6","idOption":"2","prob":1,"desc":"Sigues tu camino como si nada hubiese pasado"}
+]}

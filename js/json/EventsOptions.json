@@ -1,0 +1,19 @@
+﻿{ 
+"EventsOption": [
+{"id":1,"idEvent":"1","title":"+Oro","desc":"Recibes el doble del oro a completar este viaje"},
+{"id":2,"idEvent":"1","title":"Mejorar barco","desc":"Mejoras el barco y comienzas mejor que nunca"},
+{"id":3,"idEvent":"1","title":"Atajo","desc":"Tomas un atajo que hace que el viaje sea un 50% más corto"},
+{"id":1,"idEvent":"2","title":"Explorar Isla","desc":"Explorar la isla para buscar el tesoro oculto"},
+{"id":2,"idEvent":"2","title":"Continuar Navegando","desc":"Ignorar al marinero, no hay tiempo que perder para entregar esta carga"},
+{"id":3,"idEvent":"2","title":"Matar Marinero","desc":"Matar al marinero para demostrar que nadie te dice que hacer en tu barco"},
+{"id":1,"idEvent":"3","title":"Combatir Plaga","desc":"Colocar 5 marineros a controlar el problema por el resto del viaje"},
+{"id":2,"idEvent":"3","title":"Ignorar Problema","desc":"Ignorar el problema y tu comida se verá reducida a la mitad"},
+{"id":1,"idEvent":"4","title":"Matar Marinero","desc":"Matar el marinero para demostrar tu poder"},
+{"id":2,"idEvent":"4","title":"Encarcelar Marinero","desc":"Encarcelar al marinero en el barco"},
+{"id":3,"idEvent":"4","title":"Matar Todos","desc":"Matar al marinero y todos los posibles complices"},
+{"id":1,"idEvent":"5","title":"Tirar Oro","desc":"Tirar todo el oro al mar"},
+{"id":2,"idEvent":"5","title":"Ignorar Pedido","desc":"Ignorar el pedido de la voz y continuar tu viaje"},
+{"id":3,"idEvent":"5","title":"Mitad oro","desc":"Tirar solo la mitad del oro al mar"},
+{"id":1,"idEvent":"6","title":"Dar Oro","desc":"Entregar las 20 monedas de oro a la estatua"},
+{"id":2,"idEvent":"6","title":"Ignorar Pedido","desc":"Ignorar la estatua y continuar navegando"}
+]}
