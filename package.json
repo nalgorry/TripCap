@@ -11,7 +11,7 @@
   "author": "Nicolas Algorry",
   "license": "MIT",
   "dependencies": {
-    "ecstatic": "^1.0.1",
+    "ecstatic": "^2.0.0",
     "socket.io": "^1.4.5"
   },
   "devDependencies": {
