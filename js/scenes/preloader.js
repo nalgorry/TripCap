@@ -89,10 +89,6 @@ var preloader = (function (_super) {
         this.load.json('eventOption', 'js/json/EventsOptions.json');
         this.load.json('eventResult', 'js/json/EventsResult.json');
         this.load.json('eventEffect', 'js/json/EventsEffect.json');
-        //to test the preloader
-        for (var i = 0; i < 50; i++) {
-            this.load.image('logo' + i, 'assets/tripBack.png');
-        }
     };
     preloader.prototype.create = function () {
         this.scene.start('startMenu');
