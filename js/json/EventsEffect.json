@@ -2,7 +2,7 @@
 "EventsEffect": [
 {"id":1,"idEvent":"1","effectType":2,"idResult":1,"min":30,"max":60},
 {"id":2,"idEvent":"1","effectType":6,"idResult":2,"min":50,"max":50},
-{"id":3,"idEvent":"1","effectType":14,"idResult":3,"min":-99,"max":-99},
+{"id":3,"idEvent":"1","effectType":14,"idResult":3,"min":-50,"max":-50},
 {"id":1,"idEvent":"2","effectType":2,"idResult":1,"min":50,"max":200},
 {"id":2,"idEvent":"2","effectType":4,"idResult":2,"min":-10,"max":-15},
 {"id":3,"idEvent":"2","effectType":3,"idResult":2,"min":5,"max":15},
