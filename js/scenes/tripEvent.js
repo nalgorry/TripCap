@@ -14,7 +14,6 @@ var tripEvent = (function (_super) {
         this.eventData = data.event;
         this.trip = data.trip;
         this.initScene();
-        console.log(this.trip);
     };
     tripEvent.prototype.update = function () {
     };

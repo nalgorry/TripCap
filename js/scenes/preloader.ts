@@ -85,8 +85,10 @@ class preloader extends Phaser.Scene {
         this.load.image('cityButton', 'assets/cityButton.png');
         this.load.image('backCity', 'assets/backCity.png');
         this.load.image('nextTripButton', 'assets/nextTripButton.png');
-
-               
+        this.load.image('tripPauseBack', 'assets/tripPauseBack.png');
+        this.load.image('tripPlayButton', 'assets/tripPlayButton.png');
+        this.load.image('tripPauseButton', 'assets/tripPauseButton.png');    
+ 
         //lets add some fonts
         this.load.bitmapFont('Pfont', 'assets/fonts/Pfont.png', 'assets/fonts/Pfont.xml');
         this.load.bitmapFont('FreeFont', 'assets/fonts/freeStyle.png', 'assets/fonts/freeStyle.fnt');

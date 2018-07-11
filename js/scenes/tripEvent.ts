@@ -19,8 +19,6 @@ class tripEvent extends Phaser.Scene {
         this.trip = data.trip;
         this.initScene();
 
-        console.log(this.trip);
-
     }
 
     update() {

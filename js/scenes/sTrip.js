@@ -9,22 +9,22 @@ var sTrip = (function (_super) {
         _super.apply(this, arguments);
         this.distShipStartx = 44;
         this.distShipEndx = 640;
-        this.crewButtons = new Array();
         this.statusBars = new Array();
         this.interval = 5;
         this.t = 0;
+        this.firstPause = true;
     }
     sTrip.prototype.create = function () {
-        //lets check the boat and trip variables
         this.boat = new cBoat();
         this.trip = new cTrip(this.boat, this); //i send the scene to be able to generate events
-        //lets add the events we need to conect the view to the controler
-        this.events.on('updateCrew', this.updateCrewText, this);
-        this.events.on('updateTrip', this.updateTripText, this);
+        //init the comon controls
+        this.crewControl = new crewControls(this.trip, this);
         this.events.on('tripEnd', this.tripEnd, this);
         this.events.on('eventStart', this.startEvent, this);
+        this.events.on('updateTrip', this.updateTripText, this);
+        this.events.on('updateCrew', this.crewControl.updateCrewText, this.crewControl);
         this.initScene();
-        this.createButtons();
+        this.createWindAndSpeedButtons();
         this.statusBars[0 /* food */] = new cStatusBar(this, 60, 62);
         this.statusBars[1 /* maintenance */] = new cStatusBar(this, 236, 62);
         this.statusBars[2 /* clean */] = new cStatusBar(this, 412, 62);
@@ -37,13 +37,12 @@ var sTrip = (function (_super) {
         var eventResult = this.cache.json.get('eventResult');
         var eventEffect = this.cache.json.get('eventEffect');
         this.eventControler = new cEventsControler(eventData, eventOptions, eventResult, eventEffect);
-    };
-    sTrip.prototype.tripEnd = function () {
-        this.cameras.main.fadeOut(500, 255, 255, 255);
-        // start the tripEnd scene
-        this.time.delayedCall(500, function () {
-            this.scene.start('tripEnd');
-        }, [], this);
+        //lets add the pause button (super great!)
+        var button = this.add.sprite(360, 856, 'tripPauseButton');
+        button.setInteractive();
+        button.on('pointerdown', this.pauseTrip, this);
+        //lets pause the trip
+        this.pauseTrip();
     };
     sTrip.prototype.updateTripText = function () {
         //wind and ship speed
@@ -56,36 +55,37 @@ var sTrip = (function (_super) {
         //lets update the position of the ship
         this.distShip.x = (this.distShipEndx - this.distShipStartx) * this.trip.tripDistancePorc + this.distShipStartx;
     };
+    sTrip.prototype.tripEnd = function () {
+        this.cameras.main.fadeOut(500, 255, 255, 255);
+        // start the tripEnd scene
+        this.time.delayedCall(500, function () {
+            this.scene.start('tripEnd');
+        }, [], this);
+    };
     sTrip.prototype.initScene = function () {
         //lets add the back of the game 
         this.back = this.add.sprite(0, 0, 'tripBack');
         this.back.setOrigin(0);
         this.cameras.main.fadeIn(500, 255, 255, 255);
     };
-    sTrip.prototype.createButtons = function () {
-        //lets show the avaible crew
-        this.textHealtyCrew = this.add.bitmapText(120, 822, 'Pfont', this.trip.healtyCrew.toString(), 60);
-        this.textHealtyCrew.setOrigin(0);
-        this.textSickCrew = this.add.bitmapText(640, 822, 'Pfont', this.trip.sickCrew.toString(), 60);
-        this.textSickCrew.setOrigin(0);
+    sTrip.prototype.createWindAndSpeedButtons = function () {
         //speed and wind
         this.textBoatSpeed = this.add.bitmapText(125, 715, 'Pfont', Phaser.Math.RoundTo(this.trip.boatSpeed, 1).toString(), 60);
         this.textBoatSpeed.setOrigin(0.5);
         this.textWindSpeed = this.add.bitmapText(515, 715, 'Pfont', Phaser.Math.RoundTo(this.trip.windSpeed, 1).toString(), 60);
         this.textWindSpeed.setOrigin(0.5);
-        //lets create all the options for the crew
-        this.crewButtons[0 /* sails */] = new tripButton(this, 5, 896, 0 /* sails */);
-        this.crewButtons[1 /* rows */] = new tripButton(this, 244, 896, 1 /* rows */);
-        this.crewButtons[2 /* leadership */] = new tripButton(this, 481, 896, 2 /* leadership */);
-        this.crewButtons[3 /* maintenance */] = new tripButton(this, 5, 1073, 3 /* maintenance */);
-        this.crewButtons[4 /* clean */] = new tripButton(this, 244, 1073, 4 /* clean */);
-        this.crewButtons[5 /* fish */] = new tripButton(this, 481, 1073, 5 /* fish */);
-        //lets check if they click a button
-        this.events.on('clickUp', this.buttonClick, this);
     };
-    sTrip.prototype.buttonClick = function (task, upDown) {
-        //update the logic of the game
-        this.trip.updateCrew(task, upDown);
+    sTrip.prototype.pauseTrip = function () {
+        //i must do it with a timer if not the scene will not pause
+        this.time.delayedCall(20, function () {
+            this.scene.pause();
+            var data = {
+                trip: this.trip,
+                firstPause: this.firstPause
+            };
+            this.scene.launch('tripPause', data);
+            this.firstPause = false;
+        }, [], this);
     };
     sTrip.prototype.startEvent = function (eventNumber) {
         // shake the camera
@@ -106,19 +106,6 @@ var sTrip = (function (_super) {
         circle.fillStyle(0xb1160d, 1);
         circle.fillCircle(this.distShip.x, this.distShip.y, 5);
         circle.fillPath();
-    };
-    sTrip.prototype.updateCrewText = function () {
-        this.textHealtyCrew.text = this.trip.healtyCrew.toString();
-        this.textSickCrew.text = this.trip.sickCrew.toString();
-        //check if there is still avaible crew
-        var hideUpArrow = false;
-        if (this.trip.healtyCrew == 0)
-            hideUpArrow = true;
-        //lets update all the used crew
-        for (var i = 0; i < 6; i++) {
-            this.crewButtons[i].updateText(this.trip.usedCrew[i]);
-            this.crewButtons[i].hideUpArrow(hideUpArrow);
-        }
     };
     sTrip.prototype.update = function () {
         //there is no need to update everything all the time

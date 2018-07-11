@@ -37,7 +37,7 @@ var cTrip = (function () {
             callbackScope: this
         });
         //lets init the first event 
-        this.scene.time.delayedCall(5, this.startFirstEvent, [], this);
+        this.scene.time.delayedCall(10000, this.startFirstEvent, [], this);
         //this.startEventTimer();
     }
     cTrip.prototype.startEventTimer = function () {
