@@ -12,7 +12,6 @@ var sTrip = (function (_super) {
         this.statusBars = new Array();
         this.interval = 5;
         this.t = 0;
-        this.firstPause = true;
     }
     sTrip.prototype.create = function () {
         this.boat = new cBoat();
@@ -79,11 +78,7 @@ var sTrip = (function (_super) {
         //i must do it with a timer if not the scene will not pause
         this.time.delayedCall(20, function () {
             this.scene.pause();
-            var data = {
-                trip: this.trip,
-                firstPause: this.firstPause
-            };
-            this.scene.launch('tripPause', data);
+            this.scene.launch('tripPause', this.trip);
             this.firstPause = false;
         }, [], this);
     };

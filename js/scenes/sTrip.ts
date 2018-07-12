@@ -21,8 +21,6 @@ class sTrip extends Phaser.Scene {
 
     private crewControl:crewControls;
 
-    private firstPause:boolean = true;
-
     create() {
 
         this.boat = new cBoat();
@@ -120,12 +118,7 @@ class sTrip extends Phaser.Scene {
         this.time.delayedCall(20, function() {
             this.scene.pause();
 
-            var data = {
-                trip: this.trip,
-                firstPause: this.firstPause
-            }
-
-            this.scene.launch('tripPause', data);
+            this.scene.launch('tripPause', this.trip);
             this.firstPause = false;
         }, [], this);
     }

@@ -13,15 +13,17 @@ var cTrip = (function () {
         //remos
         this.rowsMaxSpeed = 8;
         this.rowsEff = 0.25; //number that makes the exponetial grow
+        this.probSick = 1;
         this.tripTotalDist = 100; //en nudos nauticos 
         this.currentDistance = 0;
         this.tripDistancePorc = 0;
         this.eventMinTime = 15; //en segundos 
-        this.eventMaxTime = 45;
+        this.eventMaxTime = 40;
         this.usedCrew = new Array();
         this.currentStatus = new Array();
         this.barPorc = new Array();
-        this.eventsPosible = [2, 3, 4, 5, 6];
+        this.leadershipAcumIncrement = 0.01;
+        this.eventsPosible = [2, 3, 4, 5, 6, 7, 8, 9, 10];
         this.tripEnd = false; //flag to activate when the trip ends
         this.healtyCrew = boat.crewman;
         this.sickCrew = 0;
@@ -118,7 +120,7 @@ var cTrip = (function () {
                         this.boat.reputationPirate = 0;
                     break;
                 case enumEffectType.Marineros_Ocupados:
-                    this.reduceAvaibleCrew(1);
+                    this.reduceAvaibleCrew(value);
                     break;
                 case enumEffectType.Viento:
                     this.windMod += value;
@@ -130,7 +132,9 @@ var cTrip = (function () {
                     break;
                 case enumEffectType.PorcLargoViaje:
                     this.tripTotalDist = this.tripTotalDist * (1 + value / 100);
-                    console.log(this.tripTotalDist);
+                    break;
+                case enumEffectType.ProbEnfermos:
+                    this.probSick += value / 100;
                     break;
                 default:
                     break;
@@ -185,9 +189,11 @@ var cTrip = (function () {
         console.log(this.eventsPosible);
     };
     cTrip.prototype.crewSick = function () {
-        var maxProbSick = 12; //probabilidad en 1000
+        var baseProbSick = 2; //probabilidad en 1000
+        var cleanSick = 8;
         //depende de la limpieza si se enferman o no 
-        var probSick = maxProbSick * this.currentStatus[2 /* clean */] / this.boat.cleanSystem;
+        var probSick = baseProbSick + cleanSick * (1 - this.currentStatus[2 /* clean */] / this.boat.cleanSystem);
+        probSick = probSick * this.probSick;
         var rnd = Phaser.Math.Between(0, 1000);
         if (this.sickCrew == this.boat.crewman)
             return; //if all are sick, there is nothing to do here
@@ -245,14 +251,9 @@ var cTrip = (function () {
         if (value === void 0) { value = 0; }
         var crewEfficiency = 0.07;
         var maxIncrement = 0.4;
-        var baseLostMin = 0.1;
-        var limitTime = 500; //tiempo limite para que el barco entre en lio barbaro :P
-        //here when the sheep is more damaged it lost more 
-        var baseLost = 0.8 * this.scene.time.now / 1000 / limitTime;
-        if (baseLost < baseLostMin) {
-            baseLost = baseLostMin;
-        }
-        var increment = crewEfficiency * this.usedCrew[2 /* leadership */] - baseLost;
+        var acumIncrement = 0.02 / 100;
+        this.leadershipAcumIncrement += acumIncrement;
+        var increment = crewEfficiency * this.usedCrew[2 /* leadership */] - this.leadershipAcumIncrement;
         if (increment > maxIncrement) {
             increment = maxIncrement;
         }
@@ -261,9 +262,9 @@ var cTrip = (function () {
     };
     cTrip.prototype.updateMant = function (value) {
         if (value === void 0) { value = 0; }
-        var crewEfficiency = 0.07;
-        var maxIncrement = 0.4;
-        var baseLostMin = 0.1;
+        var crewEfficiency = 0.07 / 2;
+        var maxIncrement = 0.4 / 2;
+        var baseLostMin = 0.1 / 2;
         //here when the sheep is more damaged it lost more 
         var baseLost = 0.3 * this.currentStatus[1 /* maintenance */] / this.boat.mantSystem;
         if (baseLost < baseLostMin) {
@@ -278,8 +279,8 @@ var cTrip = (function () {
     };
     cTrip.prototype.updateClean = function (value) {
         if (value === void 0) { value = 0; }
-        var cleanLostBase = 0.2;
-        var crewEfficiency = 0.07;
+        var cleanLostBase = 0.2 / 2;
+        var crewEfficiency = 0.07 / 2;
         var maxIncrement = 0.4;
         var increment = crewEfficiency * this.usedCrew[4 /* clean */] - cleanLostBase;
         if (increment > maxIncrement) {

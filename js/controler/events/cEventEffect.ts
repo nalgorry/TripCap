@@ -13,6 +13,7 @@ enum enumEffectType {
     PorcOro = 12,
     Item = 13,
     PorcLargoViaje = 14,
+    ProbEnfermos = 15,
     
 }
 
@@ -91,6 +92,9 @@ class cEventEffect {
                 break;
             case enumEffectType.PorcLargoViaje:
                 text = "% Largo Viaje";
+                break;
+            case enumEffectType.ProbEnfermos:
+                text = "% Prob. Enfermos";
                 break;
             default:
                 break;

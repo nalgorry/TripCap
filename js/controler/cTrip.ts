@@ -18,14 +18,14 @@ class cTrip {
     private rowsMaxSpeed = 8;
     private rowsEff = 0.25; //number that makes the exponetial grow
 
+    private probSick = 1;
+
     public tripTotalDist:number = 100; //en nudos nauticos 
     public currentDistance:number = 0;
     public tripDistancePorc:number = 0;
 
     public eventMinTime:number = 15; //en segundos 
-    public eventMaxTime:number = 45;
-
-    private tripTime:number;
+    public eventMaxTime:number = 40;
 
     public usedCrew = new Array();
 
@@ -35,7 +35,9 @@ class cTrip {
 
     private windTimer:Phaser.Time.TimerEvent;
 
-    private eventsPosible:number[] = [2, 3, 4, 5, 6];
+    private leadershipAcumIncrement:number = 0.01;
+
+    private eventsPosible:number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     private tripEnd:boolean = false; //flag to activate when the trip ends
 
@@ -160,7 +162,7 @@ class cTrip {
                     if (this.boat.reputationPirate < 0) this.boat.reputationPirate = 0;
                     break;
                 case enumEffectType.Marineros_Ocupados:
-                    this.reduceAvaibleCrew(1);
+                    this.reduceAvaibleCrew(value);
                     break;
                 case enumEffectType.Viento:
                     this.windMod += value;
@@ -173,7 +175,9 @@ class cTrip {
                     break;
                 case enumEffectType.PorcLargoViaje:
                     this.tripTotalDist = this.tripTotalDist * (1 + value / 100);
-                    console.log( this.tripTotalDist);
+                    break;
+                case enumEffectType.ProbEnfermos:
+                    this.probSick += value / 100;
                     break;
                 default:
                     break;
@@ -258,9 +262,11 @@ class cTrip {
 
     private crewSick() {
 
-        var maxProbSick:number = 12; //probabilidad en 1000
+        var baseProbSick:number = 2; //probabilidad en 1000
+        var cleanSick:number = 8;
         //depende de la limpieza si se enferman o no 
-        var probSick = maxProbSick * this.currentStatus[enumStatus.clean] / this.boat.cleanSystem 
+        var probSick = baseProbSick + cleanSick * (1 - this.currentStatus[enumStatus.clean]/ this.boat.cleanSystem );
+        probSick = probSick * this.probSick;
 
         var rnd = Phaser.Math.Between(0, 1000);
 
@@ -335,15 +341,11 @@ class cTrip {
 
         var crewEfficiency = 0.07;
         var maxIncrement = 0.4;
-        var baseLostMin = 0.1;
+        var acumIncrement = 0.02 / 100;
 
-        var limitTime = 500 //tiempo limite para que el barco entre en lio barbaro :P
+        this.leadershipAcumIncrement += acumIncrement;
 
-        //here when the sheep is more damaged it lost more 
-        var baseLost = 0.8 * this.scene.time.now / 1000 / limitTime;
-        if (baseLost < baseLostMin) {baseLost = baseLostMin}
-
-        var increment = crewEfficiency * this.usedCrew[enumTask.leadership] - baseLost;
+        var increment = crewEfficiency * this.usedCrew[enumTask.leadership] - this.leadershipAcumIncrement;
 
         if (increment > maxIncrement) {increment = maxIncrement}
 
@@ -354,9 +356,9 @@ class cTrip {
 
     private updateMant(value:number = 0) {
         
-        var crewEfficiency = 0.07;
-        var maxIncrement = 0.4;
-        var baseLostMin = 0.1;
+        var crewEfficiency = 0.07 / 2;
+        var maxIncrement = 0.4 / 2;
+        var baseLostMin = 0.1 / 2;
 
         //here when the sheep is more damaged it lost more 
         var baseLost = 0.3 * this.currentStatus[enumStatus.maintenance] / this.boat.mantSystem;
@@ -373,8 +375,8 @@ class cTrip {
 
     private updateClean(value:number = 0) {
 
-        var cleanLostBase = 0.2;
-        var crewEfficiency = 0.07;
+        var cleanLostBase = 0.2 / 2;
+        var crewEfficiency = 0.07 / 2;
         var maxIncrement = 0.4;
 
         var increment = crewEfficiency * this.usedCrew[enumTask.clean] - cleanLostBase;

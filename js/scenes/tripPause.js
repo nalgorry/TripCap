@@ -8,14 +8,11 @@ var tripPause = (function (_super) {
     function tripPause() {
         _super.apply(this, arguments);
     }
-    tripPause.prototype.create = function (data) {
+    tripPause.prototype.create = function (trip) {
         this.initScene();
-        this.trip = data.trip;
-        var firstPause = data.firstPause;
+        this.trip = trip;
         this.crewControls = new crewControls(this.trip, this);
-        if (firstPause == true) {
-            this.scene.get('sTrip').events.on('updateCrew', this.updateCrewText, this);
-        }
+        this.scene.get('sTrip').events.on('updateCrew', this.updateCrewText, this);
     };
     tripPause.prototype.initScene = function () {
         //lets add the back of the game 

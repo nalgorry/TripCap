@@ -4,18 +4,16 @@ class tripPause extends Phaser.Scene {
     private crewControls:crewControls;
     private trip:cTrip;
 
-    create (data:any) {
+    create (trip:cTrip) {
         
         this.initScene();
 
-        this.trip = data.trip;
-        var firstPause = data.firstPause;
+        this.trip = trip;
 
         this.crewControls = new crewControls(this.trip, this);
 
-        if (firstPause == true) {
-            this.scene.get('sTrip').events.on('updateCrew', this.updateCrewText, this);    
-        }
+        this.scene.get('sTrip').events.on('updateCrew', this.updateCrewText, this);    
+        
     }
 
     private initScene() {

@@ -7,7 +7,7 @@
 {"id":2,"idEvent":"2","idOption":"1","prob":80,"desc":"Recorres la isla sin encontrar ningun tesoro, pero al menos encuentras algunas frutas para alimentar a tus marineros."},
 {"id":3,"idEvent":"2","idOption":"2","prob":100,"desc":"Continuas navegando ignorando la isla en tu camino"},
 {"id":3,"idEvent":"2","idOption":"3","prob":100,"desc":"Al matar al marinero demuestras tu tenasidad para mantenerte al mando. Tus hombres te temen más que nunca."},
-{"id":1,"idEvent":"3","idOption":"1","prob":100,"desc":"Pierdes 5 marineros que ya no estarán disponibles por el resto del viaje"},
+{"id":1,"idEvent":"3","idOption":"1","prob":100,"desc":"Pierdes 2 marineros que ya no estarán disponibles por el resto del viaje"},
 {"id":2,"idEvent":"3","idOption":"2","prob":100,"desc":"Tus reservas de comida sufren una grán reducción"},
 {"id":1,"idEvent":"4","idOption":"1","prob":1,"desc":"Matas al marinero, los demas marineros pensarán dos veces antes de intentar un nuevo motin."},
 {"id":2,"idEvent":"4","idOption":"2","prob":100,"desc":"El marinero queda aislado, pero los rumores sobre el botin siguen estando presentes en tu barco"},
@@ -17,5 +17,16 @@
 {"id":3,"idEvent":"5","idOption":"3","prob":60,"desc":"La voz y la niebla desaparece, todo parece listo para seguir navegando"},
 {"id":4,"idEvent":"5","idOption":"3","prob":40,"desc":"La niebla parece ponerse aun mas densa, el resto del viaje no parece muy tranquilo…"},
 {"id":1,"idEvent":"6","idOption":"1","prob":1,"desc":"Entragas el oro y un extraño artefacto aparece ante tus ojos"},
-{"id":2,"idEvent":"6","idOption":"2","prob":1,"desc":"Sigues tu camino como si nada hubiese pasado"}
+{"id":2,"idEvent":"6","idOption":"2","prob":1,"desc":"Sigues tu camino como si nada hubiese pasado"},
+{"id":1,"idEvent":"7","idOption":"1","prob":1,"desc":"Aislas a marineros afectados, el resto de la tripulación no parece presentar sintomas"},
+{"id":2,"idEvent":"7","idOption":"2","prob":1,"desc":"Mantienes a los marineros con sintomas, las probabilidad de enfermos aumenta"},
+{"id":1,"idEvent":"8","idOption":"1","prob":1,"desc":"El marinero descansa, el resto de los marineros parece gustarles la idea de estar enfermos"},
+{"id":2,"idEvent":"8","idOption":"2","prob":1,"desc":"Encarcelas al marinero para que nadie intente simular en tu barco"},
+{"id":3,"idEvent":"8","idOption":"3","prob":1,"desc":"Un poco drástico, pero efectivo"},
+{"id":1,"idEvent":"9","idOption":"1","prob":1,"desc":"Compras la comida, tus tripulantes parecen contentos"},
+{"id":2,"idEvent":"9","idOption":"2","prob":1,"desc":"Tus tripulantes están desilucionados con que no van a tener más comida disponible para este viaje"},
+{"id":1,"idEvent":"10","idOption":"1","prob":20,"desc":"No encuentas nada entre los restros. Tu barco se daña un poco al recorrer el lugar."},
+{"id":2,"idEvent":"10","idOption":"1","prob":40,"desc":"Encuentras un poco de comida entre los restros.Tu barco se daña un poco al recorrer el lugar."},
+{"id":3,"idEvent":"10","idOption":"1","prob":40,"desc":"Encuentras un tripulante que se suma a tu tripulación. Tu barco se daña un poco al recorrer el lugar."},
+{"id":4,"idEvent":"10","idOption":"2","prob":1,"desc":"Ignoras el naufragio, tu carga es demasiado importante para perder tiempo en esto"}
 ]}

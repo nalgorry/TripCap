@@ -6,7 +6,7 @@
 {"id":1,"idEvent":"2","title":"Explorar Isla","desc":"Explorar la isla para buscar el tesoro oculto"},
 {"id":2,"idEvent":"2","title":"Continuar Navegando","desc":"Ignorar al marinero, no hay tiempo que perder para entregar esta carga"},
 {"id":3,"idEvent":"2","title":"Matar Marinero","desc":"Matar al marinero para demostrar que nadie te dice que hacer en tu barco"},
-{"id":1,"idEvent":"3","title":"Combatir Plaga","desc":"Colocar 5 marineros a controlar el problema por el resto del viaje"},
+{"id":1,"idEvent":"3","title":"Combatir Plaga","desc":"Colocar 2 marineros a controlar el problema por el resto del viaje"},
 {"id":2,"idEvent":"3","title":"Ignorar Problema","desc":"Ignorar el problema y tu comida se verá reducida a la mitad"},
 {"id":1,"idEvent":"4","title":"Matar Marinero","desc":"Matar el marinero para demostrar tu poder"},
 {"id":2,"idEvent":"4","title":"Encarcelar Marinero","desc":"Encarcelar al marinero en el barco"},
@@ -15,5 +15,14 @@
 {"id":2,"idEvent":"5","title":"Ignorar Pedido","desc":"Ignorar el pedido de la voz y continuar tu viaje"},
 {"id":3,"idEvent":"5","title":"Mitad oro","desc":"Tirar solo la mitad del oro al mar"},
 {"id":1,"idEvent":"6","title":"Dar Oro","desc":"Entregar las 20 monedas de oro a la estatua"},
-{"id":2,"idEvent":"6","title":"Ignorar Pedido","desc":"Ignorar la estatua y continuar navegando"}
+{"id":2,"idEvent":"6","title":"Ignorar Pedido","desc":"Ignorar la estatua y continuar navegando"},
+{"id":1,"idEvent":"7","title":"Aislar Enfermos","desc":"Aislar a los que presenten sintomas para que no contagien a los demás"},
+{"id":2,"idEvent":"7","title":"Mantener Enfermos","desc":"Ignorar la peste y continuar navegando"},
+{"id":1,"idEvent":"8","title":"Dejar Descansar","desc":"Dejar descansar al marinero"},
+{"id":2,"idEvent":"8","title":"Encarcelar Marinero","desc":"Encarcelar al marinero, nadie simula en tu barco"},
+{"id":3,"idEvent":"8","title":"Matar Marinero","desc":"Nadie te miente en la cara en tu barco"},
+{"id":1,"idEvent":"9","title":"Comprar Comida","desc":"Comprar comida al barco amigo"},
+{"id":2,"idEvent":"9","title":"Ignorar Barco","desc":"Ignorar el pedido del barco"},
+{"id":1,"idEvent":"10","title":"Inspecionar Restos","desc":"Inspecionar los restos en busca de un tesoro"},
+{"id":2,"idEvent":"10","title":"Ignorar Restos","desc":"Ignorar los restos y continuar con el camino"}
 ]}

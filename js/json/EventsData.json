@@ -2,8 +2,12 @@
 "EventsData": [
 {"id":1,"title":"Inicio del viaje","difficulty":"1","desc":"Hola aventurero! Este es el primer evento de muchos que tendrás durante tu viaje, elije sabiamente para continuar tu aventura."},
 {"id":2,"title":"El cofre oculto","difficulty":"1","desc":"Encuentras una isla desierta, uno de tus tripulantes dice recordar un mapa de esa isla con un tesoro escondido"},
-{"id":3,"title":"Ataque de ratas","difficulty":"1","desc":"Descubres que en tu boveda hay ratas y se estan comiendo tu comida"},
+{"id":3,"title":"Ataque de ratas","difficulty":"1","desc":"Descubres que en tu boveda hay ratas y se están comiendo tu comida"},
 {"id":4,"title":"Motin!","difficulty":"1","desc":"Descubres a uno de tus tripulantes organizando un motin en tu contra"},
 {"id":5,"title":"Fantasma de la niebla","difficulty":"1","desc":"En tu viaje aparece una espesa niebla, una vos te dice que tires todo tu oro al mar"},
-{"id":6,"title":"Estatua del mar","difficulty":"1","desc":"Descubres una pequeña isla, en el centro hay una estatua que pide que le entregue 20 monedas de oro"}
+{"id":6,"title":"Estatua del mar","difficulty":"1","desc":"Descubres una pequeña isla, en el centro hay una estatua que pide que le entregue 20 monedas de oro"},
+{"id":7,"title":"Peste Del Mar","difficulty":"1","desc":"Una peste comienza a atacar a tus marineros los cuales se comienzan a enfermar."},
+{"id":8,"title":"Marinero Enfermo","difficulty":"1","desc":"Uno de tus marineros parece estar simulando estar enfermo para no trabajar"},
+{"id":9,"title":"Barco amigo con comida","difficulty":"1","desc":"Un barco amigo te ofrece comida por 4 monedas de oro"},
+{"id":10,"title":"Naufragio","difficulty":"1","desc":"Descubres un barco que naufragó, puede inspecionar los restros para ver si encuentras algo de utilidad"}
 ]}
