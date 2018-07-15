@@ -7,26 +7,32 @@ var cTrip = (function () {
         this.finalWindSpeed = 0;
         this.windIncrement = 0;
         //Escala de Beaufort
-        this.windMinSpeed = 0; //nudos
+        this.windMinSpeed = 1; //nudos
         this.windMaxSpeed = 30; //nudos - tormenta muy fuerte 64
         this.windMod = 0; //some events change the wind
         //remos
         this.rowsMaxSpeed = 8;
         this.rowsEff = 0.25; //number that makes the exponetial grow
         this.probSick = 1;
-        this.tripTotalDist = 100; //en nudos nauticos 
+        this.PorcPerdidaMant = 1;
+        this.tripEndGold = 100;
+        this.tripTotalDist = 80; //en nudos nauticos 
         this.currentDistance = 0;
         this.tripDistancePorc = 0;
-        this.eventMinTime = 15; //en segundos 
-        this.eventMaxTime = 40;
+        this.eventMinTime = 18; //en segundos 
+        this.eventMaxTime = 30;
         this.usedCrew = new Array();
         this.currentStatus = new Array();
         this.barPorc = new Array();
         this.leadershipAcumIncrement = 0.01;
-        this.eventsPosible = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.eventsPosible = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         this.tripEnd = false; //flag to activate when the trip ends
+        this.startTime = new Date();
+        this.numOfEvents = 0;
         this.healtyCrew = boat.crewman;
         this.sickCrew = 0;
+        var a = this.boat;
+        this.boatStartStats = Object.assign({}, this.boat); //lets copy the object
         //lets put in cero all the usedCrew
         for (var i = 0; i <= 6; i++) {
             this.usedCrew[i] = 0;
@@ -38,9 +44,13 @@ var cTrip = (function () {
             callback: this.changeWind,
             callbackScope: this
         });
-        //lets init the first event 
-        this.scene.time.delayedCall(10000, this.startFirstEvent, [], this);
-        //this.startEventTimer();
+        if (this.boat.numberOfTrips == 0) {
+            //lets init the first event 
+            this.scene.time.delayedCall(5000, this.startFirstEvent, [], this);
+        }
+        else {
+            this.startEventTimer();
+        }
     }
     cTrip.prototype.startEventTimer = function () {
         //timer to get a new event
@@ -53,7 +63,7 @@ var cTrip = (function () {
             this.finalWindSpeed = Phaser.Math.Between(this.windMinSpeed, this.windMaxSpeed - this.windMod);
         }
         else {
-            this.finalWindSpeed = 0;
+            this.finalWindSpeed = 1;
         }
         //the number of cicles to chance the speed
         var cycles = Phaser.Math.Between(30, 50);
@@ -85,6 +95,7 @@ var cTrip = (function () {
         this.scene.events.emit('eventStart', 1);
     };
     cTrip.prototype.updateAfterEvent = function (result) {
+        this.numOfEvents += 1;
         //lets check what we have to change in the trip
         for (var r in result.effect) {
             var effect = result.effect[r];
@@ -103,8 +114,7 @@ var cTrip = (function () {
                     this.updateMant(value);
                     break;
                 case enumEffectType.Marineros:
-                    this.boat.crewman += value;
-                    this.reduceAvaibleCrew(1);
+                    this.updateAvaibleCrew(value);
                     break;
                 case enumEffectType.Oro:
                     this.boat.gold += value;
@@ -136,6 +146,9 @@ var cTrip = (function () {
                 case enumEffectType.ProbEnfermos:
                     this.probSick += value / 100;
                     break;
+                case enumEffectType.PorcPerdidaMant:
+                    this.PorcPerdidaMant += value / 100;
+                    break;
                 default:
                     break;
             }
@@ -145,6 +158,15 @@ var cTrip = (function () {
         this.scene.events.emit('updateTrip');
         //lets prepare for then ext event 
         this.startEventTimer();
+    };
+    cTrip.prototype.updateAvaibleCrew = function (value) {
+        this.boat.crewman += value;
+        if (value < 0) {
+            this.reduceAvaibleCrew(-value);
+        }
+        else {
+            this.healtyCrew += value;
+        }
     };
     cTrip.prototype.updateCrew = function (task, upDown) {
         var addValue;
@@ -219,9 +241,9 @@ var cTrip = (function () {
             else {
                 var usedTask = new Array();
                 //lets find where is the crew asigned
-                for (var i = 0; i < 6; i++) {
-                    if (this.usedCrew[i] > 0) {
-                        usedTask.push(i);
+                for (var j = 0; j < 6; j++) {
+                    if (this.usedCrew[j] > 0) {
+                        usedTask.push(j);
                     }
                 }
                 //we reduce a random one by one
@@ -262,15 +284,18 @@ var cTrip = (function () {
     };
     cTrip.prototype.updateMant = function (value) {
         if (value === void 0) { value = 0; }
-        var crewEfficiency = 0.07 / 2;
-        var maxIncrement = 0.4 / 2;
-        var baseLostMin = 0.1 / 2;
+        var crewEfficiency = 0.04;
+        var maxIncrement = 0.2;
+        var baseLostMin = 0.05;
+        var baseLost = 0.04 * 1.75; //need 1.75 trip in base case
+        var incremLost = 0.04 * 3; //need 5 in worst case                                                                   
         //here when the sheep is more damaged it lost more 
-        var baseLost = 0.3 * this.currentStatus[1 /* maintenance */] / this.boat.mantSystem;
-        if (baseLost < baseLostMin) {
-            baseLost = baseLostMin;
+        var lost = baseLost + incremLost * (1 - this.currentStatus[1 /* maintenance */] / this.boat.mantSystem);
+        lost = lost * this.PorcPerdidaMant; //modif to the lost of mant
+        if (lost < baseLostMin) {
+            lost = baseLostMin;
         }
-        var increment = crewEfficiency * this.usedCrew[3 /* maintenance */] - baseLost;
+        var increment = crewEfficiency * this.usedCrew[3 /* maintenance */] - lost;
         if (increment > maxIncrement) {
             increment = maxIncrement;
         }
@@ -303,6 +328,7 @@ var cTrip = (function () {
         if (this.tripDistancePorc >= 1 && this.tripEnd == false) {
             this.scene.events.emit("tripEnd");
             this.tripEnd = true;
+            this.boat.numberOfTrips++;
         }
     };
     cTrip.prototype.updateBoatSpeed = function () {

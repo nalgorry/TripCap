@@ -15,6 +15,7 @@ var enumEffectType;
     enumEffectType[enumEffectType["Item"] = 13] = "Item";
     enumEffectType[enumEffectType["PorcLargoViaje"] = 14] = "PorcLargoViaje";
     enumEffectType[enumEffectType["ProbEnfermos"] = 15] = "ProbEnfermos";
+    enumEffectType[enumEffectType["PorcPerdidaMant"] = 16] = "PorcPerdidaMant";
 })(enumEffectType || (enumEffectType = {}));
 var cEventEffect = (function () {
     function cEventEffect(JSONdata) {
@@ -79,6 +80,9 @@ var cEventEffect = (function () {
                 break;
             case enumEffectType.ProbEnfermos:
                 text = "% Prob. Enfermos";
+                break;
+            case enumEffectType.PorcPerdidaMant:
+                text = "% Pérdida Mant.";
                 break;
             default:
                 break;

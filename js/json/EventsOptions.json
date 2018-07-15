@@ -24,5 +24,9 @@
 {"id":1,"idEvent":"9","title":"Comprar Comida","desc":"Comprar comida al barco amigo"},
 {"id":2,"idEvent":"9","title":"Ignorar Barco","desc":"Ignorar el pedido del barco"},
 {"id":1,"idEvent":"10","title":"Inspecionar Restos","desc":"Inspecionar los restos en busca de un tesoro"},
-{"id":2,"idEvent":"10","title":"Ignorar Restos","desc":"Ignorar los restos y continuar con el camino"}
+{"id":2,"idEvent":"10","title":"Ignorar Restos","desc":"Ignorar los restos y continuar con el camino"},
+{"id":1,"idEvent":"11","title":"Tirar Comida","desc":"Tirar comida para distraer a los peces"},
+{"id":2,"idEvent":"11","title":"Ignorar Peces","desc":"Ignorar los peces"},
+{"id":1,"idEvent":"12","title":"Arreglar Fuga","desc":"Poner a 3 marineros a trabajar en la fuga por el resto del viaje."},
+{"id":2,"idEvent":"12","title":"Ignorar Problema","desc":"Ignorar el problema hasta el próximo puerto"}
 ]}

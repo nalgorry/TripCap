@@ -13,8 +13,8 @@ var sTrip = (function (_super) {
         this.interval = 5;
         this.t = 0;
     }
-    sTrip.prototype.create = function () {
-        this.boat = new cBoat();
+    sTrip.prototype.create = function (boat) {
+        this.boat = boat;
         this.trip = new cTrip(this.boat, this); //i send the scene to be able to generate events
         //init the comon controls
         this.crewControl = new crewControls(this.trip, this);
@@ -37,11 +37,16 @@ var sTrip = (function (_super) {
         var eventEffect = this.cache.json.get('eventEffect');
         this.eventControler = new cEventsControler(eventData, eventOptions, eventResult, eventEffect);
         //lets add the pause button (super great!)
-        var button = this.add.sprite(360, 856, 'tripPauseButton');
+        var button = this.add.sprite(360, 860, 'tripPauseButton');
         button.setInteractive();
         button.on('pointerdown', this.pauseTrip, this);
         //lets pause the trip
         this.pauseTrip();
+        //to test the end of the trip
+        //this.tripEnd(); 
+        //to shop fps
+        this.textFps = this.add.bitmapText(10, 10, 'Pfont', this.trip.healtyCrew.toString(), 20);
+        this.textFps.setOrigin(0);
     };
     sTrip.prototype.updateTripText = function () {
         //wind and ship speed
@@ -58,14 +63,13 @@ var sTrip = (function (_super) {
         this.cameras.main.fadeOut(500, 255, 255, 255);
         // start the tripEnd scene
         this.time.delayedCall(500, function () {
-            this.scene.start('tripEnd');
+            this.scene.start('tripEnd', this.trip);
         }, [], this);
     };
     sTrip.prototype.initScene = function () {
         //lets add the back of the game 
         this.back = this.add.sprite(0, 0, 'tripBack');
         this.back.setOrigin(0);
-        this.cameras.main.fadeIn(500, 255, 255, 255);
     };
     sTrip.prototype.createWindAndSpeedButtons = function () {
         //speed and wind
@@ -112,6 +116,7 @@ var sTrip = (function (_super) {
         else {
             this.t++;
         }
+        this.textFps.setText("fps" + this.sys.game.loop.actualFps.toString());
     };
     return sTrip;
 }(Phaser.Scene));

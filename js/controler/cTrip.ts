@@ -10,7 +10,7 @@ class cTrip {
     private windIncrement:number = 0;
 
     //Escala de Beaufort
-    private windMinSpeed = 0; //nudos
+    private windMinSpeed = 1; //nudos
     private windMaxSpeed = 30; //nudos - tormenta muy fuerte 64
     private windMod = 0; //some events change the wind
 
@@ -19,13 +19,15 @@ class cTrip {
     private rowsEff = 0.25; //number that makes the exponetial grow
 
     private probSick = 1;
+    private PorcPerdidaMant = 1;
 
-    public tripTotalDist:number = 100; //en nudos nauticos 
+    public tripEndGold:number = 100;
+    public tripTotalDist:number = 80; //en nudos nauticos 
     public currentDistance:number = 0;
     public tripDistancePorc:number = 0;
 
-    public eventMinTime:number = 15; //en segundos 
-    public eventMaxTime:number = 40;
+    public eventMinTime:number = 18; //en segundos 
+    public eventMaxTime:number = 30;
 
     public usedCrew = new Array();
 
@@ -37,15 +39,24 @@ class cTrip {
 
     private leadershipAcumIncrement:number = 0.01;
 
-    private eventsPosible:number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+    private eventsPosible:number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     private tripEnd:boolean = false; //flag to activate when the trip ends
+
+    public startTime = new Date();
+
+    public numOfEvents:number = 0;
+
+    public boatStartStats:cBoat;
 
     constructor(public boat:cBoat, 
         public scene:Phaser.Scene) {
 
         this.healtyCrew = boat.crewman;
         this.sickCrew = 0;
+        
+        var a = this.boat
+        this.boatStartStats = (<any>Object).assign({}, this.boat); //lets copy the object
 
         //lets put in cero all the usedCrew
         for (var i = 0; i <= 6; i++) {
@@ -61,11 +72,13 @@ class cTrip {
             callbackScope: this
         })
 
-        //lets init the first event 
-        this.scene.time.delayedCall(10000, this.startFirstEvent, [], this);    
-
-        //this.startEventTimer();
-
+        if (this.boat.numberOfTrips == 0) {
+            //lets init the first event 
+            this.scene.time.delayedCall(5000, this.startFirstEvent, [], this);    
+        } else {
+            this.startEventTimer();
+        }
+        
     }
 
     private startEventTimer() {
@@ -80,7 +93,7 @@ class cTrip {
         if (this.windMod <= this.windMaxSpeed) {
             this.finalWindSpeed = Phaser.Math.Between(this.windMinSpeed, this.windMaxSpeed - this.windMod);
         } else {
-            this.finalWindSpeed = 0;
+            this.finalWindSpeed = 1;
         }
 
         //the number of cicles to chance the speed
@@ -123,9 +136,9 @@ class cTrip {
         this.scene.events.emit('eventStart', 1);
     }
 
-
     public updateAfterEvent(result:cEventResult) {
 
+        this.numOfEvents += 1;
         //lets check what we have to change in the trip
 
         for (var r in result.effect) { 
@@ -147,8 +160,7 @@ class cTrip {
                     this.updateMant(value);
                     break;
                 case enumEffectType.Marineros:
-                    this.boat.crewman += value;
-                    this.reduceAvaibleCrew(1);
+                   this.updateAvaibleCrew(value);
                     break;
                 case enumEffectType.Oro:
                     this.boat.gold += value;
@@ -179,6 +191,9 @@ class cTrip {
                 case enumEffectType.ProbEnfermos:
                     this.probSick += value / 100;
                     break;
+                case enumEffectType.PorcPerdidaMant:
+                    this.PorcPerdidaMant += value / 100;
+                    break;              
                 default:
                     break;
             }
@@ -193,6 +208,16 @@ class cTrip {
         this.startEventTimer();
 
     }
+
+    public updateAvaibleCrew(value:number) {
+        this.boat.crewman += value;
+        if (value < 0) {
+            this.reduceAvaibleCrew(-value);
+        } else {
+            this.healtyCrew += value;
+        }   
+    }
+
 
     public updateCrew(task:enumTask, upDown:enumUpDown) {
 
@@ -300,9 +325,9 @@ class cTrip {
             } else {
                 var usedTask:number[] = new Array();
                 //lets find where is the crew asigned
-                for (var i=0; i < 6; i++ ) {
-                    if (this.usedCrew[i] > 0) {
-                        usedTask.push(i);
+                for (var j=0; j < 6; j++ ) {
+                    if (this.usedCrew[j] > 0) {
+                        usedTask.push(j);
                     }
                 }
                 //we reduce a random one by one
@@ -356,15 +381,18 @@ class cTrip {
 
     private updateMant(value:number = 0) {
         
-        var crewEfficiency = 0.07 / 2;
-        var maxIncrement = 0.4 / 2;
-        var baseLostMin = 0.1 / 2;
+        var crewEfficiency = 0.04;
+        var maxIncrement = 0.2;
+        var baseLostMin = 0.05;
+        var baseLost = 0.04 * 1.75; //need 1.75 trip in base case
+        var incremLost = 0.04 * 3  //need 5 in worst case                                                                   
 
         //here when the sheep is more damaged it lost more 
-        var baseLost = 0.3 * this.currentStatus[enumStatus.maintenance] / this.boat.mantSystem;
-        if (baseLost < baseLostMin) {baseLost = baseLostMin}
+        var lost = baseLost + incremLost * (1 - this.currentStatus[enumStatus.maintenance] / this.boat.mantSystem );
+        lost = lost * this.PorcPerdidaMant //modif to the lost of mant
+        if (lost < baseLostMin) {lost = baseLostMin}
 
-        var increment = crewEfficiency * this.usedCrew[enumTask.maintenance] - baseLost;
+        var increment = crewEfficiency * this.usedCrew[enumTask.maintenance] - lost;
 
         if (increment > maxIncrement) {increment = maxIncrement}
 
@@ -405,6 +433,7 @@ class cTrip {
         if (this.tripDistancePorc >= 1 && this.tripEnd == false) {
             this.scene.events.emit("tripEnd");
             this.tripEnd = true;
+            this.boat.numberOfTrips ++;
 
         }
 

@@ -4,7 +4,7 @@ class cEventEffectText {
     constructor(private x, 
         private y,
         private scene:Phaser.Scene,
-        private value:number,
+        private value:string,
         private text:string) {
 
             this.initResult();

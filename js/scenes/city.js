@@ -8,8 +8,9 @@ var city = (function (_super) {
     function city() {
         _super.apply(this, arguments);
     }
-    city.prototype.create = function (data) {
+    city.prototype.create = function (boat) {
         this.initScene();
+        this.boat = boat;
     };
     city.prototype.update = function () {
     };
@@ -29,6 +30,7 @@ var city = (function (_super) {
         this.cameras.main.fadeOut(500, 255, 255, 255);
         // start the tripEnd scene
         this.time.delayedCall(500, function () {
+            this.scene.stop('sTrip');
             this.scene.start('sTrip');
         }, [], this);
         this.button.setTint(0xffffff);

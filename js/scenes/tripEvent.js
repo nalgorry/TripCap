@@ -83,7 +83,7 @@ var tripEvent = (function (_super) {
         var column = 0;
         for (var r in result.effect) {
             var effectData = result.effect[r];
-            var efect = new cEventEffectText(70 + 350 * column, 840 + sep * line, this, effectData.getValue(), effectData.getText());
+            var efect = new cEventEffectText(70 + 350 * column, 840 + sep * line, this, effectData.getValue().toString(), effectData.getText());
             line += 1;
             if (line == 3) {
                 line = 0;

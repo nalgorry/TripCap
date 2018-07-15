@@ -8,14 +8,16 @@ class cBoat {
     public cleanSystem = 100//Sistema Limpieza
     public foodSystem = 100//Sistema Comida
     public mantSystem = 100//Protección
-    public crewman = 15//tripulantes
+    public crewman = 16//tripulantes
     public gold = 0//oro
     public kg_capacity = 200 //capacidad barco
     public attack = 1//ataque barco
     public reputationPirate = 0 //reputación pirata
     public reputationHeroe = 0 //reputación heroe
 
-    public maxUsedWind:number = 0.7; //maxima eficacia de las velas, items la van a poder mejoraor despues
+    public maxUsedWind:number = 0.8; //maxima eficacia de las velas, items la van a poder mejoraor despues
+
+    public numberOfTrips:number = 0; //cantidad de viajes que hizo el barco
 
     
 }

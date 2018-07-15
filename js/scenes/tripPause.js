@@ -18,9 +18,9 @@ var tripPause = (function (_super) {
         //lets add the back of the game 
         this.back = this.add.sprite(0, 0, 'tripPauseBack');
         this.back.setOrigin(0);
-        this.cameras.main.fadeIn(500, 255, 255, 255);
+        //this.cameras.main.fadeIn(500, 255, 255, 255);
         //create the play button
-        var button = this.add.sprite(360, 856, 'tripPlayButton');
+        var button = this.add.sprite(360, 860, 'tripPlayButton');
         button.setInteractive();
         button.on('pointerdown', this.startPress, this);
     };

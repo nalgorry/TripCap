@@ -12,7 +12,7 @@ class InitGame {
             parent: 'content',
             state: null,
             backgroundColor: '#FFFFFF',
-            //enableDebug: false,
+            enableDebug: false,
         };
 
         this.game = new Phaser.Game(conf);
@@ -29,13 +29,18 @@ class InitGame {
 
         this.game.scene.start('boot');
 
+
     }
 
+    
 
-} //fin
+
+}
+ //fin
 window.onload = () => {
 
     var game = new InitGame();
+
 
 };
 

@@ -7,6 +7,7 @@ var InitGame = (function () {
             parent: 'content',
             state: null,
             backgroundColor: '#FFFFFF',
+            enableDebug: false,
         };
         this.game = new Phaser.Game(conf);
         this.game.scene.add('boot', boot, false);
@@ -20,7 +21,8 @@ var InitGame = (function () {
         this.game.scene.start('boot');
     }
     return InitGame;
-}()); //fin
+}());
+//fin
 window.onload = function () {
     var game = new InitGame();
 };

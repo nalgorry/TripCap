@@ -28,5 +28,9 @@
 {"id":1,"idEvent":"10","idOption":"1","prob":20,"desc":"No encuentas nada entre los restros. Tu barco se daña un poco al recorrer el lugar."},
 {"id":2,"idEvent":"10","idOption":"1","prob":40,"desc":"Encuentras un poco de comida entre los restros.Tu barco se daña un poco al recorrer el lugar."},
 {"id":3,"idEvent":"10","idOption":"1","prob":40,"desc":"Encuentras un tripulante que se suma a tu tripulación. Tu barco se daña un poco al recorrer el lugar."},
-{"id":4,"idEvent":"10","idOption":"2","prob":1,"desc":"Ignoras el naufragio, tu carga es demasiado importante para perder tiempo en esto"}
+{"id":4,"idEvent":"10","idOption":"2","prob":1,"desc":"Ignoras el naufragio, tu carga es demasiado importante para perder tiempo en esto"},
+{"id":1,"idEvent":"11","idOption":"1","prob":1,"desc":"Tiras comida y los peces parecen desaparecer en calma, a los marineros no les agrada que tires su comida"},
+{"id":2,"idEvent":"11","idOption":"2","prob":1,"desc":"Los peces atacan tu barco y le generan un gran daño"},
+{"id":1,"idEvent":"12","idOption":"1","prob":1,"desc":"Pierdes 3 marineros para el resto del viaje"},
+{"id":2,"idEvent":"12","idOption":"2","prob":1,"desc":"Tu barco comienza a hundirse lentamente"}
 ]}

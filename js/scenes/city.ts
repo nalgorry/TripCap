@@ -2,9 +2,12 @@ class city extends Phaser.Scene {
 
     private back:Phaser.GameObjects.Image;
     private button: Phaser.GameObjects.Image;
+    private boat:cBoat;
 
-    create(data:any) {
-        this.initScene()
+    create(boat:cBoat) {
+        this.initScene();
+
+        this.boat = boat;
     }
 
     update() {
@@ -36,6 +39,7 @@ class city extends Phaser.Scene {
         
         // start the tripEnd scene
         this.time.delayedCall(500, function() {
+            this.scene.stop('sTrip');
             this.scene.start('sTrip');
         }, [], this);
 

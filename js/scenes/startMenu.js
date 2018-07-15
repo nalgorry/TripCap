@@ -23,14 +23,36 @@ var startMenu = (function (_super) {
             this.changeScene();
         }, this);
         //this.changeScene(); //lo hago aca para saltearme el menu de inicio al dope
+        this.textFps = this.add.bitmapText(10, 10, 'Pfont', "0", 30);
+        this.textFps.setOrigin(0);
+        window.addEventListener('resize', this.resize);
+        this.resize();
+        this.cameras.main.fadeIn(500, 255, 255, 255);
+    };
+    startMenu.prototype.resize = function () {
+        var canvas = document.getElementById("content").getElementsByTagName("canvas")[0];
+        ;
+        var width = window.innerWidth;
+        var height = window.innerHeight + 5;
+        var wratio = width / height, ratio = canvas.width / canvas.height;
+        if (wratio < ratio) {
+            canvas.style.width = width + "px";
+            canvas.style.height = (width / ratio) + "px";
+        }
+        else {
+            canvas.style.width = (height * ratio) + "px";
+            canvas.style.height = height + "px";
+        }
     };
     startMenu.prototype.changeScene = function () {
         this.cameras.main.fade(500, 255, 255, 255);
         this.time.delayedCall(500, function () {
-            this.scene.start('sTrip');
+            var boat = new cBoat();
+            this.scene.start('sTrip', boat);
         }, [], this);
     };
     startMenu.prototype.update = function () {
+        this.textFps.setText("canvas" + this.sys.game.loop.actualFps.toString());
     };
     startMenu.prototype.render = function () {
     };

@@ -116,7 +116,7 @@ class tripEvent extends Phaser.Scene {
         for (var r in result.effect) { 
             
             var effectData:cEventEffect = result.effect[r];
-            var efect = new cEventEffectText(70 + 350 * column, 840 + sep * line, this, effectData.getValue(), effectData.getText() );
+            var efect = new cEventEffectText(70 + 350 * column, 840 + sep * line, this, effectData.getValue().toString(), effectData.getText() );
 
             line += 1;
 

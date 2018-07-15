@@ -9,5 +9,7 @@
 {"id":7,"title":"Peste Del Mar","difficulty":"1","desc":"Una peste comienza a atacar a tus marineros los cuales se comienzan a enfermar."},
 {"id":8,"title":"Marinero Enfermo","difficulty":"1","desc":"Uno de tus marineros parece estar simulando estar enfermo para no trabajar"},
 {"id":9,"title":"Barco amigo con comida","difficulty":"1","desc":"Un barco amigo te ofrece comida por 4 monedas de oro"},
-{"id":10,"title":"Naufragio","difficulty":"1","desc":"Descubres un barco que naufragó, puede inspecionar los restros para ver si encuentras algo de utilidad"}
+{"id":10,"title":"Naufragio","difficulty":"1","desc":"Descubres un barco que naufragó, puede inspecionar los restros para ver si encuentras algo de utilidad"},
+{"id":11,"title":"Peces Extraños","difficulty":"2","desc":"Tu barco se encuentra rodeado de unos extraños peces"},
+{"id":12,"title":"Entrada de agua","difficulty":"1","desc":"Detectas una entrada de agua en tu barco que parece peligrosa"}
 ]}
