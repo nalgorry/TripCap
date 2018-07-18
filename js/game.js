@@ -18,6 +18,7 @@ var InitGame = (function () {
         this.game.scene.add('tripEnd', tripEnd, false);
         this.game.scene.add('city', city, false);
         this.game.scene.add('tripPause', tripPause, false);
+        this.game.scene.add('tripHelp', tripHelp, false);
         this.game.scene.start('boot');
     }
     return InitGame;

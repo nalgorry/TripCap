@@ -1,6 +1,7 @@
 class startMenu extends Phaser.Scene {
 
-    private button:Phaser.GameObjects.GameObject;
+    private startButton:Phaser.GameObjects.GameObject;
+    private helpButton:Phaser.GameObjects.GameObject;
     private back:Phaser.GameObjects.Sprite;
 
     private textFps:Phaser.GameObjects.BitmapText;
@@ -11,29 +12,53 @@ class startMenu extends Phaser.Scene {
         this.back.setOrigin(0);
 
         //lets create the start button
-        this.button =  this.add.sprite(720/2,1100,'startButton').setInteractive();
+        this.startButton =  this.add.sprite(720/2,1100,'startButton').setInteractive();
+                
+        this.startButton.on('pointerdown', function (pointer) {
+
+            this.startButton.setTint(0x15536b);
+    
+        }, this);
+
+        this.startButton.on('pointerout', function (pointer) {
+
+            this.startButton.clearTint();
+    
+        }, this);
+
+        this.startButton.on('pointerup', function (pointer) {
+
+            this.changeScene('sTrip');
+
+        }, this);
+
+        //lets create the helpButton button
+        this.helpButton =  this.add.sprite(720/2,1000,'howToPlayButton').setInteractive();
         
-        this.button.on('pointerdown', function (pointer) {
+        this.helpButton.on('pointerdown', function (pointer) {
 
-            this.button.setTint(0x15536b);
+            this.helpButton.setTint(0x15536b);
     
         }, this);
 
-        this.button.on('pointerout', function (pointer) {
+        this.helpButton.on('pointerout', function (pointer) {
 
-            this.button.clearTint();
+            this.helpButton.clearTint('helpTrip');
     
         }, this);
 
-        this.button.on('pointerup', function (pointer) {
+        this.helpButton.on('pointerup', function (pointer) {
 
-            this.changeScene();
+            this.changeScene('tripHelp');
 
         }, this);
+
+
 
         //this.changeScene(); //lo hago aca para saltearme el menu de inicio al dope
         this.textFps = this.add.bitmapText(10, 10, 'Pfont', "0", 30);
         this.textFps.setOrigin(0);
+        this.textFps.alpha = 0;
 
 
         window.addEventListener('resize', this.resize);
@@ -61,7 +86,7 @@ class startMenu extends Phaser.Scene {
         }
     }
  
-    changeScene() {
+    changeScene(sceneName:string) {
 
         this.cameras.main.fade(500, 255, 255, 255);
 
@@ -69,7 +94,7 @@ class startMenu extends Phaser.Scene {
 
             var boat:cBoat = new cBoat();
 
-            this.scene.start('sTrip', boat);
+            this.scene.start(sceneName, boat);
 
         }, [], this);
         

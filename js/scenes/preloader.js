@@ -83,6 +83,12 @@ var preloader = (function (_super) {
         this.load.image('tripPauseBack', 'assets/tripPauseBack.png');
         this.load.image('tripPlayButton', 'assets/tripPlayButton.png');
         this.load.image('tripPauseButton', 'assets/tripPauseButton.png');
+        //help sprites
+        this.load.image('help1', 'assets/help1.png');
+        this.load.image('help2', 'assets/help2.png');
+        this.load.image('help3', 'assets/help3.png');
+        this.load.image('helpNextButton', 'assets/helpNextButton.png');
+        this.load.image('howToPlayButton', 'assets/howToPlayButton.png');
         //lets add some fonts
         this.load.bitmapFont('Pfont', 'assets/fonts/Pfont.png', 'assets/fonts/Pfont.xml');
         this.load.bitmapFont('FreeFont', 'assets/fonts/freeStyle.png', 'assets/fonts/freeStyle.fnt');

@@ -12,19 +12,31 @@ var startMenu = (function (_super) {
         this.back = this.add.sprite(0, 0, 'startBack');
         this.back.setOrigin(0);
         //lets create the start button
-        this.button = this.add.sprite(720 / 2, 1100, 'startButton').setInteractive();
-        this.button.on('pointerdown', function (pointer) {
-            this.button.setTint(0x15536b);
+        this.startButton = this.add.sprite(720 / 2, 1100, 'startButton').setInteractive();
+        this.startButton.on('pointerdown', function (pointer) {
+            this.startButton.setTint(0x15536b);
         }, this);
-        this.button.on('pointerout', function (pointer) {
-            this.button.clearTint();
+        this.startButton.on('pointerout', function (pointer) {
+            this.startButton.clearTint();
         }, this);
-        this.button.on('pointerup', function (pointer) {
-            this.changeScene();
+        this.startButton.on('pointerup', function (pointer) {
+            this.changeScene('sTrip');
+        }, this);
+        //lets create the helpButton button
+        this.helpButton = this.add.sprite(720 / 2, 1000, 'howToPlayButton').setInteractive();
+        this.helpButton.on('pointerdown', function (pointer) {
+            this.helpButton.setTint(0x15536b);
+        }, this);
+        this.helpButton.on('pointerout', function (pointer) {
+            this.helpButton.clearTint('helpTrip');
+        }, this);
+        this.helpButton.on('pointerup', function (pointer) {
+            this.changeScene('tripHelp');
         }, this);
         //this.changeScene(); //lo hago aca para saltearme el menu de inicio al dope
         this.textFps = this.add.bitmapText(10, 10, 'Pfont', "0", 30);
         this.textFps.setOrigin(0);
+        this.textFps.alpha = 0;
         window.addEventListener('resize', this.resize);
         this.resize();
         this.cameras.main.fadeIn(500, 255, 255, 255);
@@ -44,11 +56,11 @@ var startMenu = (function (_super) {
             canvas.style.height = height + "px";
         }
     };
-    startMenu.prototype.changeScene = function () {
+    startMenu.prototype.changeScene = function (sceneName) {
         this.cameras.main.fade(500, 255, 255, 255);
         this.time.delayedCall(500, function () {
             var boat = new cBoat();
-            this.scene.start('sTrip', boat);
+            this.scene.start(sceneName, boat);
         }, [], this);
     };
     startMenu.prototype.update = function () {
