@@ -30,7 +30,14 @@ class sTrip extends Phaser.Scene {
 
         //init the comon controls
         this.crewControl = new crewControls(this.trip, this);
+
+        //remove all the posible old events
+        this.events.removeAllListeners('tripEnd');
+        this.events.removeAllListeners('eventStart');
+        this.events.removeAllListeners('updateTrip');
+        this.events.removeAllListeners('updateCrew');
         
+        //init all the event to conect with the controler of the trip
         this.events.on('tripEnd', this.tripEnd, this);
         this.events.on('eventStart', this.startEvent, this);
         this.events.on('updateTrip', this.updateTripText, this);

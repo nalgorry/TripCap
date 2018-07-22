@@ -12,7 +12,7 @@ var startMenu = (function (_super) {
         this.back = this.add.sprite(0, 0, 'startBack');
         this.back.setOrigin(0);
         //lets create the start button
-        this.startButton = this.add.sprite(720 / 2, 1100, 'startButton').setInteractive();
+        this.startButton = this.add.sprite(720 / 2, 1150, 'startButton').setInteractive();
         this.startButton.on('pointerdown', function (pointer) {
             this.startButton.setTint(0x15536b);
         }, this);
@@ -20,10 +20,10 @@ var startMenu = (function (_super) {
             this.startButton.clearTint();
         }, this);
         this.startButton.on('pointerup', function (pointer) {
-            this.changeScene('sTrip');
+            this.changeScene('tripGlobal');
         }, this);
         //lets create the helpButton button
-        this.helpButton = this.add.sprite(720 / 2, 1000, 'howToPlayButton').setInteractive();
+        this.helpButton = this.add.sprite(720 / 2, 1040, 'howToPlayButton').setInteractive();
         this.helpButton.on('pointerdown', function (pointer) {
             this.helpButton.setTint(0x15536b);
         }, this);
@@ -59,8 +59,7 @@ var startMenu = (function (_super) {
     startMenu.prototype.changeScene = function (sceneName) {
         this.cameras.main.fade(500, 255, 255, 255);
         this.time.delayedCall(500, function () {
-            var boat = new cBoat();
-            this.scene.start(sceneName, boat);
+            this.scene.start(sceneName);
         }, [], this);
     };
     startMenu.prototype.update = function () {

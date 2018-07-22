@@ -88,6 +88,8 @@ class preloader extends Phaser.Scene {
         this.load.image('tripPauseBack', 'assets/tripPauseBack.png');
         this.load.image('tripPlayButton', 'assets/tripPlayButton.png');
         this.load.image('tripPauseButton', 'assets/tripPauseButton.png');    
+        this.load.image('backTripGlobal', 'assets/backTripGlobal.png');    
+        this.load.image('tripGlobalArrow', 'assets/tripGlobalArrow.png');    
 
         //help sprites
         this.load.image('help1', 'assets/help1.png');  

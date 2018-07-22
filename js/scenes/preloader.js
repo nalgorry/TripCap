@@ -83,6 +83,8 @@ var preloader = (function (_super) {
         this.load.image('tripPauseBack', 'assets/tripPauseBack.png');
         this.load.image('tripPlayButton', 'assets/tripPlayButton.png');
         this.load.image('tripPauseButton', 'assets/tripPauseButton.png');
+        this.load.image('backTripGlobal', 'assets/backTripGlobal.png');
+        this.load.image('tripGlobalArrow', 'assets/tripGlobalArrow.png');
         //help sprites
         this.load.image('help1', 'assets/help1.png');
         this.load.image('help2', 'assets/help2.png');

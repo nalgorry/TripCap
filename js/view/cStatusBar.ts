@@ -86,13 +86,13 @@ class cStatusBar {
         console.log(this.value);
         console.log(newValue)
         if(newValue > this.value) {
-            this.barLeft.setAngle(-90);
+            //this.barLeft.setAngle(-90);
             this.barRight.setAngle(-90);
         } else if (newValue < this.value) {
-            this.barLeft.setAngle(90);
+            //this.barLeft.setAngle(90);
             this.barRight.setAngle(90);
         } else {
-            this.barLeft.setAngle(0);
+            //this.barLeft.setAngle(0);
             this.barRight.setAngle(180);
         }
 
