@@ -329,6 +329,7 @@ var cTrip = (function () {
             this.scene.events.emit("tripEnd");
             this.tripEnd = true;
             this.boat.numberOfTrips++;
+            this.boat.tripNumber++;
         }
     };
     cTrip.prototype.updateBoatSpeed = function () {

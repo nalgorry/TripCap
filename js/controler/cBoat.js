@@ -1,5 +1,8 @@
 var cBoat = (function () {
     function cBoat() {
+        //tripNumber
+        this.tripNumber = 1;
+        this.numberOfTrips = 0; //cantidad de viajes que hizo el barco
         // por ahorar las  ponemos aca, luego deberian venir de algun archivo o db
         this.sails = 100; //velas
         this.rows = 100; //remos
@@ -9,13 +12,12 @@ var cBoat = (function () {
         this.foodSystem = 100; //Sistema Comida
         this.mantSystem = 100; //Protección
         this.crewman = 16; //tripulantes
-        this.gold = 0; //oro
+        this.gold = 50; //oro
         this.kg_capacity = 200; //capacidad barco
         this.attack = 1; //ataque barco
         this.reputationPirate = 0; //reputación pirata
         this.reputationHeroe = 0; //reputación heroe
         this.maxUsedWind = 0.8; //maxima eficacia de las velas, items la van a poder mejoraor despues
-        this.numberOfTrips = 0; //cantidad de viajes que hizo el barco
     }
     return cBoat;
 }());

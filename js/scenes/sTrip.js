@@ -30,8 +30,8 @@ var sTrip = (function (_super) {
         this.events.on('updateCrew', this.crewControl.updateCrewText, this.crewControl);
         this.initScene();
         this.createWindAndSpeedButtons();
-        this.statusBars[0 /* food */] = new cStatusBar(this, 60, 62);
-        this.statusBars[1 /* maintenance */] = new cStatusBar(this, 236, 62);
+        this.statusBars[1 /* maintenance */] = new cStatusBar(this, 60, 62);
+        this.statusBars[0 /* food */] = new cStatusBar(this, 236, 62);
         this.statusBars[2 /* clean */] = new cStatusBar(this, 412, 62);
         this.statusBars[3 /* leadership */] = new cStatusBar(this, 588, 62);
         //lets add the trip boat
@@ -53,6 +53,18 @@ var sTrip = (function (_super) {
         //to shop fps
         this.textFps = this.add.bitmapText(10, 10, 'Pfont', this.trip.healtyCrew.toString(), 20);
         this.textFps.setOrigin(0);
+        //lets show the button to show the ship starts
+        var a = this.add.sprite(85, 278, 'showShipStatsButton');
+        a.setInteractive();
+        a.on('pointerdown', this.showShipStats, this);
+    };
+    sTrip.prototype.showShipStats = function () {
+        this.scene.pause();
+        var data = {
+            trip: this.trip,
+            boat: this.boat
+        };
+        this.scene.launch('shipStats', data);
     };
     sTrip.prototype.updateTripText = function () {
         //wind and ship speed

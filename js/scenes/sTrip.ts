@@ -47,8 +47,8 @@ class sTrip extends Phaser.Scene {
 
         this.createWindAndSpeedButtons();
 
-        this.statusBars[enumStatus.food] = new cStatusBar(this, 60, 62);
-        this.statusBars[enumStatus.maintenance] = new cStatusBar(this, 236, 62);
+        this.statusBars[enumStatus.maintenance] = new cStatusBar(this, 60, 62);
+        this.statusBars[enumStatus.food] = new cStatusBar(this, 236, 62);
         this.statusBars[enumStatus.clean] = new cStatusBar(this, 412, 62);
         this.statusBars[enumStatus.leadership] = new cStatusBar(this, 588, 62);
 
@@ -78,6 +78,24 @@ class sTrip extends Phaser.Scene {
         this.textFps = this.add.bitmapText(10, 10, 'Pfont', this.trip.healtyCrew.toString(), 20);
         this.textFps.setOrigin(0);
 
+        //lets show the button to show the ship starts
+        var a = this.add.sprite(85, 278, 'showShipStatsButton');
+        a.setInteractive();
+        a.on('pointerdown', this.showShipStats, this);
+
+    }
+
+    private showShipStats() {
+
+            this.scene.pause();
+
+            var data = {
+                trip:this.trip,
+                boat:this.boat
+            }
+
+            this.scene.launch('shipStats', data);
+    
     }
 
     private updateTripText() {

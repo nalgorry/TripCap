@@ -31,8 +31,7 @@ class cTrip {
 
     public usedCrew = new Array();
 
-    private currentStatus:number[] = new Array();
-
+    public currentStatus:number[] = new Array();
     public barPorc:number[] = new Array();
 
     private windTimer:Phaser.Time.TimerEvent;
@@ -434,6 +433,7 @@ class cTrip {
             this.scene.events.emit("tripEnd");
             this.tripEnd = true;
             this.boat.numberOfTrips ++;
+            this.boat.tripNumber++;
 
         }
 

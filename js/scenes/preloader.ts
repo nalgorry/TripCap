@@ -88,9 +88,17 @@ class preloader extends Phaser.Scene {
         this.load.image('tripPauseBack', 'assets/tripPauseBack.png');
         this.load.image('tripPlayButton', 'assets/tripPlayButton.png');
         this.load.image('tripPauseButton', 'assets/tripPauseButton.png');    
-        this.load.image('backTripGlobal', 'assets/backTripGlobal.png');    
+        this.load.spritesheet('backTripGlobal', 'assets/backTripGlobal.png', {frameHeight:1200, frameWidth:720});    
         this.load.image('tripGlobalArrow', 'assets/tripGlobalArrow.png');    
-
+        this.load.image('backShipStats', 'assets/backShipStats.png');    
+        this.load.image('showShipStatsButton', 'assets/showShipStatsButton.png');    
+        this.load.image('backButton', 'assets/backButton.png');    
+        this.load.spritesheet('cityImage', 'assets/cityImage.png', {frameHeight:291, frameWidth:227});    
+        this.load.image('cityName', 'assets/cityName.png');    
+        this.load.image('buyButton', 'assets/buyButton.png');    
+        
+        
+        
         //help sprites
         this.load.image('help1', 'assets/help1.png');  
         this.load.image('help2', 'assets/help2.png');    
