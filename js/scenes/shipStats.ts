@@ -4,12 +4,14 @@ class shipStats extends Phaser.Scene {
     private back:Phaser.GameObjects.Image;
     public boat:cBoat;
     public trip:cTrip;
+    public currentScene:Phaser.Scenes.ScenePlugin;
 
  
     create(data) {
 
         this.trip = data.trip;
         this.boat = data.boat;
+        this.currentScene = data.currentScene;
 
         this.initScene();
         this.showStats();
@@ -33,42 +35,66 @@ class shipStats extends Phaser.Scene {
         var stat = this.add.bitmapText(502, 505, 'PfontRed', this.boat.sails.toString(), 60);
         stat.setOrigin(0.5 , 0.5);
 
+        //complete the bars
+        var mant  = new cStatusBar(this, 63, 670);
+        var food = new cStatusBar(this, 63 + 176, 670);
+        var clean = new cStatusBar(this, 63 + 176 * 2, 670);
+        var leadership = new cStatusBar(this, 63 + 176 * 3, 670);
+
+
         //trip stats if needed
         if (this.trip != undefined) {
 
-            var text:string = Math.round(this.trip.currentStatus[enumStatus.maintenance]).toString() + "/" +
-                this.boat.mantSystem.toString();
-            var stat = this.add.bitmapText(95, 635, 'PfontRed', text, 40);
-            stat.setOrigin(0.5 , 0.5);
+            var textMant:string = Math.round(this.trip.currentStatus[enumStatus.maintenance]).toString() + "/" +
+            this.boat.mantSystem.toString();
 
-            var text:string = Math.round(this.trip.currentStatus[enumStatus.food]).toString() + "/" +
-                this.boat.foodSystem.toString();
-            var stat = this.add.bitmapText(268, 635, 'PfontRed', text, 40);
-            stat.setOrigin(0.5 , 0.5);
+            var textFood:string = Math.round(this.trip.currentStatus[enumStatus.food]).toString() + "/" +
+            this.boat.foodSystem.toString();
 
-            var text:string = Math.round(this.trip.currentStatus[enumStatus.clean]).toString() + "/" +
-                this.boat.cleanSystem.toString();
-            var stat = this.add.bitmapText(444, 635, 'PfontRed', text, 40);
-            stat.setOrigin(0.5 , 0.5);
+            var textClean:string = Math.round(this.trip.currentStatus[enumStatus.clean]).toString() + "/" +
+            this.boat.cleanSystem.toString();
 
-            var text:string = Math.round(this.trip.currentStatus[enumStatus.leadership]).toString() + "/" +
-                this.boat.leaderSystem.toString();
-            var stat = this.add.bitmapText(626, 635, 'PfontRed', text, 40);
-            stat.setOrigin(0.5 , 0.5);
+            var textLeader:string = Math.round(this.trip.currentStatus[enumStatus.leadership]).toString() + "/" +
+            this.boat.leaderSystem.toString();
 
-            //complete the bars
-            var mant  = new cStatusBar(this, 63, 670);
-            var food = new cStatusBar(this, 63 + 176, 670);
-            var clean = new cStatusBar(this, 63 + 176 * 2, 670);
-            var leadership = new cStatusBar(this, 63 + 176 * 3, 670);
-
+            
             food.updateBar(this.trip.barPorc[enumStatus.food]);
             clean.updateBar(this.trip.barPorc[enumStatus.clean]);
             mant.updateBar(this.trip.barPorc[enumStatus.maintenance]);
             leadership.updateBar(this.trip.barPorc[enumStatus.leadership]);
-    
+
+        } else {
+
+            var textMant:string = Math.round(this.boat.mantSystem * 0.8).toString() + "/" +
+            this.boat.mantSystem.toString();
+
+            var textFood:string = Math.round(this.boat.foodSystem * 0.8).toString() + "/" +
+            this.boat.foodSystem.toString();
+
+            var textClean:string = Math.round(this.boat.cleanSystem * 0.8).toString() + "/" +
+            this.boat.cleanSystem.toString();
+
+            var textLeader:string = Math.round(this.boat.leaderSystem * 0.8).toString() + "/" +
+            this.boat.leaderSystem.toString();
+            
+            food.updateBar(0.8);
+            clean.updateBar(0.8);
+            mant.updateBar(0.8);
+            leadership.updateBar(0.8);
 
         }
+
+        var stat = this.add.bitmapText(95, 635, 'PfontRed', textMant, 40);
+        stat.setOrigin(0.5 , 0.5);
+
+        var stat = this.add.bitmapText(268, 635, 'PfontRed', textFood, 40);
+        stat.setOrigin(0.5 , 0.5);
+
+        var stat = this.add.bitmapText(444, 635, 'PfontRed', textClean, 40);
+        stat.setOrigin(0.5 , 0.5);
+
+        var stat = this.add.bitmapText(626, 635, 'PfontRed', textLeader, 40);
+        stat.setOrigin(0.5 , 0.5);
 
     }
 
@@ -88,10 +114,12 @@ class shipStats extends Phaser.Scene {
     private returnShip() {
         this.cameras.main.fadeOut(250, 255, 255, 255);
 
+        
+
         this.time.delayedCall(250, function() {
             //restart the trip
-            this.scene.resume('sTrip');
-            this.scene.get('sTrip').cameras.main.fadeIn(200, 255, 255, 255);
+
+            this.currentScene.resume();
             this.scene.stop();
         }, [], this);
 

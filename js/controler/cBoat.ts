@@ -13,7 +13,7 @@ class cBoat {
     public foodSystem = 100//Sistema Comida
     public mantSystem = 100//Protección
     public crewman = 16//tripulantes
-    public gold = 50//oro
+    public gold = 250//oro
     public kg_capacity = 200 //capacidad barco
     public attack = 1//ataque barco
     public reputationPirate = 0 //reputación pirata

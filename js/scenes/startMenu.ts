@@ -30,10 +30,10 @@ class startMenu extends Phaser.Scene {
 
             var boat:cBoat = new cBoat();
 
-            //this.scene.start('tripGlobal', boat);
+            this.scene.start('tripGlobal', boat);
 
             //to the the city faster
-            this.scene.start("city", boat)
+            //this.scene.start("city", boat)
 
         }, this);
 

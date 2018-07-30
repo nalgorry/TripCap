@@ -62,7 +62,8 @@ var sTrip = (function (_super) {
         this.scene.pause();
         var data = {
             trip: this.trip,
-            boat: this.boat
+            boat: this.boat,
+            currentScene: this.scene,
         };
         this.scene.launch('shipStats', data);
     };

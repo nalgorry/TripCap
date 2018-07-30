@@ -91,6 +91,9 @@ var preloader = (function (_super) {
         this.load.spritesheet('cityImage', 'assets/cityImage.png', { frameHeight: 291, frameWidth: 227 });
         this.load.image('cityName', 'assets/cityName.png');
         this.load.image('buyButton', 'assets/buyButton.png');
+        this.load.image('updateShipCard', 'assets/updateShipCard.png');
+        this.load.image('crewCard', 'assets/crewCard.png');
+        this.load.spritesheet('itemCards', 'assets/itemCards.png', { frameHeight: 277, frameWidth: 194 });
         //help sprites
         this.load.image('help1', 'assets/help1.png');
         this.load.image('help2', 'assets/help2.png');

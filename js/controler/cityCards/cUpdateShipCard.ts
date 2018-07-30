@@ -1,19 +1,25 @@
 
     enum enUpdate {
-        Mant= 1,
-        Clean = 2,
-        Leader = 3, 
-        Food = 4,
-        Seals = 5,
-        Rows = 6
+        Mant= 0,
+        Clean = 1,
+        Leader = 2, 
+        Food = 3,
+        Sails = 4,
+        Rows = 5
     }
 
 
 class cUpdateShipCard {
 
     public gold:number;
-    public updateValue;
+    public updateValue:number;
     public effectName:string;
+
+    public cardType:string = "updateCard";
+
+    public isAvaible = true;//when buy, this changes to false
+
+    public desc:string;
 
     private minValue:number = 5;
     private maxValue:number = 25;
@@ -21,7 +27,7 @@ class cUpdateShipCard {
     private minGold = 10;
     private maxGold = 20;
 
-    constructor(public updateTipe:enUpdate) {
+    constructor(public updateTipe:enUpdate, public boat:cBoat) {
         this.initCard();
     }
 
@@ -48,12 +54,45 @@ class cUpdateShipCard {
             case enUpdate.Rows:
                 this.effectName = 'Remos';
             break;
-            case enUpdate.Seals:
+            case enUpdate.Sails:
                 this.effectName = 'Velas';
             break;
             default:
                 break;
         }
+
+    }
+
+    public buy() {
+
+        this.isAvaible = false;
+
+        this.boat.gold -= this.gold;
+
+        //lets add the efect of the buy
+        switch (this.updateTipe) {
+            case enUpdate.Food:
+                this.boat.foodSystem += this.updateValue;
+            break;
+            case enUpdate.Leader:
+                this.boat.leaderSystem += this.updateValue;
+            break;
+            case enUpdate.Clean:
+                this.boat.cleanSystem += this.updateValue;
+            break;
+            case enUpdate.Mant:
+                this.boat.mantSystem += this.updateValue;       
+            break;
+            case enUpdate.Rows:
+                this.boat.rows += this.updateValue;
+            break;
+            case enUpdate.Sails:
+                this.boat.sails += this.updateValue;
+            break;
+            default:
+                break;
+        }
+
 
     }
 

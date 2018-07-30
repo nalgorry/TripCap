@@ -91,7 +91,8 @@ class sTrip extends Phaser.Scene {
 
             var data = {
                 trip:this.trip,
-                boat:this.boat
+                boat:this.boat,
+                currentScene:this.scene,
             }
 
             this.scene.launch('shipStats', data);

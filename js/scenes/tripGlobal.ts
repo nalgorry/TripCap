@@ -70,6 +70,8 @@ class tripGlobal extends Phaser.Scene {
                 pos2 = {x:140, y:515};
                 break;
             default:
+                pos1 = {x:124, y:452};
+                pos2 = {x:140, y:515};
                 break;
         }
           //lets add the arrows

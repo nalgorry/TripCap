@@ -11,6 +11,7 @@ var shipStats = (function (_super) {
     shipStats.prototype.create = function (data) {
         this.trip = data.trip;
         this.boat = data.boat;
+        this.currentScene = data.currentScene;
         this.initScene();
         this.showStats();
         this.cameras.main.fadeIn(500, 255, 255, 255);
@@ -25,34 +26,48 @@ var shipStats = (function (_super) {
         stat.setOrigin(0.5, 0.5);
         var stat = this.add.bitmapText(502, 505, 'PfontRed', this.boat.sails.toString(), 60);
         stat.setOrigin(0.5, 0.5);
+        //complete the bars
+        var mant = new cStatusBar(this, 63, 670);
+        var food = new cStatusBar(this, 63 + 176, 670);
+        var clean = new cStatusBar(this, 63 + 176 * 2, 670);
+        var leadership = new cStatusBar(this, 63 + 176 * 3, 670);
         //trip stats if needed
         if (this.trip != undefined) {
-            var text = Math.round(this.trip.currentStatus[1 /* maintenance */]).toString() + "/" +
+            var textMant = Math.round(this.trip.currentStatus[1 /* maintenance */]).toString() + "/" +
                 this.boat.mantSystem.toString();
-            var stat = this.add.bitmapText(95, 635, 'PfontRed', text, 40);
-            stat.setOrigin(0.5, 0.5);
-            var text = Math.round(this.trip.currentStatus[0 /* food */]).toString() + "/" +
+            var textFood = Math.round(this.trip.currentStatus[0 /* food */]).toString() + "/" +
                 this.boat.foodSystem.toString();
-            var stat = this.add.bitmapText(268, 635, 'PfontRed', text, 40);
-            stat.setOrigin(0.5, 0.5);
-            var text = Math.round(this.trip.currentStatus[2 /* clean */]).toString() + "/" +
+            var textClean = Math.round(this.trip.currentStatus[2 /* clean */]).toString() + "/" +
                 this.boat.cleanSystem.toString();
-            var stat = this.add.bitmapText(444, 635, 'PfontRed', text, 40);
-            stat.setOrigin(0.5, 0.5);
-            var text = Math.round(this.trip.currentStatus[3 /* leadership */]).toString() + "/" +
+            var textLeader = Math.round(this.trip.currentStatus[3 /* leadership */]).toString() + "/" +
                 this.boat.leaderSystem.toString();
-            var stat = this.add.bitmapText(626, 635, 'PfontRed', text, 40);
-            stat.setOrigin(0.5, 0.5);
-            //complete the bars
-            var mant = new cStatusBar(this, 63, 670);
-            var food = new cStatusBar(this, 63 + 176, 670);
-            var clean = new cStatusBar(this, 63 + 176 * 2, 670);
-            var leadership = new cStatusBar(this, 63 + 176 * 3, 670);
             food.updateBar(this.trip.barPorc[0 /* food */]);
             clean.updateBar(this.trip.barPorc[2 /* clean */]);
             mant.updateBar(this.trip.barPorc[1 /* maintenance */]);
             leadership.updateBar(this.trip.barPorc[3 /* leadership */]);
         }
+        else {
+            var textMant = Math.round(this.boat.mantSystem * 0.8).toString() + "/" +
+                this.boat.mantSystem.toString();
+            var textFood = Math.round(this.boat.foodSystem * 0.8).toString() + "/" +
+                this.boat.foodSystem.toString();
+            var textClean = Math.round(this.boat.cleanSystem * 0.8).toString() + "/" +
+                this.boat.cleanSystem.toString();
+            var textLeader = Math.round(this.boat.leaderSystem * 0.8).toString() + "/" +
+                this.boat.leaderSystem.toString();
+            food.updateBar(0.8);
+            clean.updateBar(0.8);
+            mant.updateBar(0.8);
+            leadership.updateBar(0.8);
+        }
+        var stat = this.add.bitmapText(95, 635, 'PfontRed', textMant, 40);
+        stat.setOrigin(0.5, 0.5);
+        var stat = this.add.bitmapText(268, 635, 'PfontRed', textFood, 40);
+        stat.setOrigin(0.5, 0.5);
+        var stat = this.add.bitmapText(444, 635, 'PfontRed', textClean, 40);
+        stat.setOrigin(0.5, 0.5);
+        var stat = this.add.bitmapText(626, 635, 'PfontRed', textLeader, 40);
+        stat.setOrigin(0.5, 0.5);
     };
     shipStats.prototype.initScene = function () {
         //lest add the back
@@ -67,8 +82,7 @@ var shipStats = (function (_super) {
         this.cameras.main.fadeOut(250, 255, 255, 255);
         this.time.delayedCall(250, function () {
             //restart the trip
-            this.scene.resume('sTrip');
-            this.scene.get('sTrip').cameras.main.fadeIn(200, 255, 255, 255);
+            this.currentScene.resume();
             this.scene.stop();
         }, [], this);
     };

@@ -21,9 +21,9 @@ var startMenu = (function (_super) {
         }, this);
         this.startButton.on('pointerup', function (pointer) {
             var boat = new cBoat();
-            //this.scene.start('tripGlobal', boat);
+            this.scene.start('tripGlobal', boat);
             //to the the city faster
-            this.scene.start("city", boat);
+            //this.scene.start("city", boat)
         }, this);
         //lets create the helpButton button
         this.helpButton = this.add.sprite(720 / 2, 1040, 'howToPlayButton').setInteractive();
