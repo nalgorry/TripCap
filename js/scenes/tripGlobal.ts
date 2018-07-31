@@ -1,6 +1,5 @@
 class tripGlobal extends Phaser.Scene {
 
-
     private back:Phaser.GameObjects.Image;
     public boat:cBoat;
 
@@ -33,7 +32,7 @@ class tripGlobal extends Phaser.Scene {
     private initScene() {
 
         //lest add the back
-        this.back = this.add.image(0, 0, 'backTripGlobal', this.boat.tripNumber - 1);
+        this.back = this.add.image(0, 0, 'backTripGlobal', this.boat.tripData.id - 1);
         this.back.setOrigin(0);
 
         this.cameras.main.fadeIn(1500, 255, 255, 255);
@@ -50,53 +49,38 @@ class tripGlobal extends Phaser.Scene {
 
         }, [], this);
 
-        this.initArrows(this.boat.tripNumber);
+        this.initArrows(this.boat.tripData.id);
 
       
     }
 
     private initArrows(tripNumber:number) {
 
-        var pos1:{x:number, y:number};
-        var pos2:{x:number, y:number};
+        var arrow1 = this.add.sprite(this.boat.tripData.arrow1.x,
+            this.boat.tripData.arrow1.y , 
+            'tripGlobalArrow');
 
-        switch (tripNumber) {
-            case 1:
-                pos1 = {x:124, y:452};
-                pos2 = {x:204, y:426};
-                break;
-            case 2:
-                pos1 = {x:124, y:452};
-                pos2 = {x:140, y:515};
-                break;
-            default:
-                pos1 = {x:124, y:452};
-                pos2 = {x:140, y:515};
-                break;
-        }
-          //lets add the arrows
+        this.tweens.add({
+            targets: arrow1,
+            y: arrow1.y - 15,
+            duration: 600,
+            ease: 'Power2',
+            yoyo: true,
+            repeat: 200
+        });
 
-          var arrow1 = this.add.sprite(pos1.x, pos1.y, 'tripGlobalArrow');
+        var arrow2 = this.add.sprite(this.boat.tripData.arrow2.x, 
+            this.boat.tripData.arrow2.y, 
+            'tripGlobalArrow');
 
-          this.tweens.add({
-              targets: arrow1,
-              y: arrow1.y - 15,
-              duration: 600,
-              ease: 'Power2',
-              yoyo: true,
-              repeat: 200
-          });
-  
-          var arrow2 = this.add.sprite(pos2.x, pos2.y, 'tripGlobalArrow');
-  
-          this.tweens.add({
-              targets: arrow2,
-              y: arrow2.y - 20,
-              duration: 600,
-              ease: 'Power2',
-              yoyo: true,
-              repeat: 200
-          });
+        this.tweens.add({
+            targets: arrow2,
+            y: arrow2.y - 20,
+            duration: 600,
+            ease: 'Power2',
+            yoyo: true,
+            repeat: 200
+        });
 
     }
 

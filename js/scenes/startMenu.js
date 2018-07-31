@@ -20,7 +20,8 @@ var startMenu = (function (_super) {
             this.startButton.clearTint();
         }, this);
         this.startButton.on('pointerup', function (pointer) {
-            var boat = new cBoat();
+            var data = this.cache.json.get('tripData');
+            var boat = new cBoat(data);
             this.scene.start('tripGlobal', boat);
             //to the the city faster
             //this.scene.start("city", boat)

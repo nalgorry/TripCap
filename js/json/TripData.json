@@ -1,0 +1,34 @@
+{ 
+    "TripData": [
+    {
+        "id":1,
+        "tripDistance":80,
+        "tripTip":"Llega a tu destino lo antes posible para que tu barco no se dañe",
+        "tripGold":120,
+        "arrow1": {"x":124, "y":452},
+        "arrow2": {"x":204, "y":426}
+    },
+    {
+        "id":2,
+        "tripDistance":70,
+        "tripTip":"Llega a tu destino lo antes posible para que tu barco no se dañe",
+        "tripGold":150,
+        "arrow1": {"x":124, "y":452},
+        "arrow2": {"x":140, "y":515}
+    },
+    {
+        "id":3,
+        "tripDistance":60,
+        "tripTip":"Si estas en probemas pausa el juego para reorganizar tus marineros",
+        "tripGold":150,
+        "arrow1": {"x":124, "y":452},
+        "arrow2": {"x":204, "y":426}
+    }
+
+
+
+    
+
+    ]
+
+}

@@ -109,6 +109,7 @@ var preloader = (function (_super) {
         this.load.json('eventOption', 'js/json/EventsOptions.json');
         this.load.json('eventResult', 'js/json/EventsResult.json');
         this.load.json('eventEffect', 'js/json/EventsEffect.json');
+        this.load.json('tripData', 'js/json/TripData.json');
     };
     preloader.prototype.create = function () {
         this.scene.start('startMenu');

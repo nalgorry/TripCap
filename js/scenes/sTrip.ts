@@ -19,7 +19,7 @@ class sTrip extends Phaser.Scene {
     private interval:number = 5;
     private t:number = 0;
 
-    private eventControler:cEventsControler;
+    private eventControler:cEventsControler; //TODO esto no va aca... se inicia todas las veces al pedo
 
     private crewControl:crewControls;
 

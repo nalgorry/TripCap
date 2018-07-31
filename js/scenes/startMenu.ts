@@ -28,7 +28,9 @@ class startMenu extends Phaser.Scene {
 
         this.startButton.on('pointerup', function (pointer) {
 
-            var boat:cBoat = new cBoat();
+            var data = this.cache.json.get('tripData'); 
+
+            var boat:cBoat = new cBoat(data);
 
             this.scene.start('tripGlobal', boat);
 

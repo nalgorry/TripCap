@@ -21,8 +21,8 @@ class cTrip {
     private probSick = 1;
     private PorcPerdidaMant = 1;
 
-    public tripEndGold:number = 100;
-    public tripTotalDist:number = 80; //en nudos nauticos 
+    public tripEndGold:number;
+    public tripTotalDist:number; //en nudos nauticos 
     public currentDistance:number = 0;
     public tripDistancePorc:number = 0;
 
@@ -51,6 +51,8 @@ class cTrip {
     constructor(public boat:cBoat, 
         public scene:Phaser.Scene) {
 
+        this.tripTotalDist = boat.tripData.tripDistance;
+        this.tripEndGold = boat.tripData.tripGold;
         this.healtyCrew = boat.crewman;
         this.sickCrew = 0;
         
@@ -432,8 +434,8 @@ class cTrip {
         if (this.tripDistancePorc >= 1 && this.tripEnd == false) {
             this.scene.events.emit("tripEnd");
             this.tripEnd = true;
-            this.boat.numberOfTrips ++;
-            this.boat.tripNumber++;
+
+            this.boat.nextTrip();
 
         }
 

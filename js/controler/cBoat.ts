@@ -1,8 +1,10 @@
 class cBoat {
 
-    //tripNumber
-    public tripNumber = 1;
+    //data of the trips
+    private tripNumber = 1;
+    private arrayTripData:cTripData[] = new Array();
     public numberOfTrips:number = 0; //cantidad de viajes que hizo el barco
+    public tripData:cTripData
 
     // por ahorar las  ponemos aca, luego deberian venir de algun archivo o db
     public sails = 100 //velas
@@ -20,5 +22,27 @@ class cBoat {
     public reputationHeroe = 0 //reputación heroe
 
     public maxUsedWind:number = 0.8; //maxima eficacia de las velas, items la van a poder mejoraor despues
+
+    constructor(data:any) {
+
+        //load the event data
+        data["TripData"].forEach(element => {
+
+            var event = new cTripData(element);
+            this.arrayTripData.push(event);
+
+        });
+
+        this.tripData = this.arrayTripData[0];
+
+        console.log(this.arrayTripData);
+
+    }
+
+    public nextTrip() {
+        this.tripNumber += 1;
+        this.numberOfTrips += 1;
+        this.tripData = this.arrayTripData[this.tripNumber - 1]
+    }
     
 }

@@ -15,8 +15,6 @@ var cTrip = (function () {
         this.rowsEff = 0.25; //number that makes the exponetial grow
         this.probSick = 1;
         this.PorcPerdidaMant = 1;
-        this.tripEndGold = 100;
-        this.tripTotalDist = 80; //en nudos nauticos 
         this.currentDistance = 0;
         this.tripDistancePorc = 0;
         this.eventMinTime = 18; //en segundos 
@@ -29,6 +27,8 @@ var cTrip = (function () {
         this.tripEnd = false; //flag to activate when the trip ends
         this.startTime = new Date();
         this.numOfEvents = 0;
+        this.tripTotalDist = boat.tripData.tripDistance;
+        this.tripEndGold = boat.tripData.tripGold;
         this.healtyCrew = boat.crewman;
         this.sickCrew = 0;
         var a = this.boat;
@@ -328,8 +328,7 @@ var cTrip = (function () {
         if (this.tripDistancePorc >= 1 && this.tripEnd == false) {
             this.scene.events.emit("tripEnd");
             this.tripEnd = true;
-            this.boat.numberOfTrips++;
-            this.boat.tripNumber++;
+            this.boat.nextTrip();
         }
     };
     cTrip.prototype.updateBoatSpeed = function () {
