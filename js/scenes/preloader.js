@@ -83,7 +83,6 @@ var preloader = (function (_super) {
         this.load.image('tripPauseBack', 'assets/tripPauseBack.png');
         this.load.image('tripPlayButton', 'assets/tripPlayButton.png');
         this.load.image('tripPauseButton', 'assets/tripPauseButton.png');
-        this.load.spritesheet('backTripGlobal', 'assets/backTripGlobal.png', { frameHeight: 1200, frameWidth: 720 });
         this.load.image('tripGlobalArrow', 'assets/tripGlobalArrow.png');
         this.load.image('backShipStats', 'assets/backShipStats.png');
         this.load.image('showShipStatsButton', 'assets/showShipStatsButton.png');
@@ -94,6 +93,8 @@ var preloader = (function (_super) {
         this.load.image('updateShipCard', 'assets/updateShipCard.png');
         this.load.image('crewCard', 'assets/crewCard.png');
         this.load.spritesheet('itemCards', 'assets/itemCards.png', { frameHeight: 277, frameWidth: 194 });
+        this.load.image('backTripGlobal', 'assets/backTripGlobal.png');
+        this.load.spritesheet('lineGlobal', 'assets/lineGlobal.png', { frameHeight: 1200, frameWidth: 720 });
         //help sprites
         this.load.image('help1', 'assets/help1.png');
         this.load.image('help2', 'assets/help2.png');

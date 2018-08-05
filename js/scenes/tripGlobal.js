@@ -23,8 +23,10 @@ var tripGlobal = (function (_super) {
     };
     tripGlobal.prototype.initScene = function () {
         //lest add the back
-        this.back = this.add.image(0, 0, 'backTripGlobal', this.boat.tripData.id - 1);
+        this.back = this.add.image(0, 0, 'backTripGlobal');
         this.back.setOrigin(0);
+        var line = this.add.image(0, 0, 'lineGlobal', this.boat.tripData.id - 1);
+        line.setOrigin(0);
         this.cameras.main.fadeIn(1500, 255, 255, 255);
         this.time.delayedCall(4500, function () {
             this.cameras.main.fadeOut(1500, 255, 255, 255);
@@ -33,6 +35,15 @@ var tripGlobal = (function (_super) {
             this.scene.start('sTrip', this.boat);
         }, [], this);
         this.initArrows(this.boat.tripData.id);
+        //init the title 
+        var title = this.add.bitmapText(360, 80, 'Pfont', "Viaje " + this.boat.tripData.id, 90);
+        title.setOrigin(0.5);
+        //init the tip
+        var fontData = this.scene.scene.cache.bitmapFont.entries.entries["FreeFont"].data;
+        var textTip = "Tip: " + this.boat.tripData.tripTip;
+        var wrapText = textWrapper.wrapText(fontData, 60 / 90, textTip, 650);
+        var text = this.add.bitmapText(360, 1050, 'FreeFont', wrapText, 60);
+        text.setOrigin(0.5);
     };
     tripGlobal.prototype.initArrows = function (tripNumber) {
         var arrow1 = this.add.sprite(this.boat.tripData.arrow1.x, this.boat.tripData.arrow1.y, 'tripGlobalArrow');

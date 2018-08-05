@@ -7,6 +7,10 @@ class cTripData {
     public tripGold:number;
     public arrow1:{x:number, y:number};
     public arrow2:{x:number, y:number};
+    public porcLostMant:number;
+    public porcLostClean:number;
+    public porcLostFood:number;
+    public porcLostLeader:number;
 
 
     constructor(data:any) {
@@ -17,6 +21,11 @@ class cTripData {
         this.tripGold = data.tripGold;
         this.arrow1 = data.arrow1;
         this.arrow2 = data.arrow2;
+
+        this.porcLostMant = data.porcLostMant;
+        this.porcLostClean = data.porcLostClean;
+        this.porcLostFood = data.porcLostFood;
+        this.porcLostLeader= data.porcLostLeader;
 
     }
 

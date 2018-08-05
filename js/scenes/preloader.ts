@@ -88,7 +88,6 @@ class preloader extends Phaser.Scene {
         this.load.image('tripPauseBack', 'assets/tripPauseBack.png');
         this.load.image('tripPlayButton', 'assets/tripPlayButton.png');
         this.load.image('tripPauseButton', 'assets/tripPauseButton.png');    
-        this.load.spritesheet('backTripGlobal', 'assets/backTripGlobal.png', {frameHeight:1200, frameWidth:720});    
         this.load.image('tripGlobalArrow', 'assets/tripGlobalArrow.png');    
         this.load.image('backShipStats', 'assets/backShipStats.png');    
         this.load.image('showShipStatsButton', 'assets/showShipStatsButton.png');    
@@ -99,6 +98,9 @@ class preloader extends Phaser.Scene {
         this.load.image('updateShipCard', 'assets/updateShipCard.png');  
         this.load.image('crewCard', 'assets/crewCard.png');  
         this.load.spritesheet('itemCards', 'assets/itemCards.png', {frameHeight:277, frameWidth:194});    
+        
+        this.load.image('backTripGlobal', 'assets/backTripGlobal.png');    
+        this.load.spritesheet('lineGlobal', 'assets/lineGlobal.png', {frameHeight:1200, frameWidth:720});    
         
         
         //help sprites
@@ -119,6 +121,8 @@ class preloader extends Phaser.Scene {
         this.load.json('eventResult', 'js/json/EventsResult.json');
         this.load.json('eventEffect', 'js/json/EventsEffect.json');
         this.load.json('tripData', 'js/json/TripData.json');
+
+        
         
                
     }

@@ -36,12 +36,14 @@ class sTrip extends Phaser.Scene {
         this.events.removeAllListeners('eventStart');
         this.events.removeAllListeners('updateTrip');
         this.events.removeAllListeners('updateCrew');
-        
+        this.events.removeAllListeners('gameEnd');
+
         //init all the event to conect with the controler of the trip
         this.events.on('tripEnd', this.tripEnd, this);
         this.events.on('eventStart', this.startEvent, this);
         this.events.on('updateTrip', this.updateTripText, this);
         this.events.on('updateCrew', this.crewControl.updateCrewText, this.crewControl);
+        this.events.on('gameEnd', this.gameEnd, this);
 
         this.initScene();
 
@@ -83,6 +85,15 @@ class sTrip extends Phaser.Scene {
         a.setInteractive();
         a.on('pointerdown', this.showShipStats, this);
 
+    }
+
+    private gameEnd() {
+        this.cameras.main.fadeOut(500, 255, 255, 255);
+        
+        // start the tripEnd scene
+        this.time.delayedCall(500, function() {
+            this.scene.start('gameEnd', this.trip);
+        }, [], this);
     }
 
     private showShipStats() {

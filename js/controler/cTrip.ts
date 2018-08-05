@@ -11,7 +11,7 @@ class cTrip {
 
     //Escala de Beaufort
     private windMinSpeed = 1; //nudos
-    private windMaxSpeed = 30; //nudos - tormenta muy fuerte 64
+    private windMaxSpeed = 22; //nudos - tormenta muy fuerte 64
     private windMod = 0; //some events change the wind
 
     //remos
@@ -19,15 +19,25 @@ class cTrip {
     private rowsEff = 0.25; //number that makes the exponetial grow
 
     private probSick = 1;
-    private PorcPerdidaMant = 1;
+
+    private porcLostMant;
+    private porcLostClean;
+    private porcLostFood;
+    private porcLostLeader;
+
+    private ceroMant:integer = 0;
+    private maxCeroMant:integer = 200;
+
+    private ceroLeader:integer = 0;
+    private maxCeroLeader:integer = 200;
 
     public tripEndGold:number;
     public tripTotalDist:number; //en nudos nauticos 
     public currentDistance:number = 0;
     public tripDistancePorc:number = 0;
 
-    public eventMinTime:number = 18; //en segundos 
-    public eventMaxTime:number = 30;
+    public eventMinTime:number = 15; //en segundos 
+    public eventMaxTime:number = 22;
 
     public usedCrew = new Array();
 
@@ -38,7 +48,7 @@ class cTrip {
 
     private leadershipAcumIncrement:number = 0.01;
 
-    private eventsPosible:number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    private eventsPosible:number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
     private tripEnd:boolean = false; //flag to activate when the trip ends
 
@@ -55,6 +65,11 @@ class cTrip {
         this.tripEndGold = boat.tripData.tripGold;
         this.healtyCrew = boat.crewman;
         this.sickCrew = 0;
+
+        this.porcLostMant = boat.tripData.porcLostMant;
+        this.porcLostClean = boat.tripData.porcLostClean;
+        this.porcLostFood = boat.tripData.porcLostFood;
+        this.porcLostLeader = boat.tripData.porcLostLeader;
         
         var a = this.boat
         this.boatStartStats = (<any>Object).assign({}, this.boat); //lets copy the object
@@ -193,8 +208,10 @@ class cTrip {
                     this.probSick += value / 100;
                     break;
                 case enumEffectType.PorcPerdidaMant:
-                    this.PorcPerdidaMant += value / 100;
-                    break;              
+                    this.porcLostMant += value / 100;
+                    break;      
+                case enumEffectType.Enfermos:
+                    this.addSickCrew(value)
                 default:
                     break;
             }
@@ -218,7 +235,6 @@ class cTrip {
             this.healtyCrew += value;
         }   
     }
-
 
     public updateCrew(task:enumTask, upDown:enumUpDown) {
 
@@ -284,8 +300,6 @@ class cTrip {
         console.log(this.eventsPosible);
     }
 
-
-
     private crewSick() {
 
         var baseProbSick:number = 2; //probabilidad en 1000
@@ -299,22 +313,26 @@ class cTrip {
         if (this.sickCrew == this.boat.crewman) return //if all are sick, there is nothing to do here
 
         if (probSick >= rnd) {
-            //se enfermo uno 
-            this.sickCrew += 1;
-
-            this.reduceAvaibleCrew(1)
-
-            //lets start a timer to see how much time they will be sick
-            var time = Phaser.Math.Between(20, 60) * 1000; //time in mili seconds
-
-            var timer = this.scene.time.addEvent({ 
-                delay: time, 
-                callback: this.recoverSick, 
-                callbackScope: this, 
-                repeat: 0});
-            
-            this.scene.events.emit('updateCrew');
+            this.oneCrewSick();
         }
+    }
+
+    private oneCrewSick() {
+        //se enfermo uno 
+        this.sickCrew += 1;
+
+        this.reduceAvaibleCrew(1)
+
+        //lets start a timer to see how much time they will be sick
+        var time = Phaser.Math.Between(20, 60) * 1000; //time in mili seconds
+
+        var timer = this.scene.time.addEvent({ 
+            delay: time, 
+            callback: this.recoverSick, 
+            callbackScope: this, 
+            repeat: 0});
+        
+        this.scene.events.emit('updateCrew');
     }
 
     private reduceAvaibleCrew(q: number) {
@@ -338,6 +356,12 @@ class cTrip {
         }
     }
 
+    private addSickCrew(value:integer) {
+        for (var i=0; i<value ; i++ ) {
+            this.oneCrewSick();
+        }
+    }
+
     private recoverSick() {
 
         this.sickCrew -= 1;
@@ -353,6 +377,7 @@ class cTrip {
         var maxIncrement = 0.4;
 
         var baseLost = this.boat.crewman * 0.005; //we need to feed all the crew we have
+        var baseLost = baseLost * this.porcLostFood;
 
         var increment = crewEfficiency * this.usedCrew[enumTask.fish] - baseLost;
         if (increment > maxIncrement) {increment = maxIncrement}
@@ -371,13 +396,26 @@ class cTrip {
 
         this.leadershipAcumIncrement += acumIncrement;
 
-        var increment = crewEfficiency * this.usedCrew[enumTask.leadership] - this.leadershipAcumIncrement;
+        var lost = this.leadershipAcumIncrement * this.porcLostLeader;
+
+        var increment = crewEfficiency * this.usedCrew[enumTask.leadership] - lost;
 
         if (increment > maxIncrement) {increment = maxIncrement}
 
         this.currentStatus[enumStatus.leadership] += increment + value;
 
         this.checkLimitsStatus(enumStatus.leadership, this.boat.leaderSystem);
+
+        //lets check if you have enough leadership
+        if (this.currentStatus[enumStatus.leadership] <= 0) {
+            this.ceroLeader += 1;
+            console.log(this.ceroLeader);
+
+            if (this.ceroLeader == this.maxCeroLeader) {
+                this.scene.events.emit('gameEnd');
+            }
+        } 
+
     }
 
     private updateMant(value:number = 0) {
@@ -390,7 +428,8 @@ class cTrip {
 
         //here when the sheep is more damaged it lost more 
         var lost = baseLost + incremLost * (1 - this.currentStatus[enumStatus.maintenance] / this.boat.mantSystem );
-        lost = lost * this.PorcPerdidaMant //modif to the lost of mant
+        lost = lost * this.porcLostMant //modif to the lost of mant
+
         if (lost < baseLostMin) {lost = baseLostMin}
 
         var increment = crewEfficiency * this.usedCrew[enumTask.maintenance] - lost;
@@ -400,6 +439,18 @@ class cTrip {
         this.currentStatus[enumStatus.maintenance] += increment + value;
 
         this.checkLimitsStatus(enumStatus.maintenance, this.boat.mantSystem);
+
+        //lets check if the boat is too damage
+        if (this.currentStatus[enumStatus.maintenance] <= 0) {
+            this.ceroMant += 1;
+            console.log(this.ceroMant);
+
+            if (this.ceroMant == this.maxCeroMant) {
+                this.scene.events.emit('gameEnd');
+            }
+        }
+
+
     }
 
     private updateClean(value:number = 0) {
@@ -408,7 +459,9 @@ class cTrip {
         var crewEfficiency = 0.07 / 2;
         var maxIncrement = 0.4;
 
-        var increment = crewEfficiency * this.usedCrew[enumTask.clean] - cleanLostBase;
+        var lost = cleanLostBase * this.porcLostClean;
+
+        var increment = crewEfficiency * this.usedCrew[enumTask.clean] - lost;
 
         if (increment > maxIncrement) {increment = maxIncrement}
 

@@ -11,5 +11,9 @@
 {"id":9,"title":"Barco amigo con comida","difficulty":"1","desc":"Un barco amigo te ofrece comida por 4 monedas de oro"},
 {"id":10,"title":"Naufragio","difficulty":"1","desc":"Descubres un barco que naufragó, puede inspecionar los restros para ver si encuentras algo de utilidad"},
 {"id":11,"title":"Peces Extraños","difficulty":"2","desc":"Tu barco se encuentra rodeado de unos extraños peces"},
-{"id":12,"title":"Entrada de agua","difficulty":"1","desc":"Detectas una entrada de agua en tu barco que parece peligrosa"}
+{"id":12,"title":"Entrada de agua","difficulty":"1","desc":"Detectas una entrada de agua en tu barco que parece peligrosa"},
+{"id":13,"title":"Incendio","difficulty":"2","desc":"Una parte de tu barco comienza a incendiarse "},
+{"id":14,"title":"Barco Fantasma","difficulty":"2","desc":"Te cruzas con un barco fantasma, entienden que quiere 30 monedas de oro para no atacarte"},
+{"id":15,"title":"Comidad Extra","difficulty":"2","desc":"Tus marineros dicen tener hambre y piden que les des más comida"},
+{"id":16,"title":"Barco Amigo","difficulty":"1","desc":"Un barco te ofrece 25 monedas de oro, por 50 de comida"}
 ]}

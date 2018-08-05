@@ -28,5 +28,13 @@
 {"id":1,"idEvent":"11","title":"Tirar Comida","desc":"Tirar comida para distraer a los peces"},
 {"id":2,"idEvent":"11","title":"Ignorar Peces","desc":"Ignorar los peces"},
 {"id":1,"idEvent":"12","title":"Arreglar Fuga","desc":"Poner a 3 marineros a trabajar en la fuga por el resto del viaje."},
-{"id":2,"idEvent":"12","title":"Ignorar Problema","desc":"Ignorar el problema hasta el próximo puerto"}
+{"id":2,"idEvent":"12","title":"Ignorar Problema","desc":"Ignorar el problema hasta el próximo puerto"},
+{"id":1,"idEvent":"13","title":"Combatir Incendio","desc":"Poner a tus marineros a combatir el incendio, puede ser peligroso"},
+{"id":2,"idEvent":"13","title":"Aislar Problema","desc":"Dejar que el barco consuma una parte del barco"},
+{"id":1,"idEvent":"14","title":"Dar Oro","desc":"Dar el oro que te pide el barco fantasma"},
+{"id":2,"idEvent":"14","title":"Ignorar Pedido","desc":"Ignorar el pedido del barco fantasma"},
+{"id":1,"idEvent":"15","title":"Aceptar Pedido","desc":"Aceptar el pedido y dejarles comer la comida disponible"},
+{"id":2,"idEvent":"15","title":"Rechazar Pedido","desc":"Rechazar el pedido"},
+{"id":1,"idEvent":"16","title":"Aceptar Trato","desc":"Aceptar el intercambio"},
+{"id":2,"idEvent":"16","title":"Rechazar Trato","desc":"Rechazar el intercambio"}
 ]}

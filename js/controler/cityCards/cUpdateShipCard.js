@@ -15,8 +15,8 @@ var cUpdateShipCard = (function () {
         this.isAvaible = true; //when buy, this changes to false
         this.minValue = 5;
         this.maxValue = 25;
-        this.minGold = 10;
-        this.maxGold = 20;
+        this.minGold = 5;
+        this.maxGold = 10;
         this.initCard();
     }
     cUpdateShipCard.prototype.initCard = function () {

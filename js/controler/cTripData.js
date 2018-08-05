@@ -7,6 +7,10 @@ var cTripData = (function () {
         this.tripGold = data.tripGold;
         this.arrow1 = data.arrow1;
         this.arrow2 = data.arrow2;
+        this.porcLostMant = data.porcLostMant;
+        this.porcLostClean = data.porcLostClean;
+        this.porcLostFood = data.porcLostFood;
+        this.porcLostLeader = data.porcLostLeader;
     }
     return cTripData;
 }());

@@ -6,28 +6,120 @@
         "tripTip":"Llega a tu destino lo antes posible para que tu barco no se dañe",
         "tripGold":120,
         "arrow1": {"x":124, "y":452},
-        "arrow2": {"x":204, "y":426}
+        "arrow2": {"x":204, "y":426},
+        "porcLostMant": 1,
+        "porcLostClean":1,
+        "porcLostFood":1,
+        "porcLostLeader":1
     },
     {
         "id":2,
         "tripDistance":70,
-        "tripTip":"Llega a tu destino lo antes posible para que tu barco no se dañe",
+        "tripTip":"Mientras más avanzas por el mar, más dificil es mantener el control de tu barco",
         "tripGold":150,
         "arrow1": {"x":124, "y":452},
-        "arrow2": {"x":140, "y":515}
+        "arrow2": {"x":140, "y":515},
+        "porcLostMant": 1.25,
+        "porcLostClean":1.25,
+        "porcLostFood":1.25,
+        "porcLostLeader":1.25
     },
     {
         "id":3,
         "tripDistance":60,
-        "tripTip":"Si estas en probemas pausa el juego para reorganizar tus marineros",
+        "tripTip":"La limpieza del barco es muy importante para evitar enfermos",
         "tripGold":150,
-        "arrow1": {"x":124, "y":452},
-        "arrow2": {"x":204, "y":426}
+        "arrow1": {"x":140, "y":515},
+        "arrow2": {"x":181, "y":506},
+        "porcLostMant": 1.5,
+        "porcLostClean":1.5,
+        "porcLostFood":1.5,
+        "porcLostLeader":1.5
+    },
+    {
+        "id":4,
+        "tripDistance":60,
+        "tripTip":"Si no hay viento, la unica opción para avanzar es remar",
+        "tripGold":150,
+        "arrow1": {"x":181, "y":506},
+        "arrow2": {"x":206, "y":544},
+        "porcLostMant": 1.75,
+        "porcLostClean":1.75,
+        "porcLostFood":1.75,
+        "porcLostLeader":1.75
+    },
+    {
+        "id":5,
+        "tripDistance":90,
+        "tripTip":"Más Marineros te permitirán mantener tu barco en mejores condiciones para el viaje",
+        "tripGold":150,
+        "arrow1": {"x":206, "y":544},
+        "arrow2": {"x":261, "y":578},
+        "porcLostMant": 2,
+        "porcLostClean":2,
+        "porcLostFood":2,
+        "porcLostLeader":2
+    },
+    {
+        "id":6,
+        "tripDistance":80,
+        "tripTip":"No olvides mejorar tu barco en las ciudades para hacer mas faciles los viajes que vienen",
+        "tripGold":150,
+        "arrow1": {"x":261, "y":578},
+        "arrow2": {"x":236, "y":636},
+        "porcLostMant": 2.25,
+        "porcLostClean":2.25,
+        "porcLostFood":2.25,
+        "porcLostLeader":2.25
+    },
+    {
+        "id":7,
+        "tripDistance":65,
+        "tripTip":"La comida se obtiene pescado, asegurate de pescar en zonas con peces",
+        "tripGold":150,
+        "arrow1": {"x":236, "y":636},
+        "arrow2": {"x":213, "y":670},
+        "porcLostMant": 2.5,
+        "porcLostClean":2.5,
+        "porcLostFood":2.5,
+        "porcLostLeader":2.5
+    },
+    {
+        "id":8,
+        "tripDistance":70,
+        "tripTip":"Toca el cofre para ver las estadisticas de tu barco, y los objetos que posees",
+        "tripGold":150,
+        "arrow1": {"x":213, "y":670},
+        "arrow2": {"x":188, "y":720},
+        "porcLostMant": 2.75,
+        "porcLostClean":2.75,
+        "porcLostFood":2.75,
+        "porcLostLeader":2.75
+    },
+    {
+        "id":9,
+        "tripDistance":60,
+        "tripTip":"Algunos objetos mágicos te dan propiedades especiales para terminar tu viaje",
+        "tripGold":150,
+        "arrow1": {"x":188, "y":720},
+        "arrow2": {"x":176, "y":765},
+        "porcLostMant": 3,
+        "porcLostClean":3,
+        "porcLostFood":3,
+        "porcLostLeader":3
+    },
+    {
+        "id":10,
+        "tripDistance":55,
+        "tripTip":"Último nivel de la BETA",
+        "tripGold":150,
+        "arrow1": {"x":176, "y":765},
+        "arrow2": {"x":219, "y":760},
+        "porcLostMant": 3.25,
+        "porcLostClean":3.25,
+        "porcLostFood":3.25,
+        "porcLostLeader":3.25
     }
-
-
-
-    
 
     ]
 

@@ -24,8 +24,8 @@ class cUpdateShipCard {
     private minValue:number = 5;
     private maxValue:number = 25;
 
-    private minGold = 10;
-    private maxGold = 20;
+    private minGold = 5;
+    private maxGold = 10;
 
     constructor(public updateTipe:enUpdate, public boat:cBoat) {
         this.initCard();

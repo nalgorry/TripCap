@@ -32,5 +32,13 @@
 {"id":1,"idEvent":"11","idOption":"1","prob":1,"desc":"Tiras comida y los peces parecen desaparecer en calma, a los marineros no les agrada que tires su comida"},
 {"id":2,"idEvent":"11","idOption":"2","prob":1,"desc":"Los peces atacan tu barco y le generan un gran daño"},
 {"id":1,"idEvent":"12","idOption":"1","prob":1,"desc":"Pierdes 3 marineros para el resto del viaje"},
-{"id":2,"idEvent":"12","idOption":"2","prob":1,"desc":"Tu barco comienza a hundirse lentamente"}
+{"id":2,"idEvent":"12","idOption":"2","prob":1,"desc":"Tu barco comienza a hundirse lentamente"},
+{"id":1,"idEvent":"13","idOption":"1","prob":1,"desc":"Combates el incendio con éxito. Algunos marineros sufrieron heridas al hacerlo"},
+{"id":2,"idEvent":"13","idOption":"2","prob":2,"desc":"Pierdes una gran parte de tu barco a causa del incendio"},
+{"id":1,"idEvent":"14","idOption":"1","prob":1,"desc":"Entregas el oro y el barco desaparece"},
+{"id":2,"idEvent":"14","idOption":"2","prob":1,"desc":"El barco pasa sobre tu barco causando daños y enfermos"},
+{"id":1,"idEvent":"15","idOption":"1","prob":1,"desc":"Los marineros hacen un festin con la comida que tenias disponible para el viaje"},
+{"id":2,"idEvent":"15","idOption":"2","prob":1,"desc":"Los marineros no parecen para nada contentos con tu rechazo"},
+{"id":1,"idEvent":"16","idOption":"1","prob":1,"desc":"Aceptas el cambio, tus marineros no parecen contento con ver desaparecer su comida"},
+{"id":2,"idEvent":"16","idOption":"2","prob":1,"desc":"Rechazas el pedido y continuas tu viaje"}
 ]}
