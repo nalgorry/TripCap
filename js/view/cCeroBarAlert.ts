@@ -15,7 +15,14 @@ class cCeroBarAlert {
 
     private init() {
 
-         this.ceroBarContainer = this.scene.add.container(360, 260 + 90 * (this.data.numAlerts -1))
+         this.ceroBarContainer = this.scene.add.container(360, 260 + 78 * (this.data.numAlerts -1))
+         this.ceroBarContainer.alpha = 0;
+
+         this.scene.tweens.add({
+            targets: this.ceroBarContainer,
+            alpha: 1 , duration: 600, ease: 'Power2'
+        });
+
 
         //fondo
         var back = this.scene.add.image(0, 0, 'ceroBarBack', this.data.status);
@@ -26,7 +33,7 @@ class cCeroBarAlert {
         this.circleCeroBarBack.lineStyle(2, 0xa34848, 1);
         this.circleCeroBarBack.fillStyle(0xa34848);
         this.circleCeroBarBack.alpha = 0.5;
-        this.circleCeroBarBack.fillCircle(0, 0, 35);
+        this.circleCeroBarBack.fillCircle(0, 0, 30);
         this.circleCeroBarBack.visible = false;
 
         this.ceroBarContainer.add(this.circleCeroBarBack);
@@ -36,12 +43,12 @@ class cCeroBarAlert {
         this.circleCeroBar.lineStyle(2, 0xFFFFFF, 1);
         this.circleCeroBar.fillStyle(0xFFFFFF);
         this.circleCeroBar.alpha = 1;
-        this.circleCeroBar.fillCircle(0, 0, 35);
+        this.circleCeroBar.fillCircle(0, 0, 30);
         this.circleCeroBar.visible = false;
 
         this.ceroBarContainer.add(this.circleCeroBar);
 
-        this.textCeroBarTime = this.scene.add.bitmapText(-145, 0, 'PfontRed', "5", 50);
+        this.textCeroBarTime = this.scene.add.bitmapText(-145, 0, 'PfontRed', "5", 45);
         this.textCeroBarTime.setOrigin(0.5);
 
         this.ceroBarContainer.add(this.textCeroBarTime);

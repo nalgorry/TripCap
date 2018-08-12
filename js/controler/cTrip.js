@@ -14,10 +14,11 @@ var cTrip = (function () {
         this.rowsMaxSpeed = 8;
         this.rowsEff = 0.25; //number that makes the exponetial grow
         this.probSick = 1;
-        this.maxCeroMant = 10 * 1000 / 83.33; //el primer numero son la cantidad de segundos
-        this.maxCeroLeader = 200;
-        this.maxCeroClean = 3 * 1000 / 83.33;
-        this.maxCeroFood = 200;
+        this.maxCeroMant = 8 * 1000 / 83.33; //el primer numero son la cantidad de segundos
+        this.maxCeroLeader = 8 * 1000 / 83.33;
+        this.maxCeroClean = 8 * 1000 / 83.33;
+        this.maxCeroFood = 8 * 1000 / 83.33;
+        this.ceroFood = false;
         this.numberOfAlert = 0;
         this.activeAlerts = [false, false, false, false];
         this.alertsCounter = [0, 0, 0, 0];
@@ -203,8 +204,8 @@ var cTrip = (function () {
         this.updateBoatSpeed();
         this.updateTripDistance();
         this.updateClean();
-        this.updateMant();
         this.updateFood();
+        this.updateMant();
         this.updateLeadership();
         this.crewSick();
         //lets update the bars %
@@ -293,10 +294,10 @@ var cTrip = (function () {
             if (this.alertsCounter[status] >= maxValue) {
                 switch (status) {
                     case 2 /* clean */:
-                        console.log("sin limpieza");
+                        this.probSick = 2;
                         break;
                     case 0 /* food */:
-                        console.log("sin comidada");
+                        this.ceroFood = true;
                         break;
                     case 3 /* leadership */:
                     case 1 /* maintenance */:
@@ -311,11 +312,23 @@ var cTrip = (function () {
             this.activeAlerts[status] = false;
             this.scene.events.emit('barRecoverFromCero', status);
             this.numberOfAlert -= 1;
+            //recover the status if needed
+            switch (status) {
+                case 2 /* clean */:
+                    this.probSick = 1;
+                    break;
+                case 0 /* food */:
+                    this.ceroFood = false;
+                    break;
+                case 3 /* leadership */:
+                case 1 /* maintenance */:
+                    break;
+            }
         }
     };
     cTrip.prototype.updateFood = function (value) {
         if (value === void 0) { value = 0; }
-        var crewEfficiency = 0.015;
+        var crewEfficiency = 0.018;
         var maxIncrement = 0.4;
         var baseLost = this.boat.crewman * 0.005; //we need to feed all the crew we have
         var baseLost = baseLost * this.porcLostFood;
@@ -333,6 +346,10 @@ var cTrip = (function () {
         var crewEfficiency = 0.07;
         var maxIncrement = 0.4;
         var acumIncrement = 0.02 / 100;
+        //if we have no food, we have no creEfficiency
+        if (this.ceroFood == true) {
+            crewEfficiency = 0;
+        }
         this.leadershipAcumIncrement += acumIncrement;
         var lost = this.leadershipAcumIncrement * this.porcLostLeader;
         var increment = crewEfficiency * this.usedCrew[2 /* leadership */] - lost;
@@ -350,7 +367,7 @@ var cTrip = (function () {
         var maxIncrement = 0.2;
         var baseLostMin = 0.05;
         var baseLost = 0.04 * 1.75; //need 1.75 trip in base case
-        var incremLost = 0.04 * 3; //need 5 in worst case                                                                   
+        var incremLost = 0.035 * 3; //need 5 in worst case                                                                   
         //here when the sheep is more damaged it lost more 
         var lost = baseLost + incremLost * (1 - this.currentStatus[1 /* maintenance */] / this.boat.mantSystem);
         lost = lost * this.porcLostMant; //modif to the lost of mant
@@ -403,7 +420,7 @@ var cTrip = (function () {
         var boatMaxSpeed = this.windSpeed * this.boat.maxUsedWind;
         //lets calculate the efficiency of the crew, more wind speed needs more people
         if (boatMaxSpeed != 0) {
-            var crewEfficiency = (this.usedCrew[0 /* sails */] * 5) / this.windSpeed;
+            var crewEfficiency = (this.usedCrew[0 /* sails */] * 4) / this.windSpeed;
             if (crewEfficiency > 1)
                 crewEfficiency = 1;
             var boatFinalSpeed = boatMaxSpeed * crewEfficiency;

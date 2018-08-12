@@ -119,6 +119,9 @@ class sTrip extends Phaser.Scene {
 
     private gameEnd() {
         this.cameras.main.fadeOut(500, 255, 255, 255);
+
+        //we only need to lister to the end game once to stop the game
+        this.events.removeAllListeners('gameEnd');
         
         // start the tripEnd scene
         this.time.delayedCall(500, function() {

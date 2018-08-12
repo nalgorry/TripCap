@@ -20,15 +20,17 @@ class cTrip {
 
     private probSick = 1;
 
-    private porcLostMant;
-    private porcLostClean;
-    private porcLostFood;
-    private porcLostLeader;
+    private porcLostMant:number;
+    private porcLostClean:number;
+    private porcLostFood:number;
+    private porcLostLeader:number;
 
-    private maxCeroMant:integer = 10 * 1000 / 83.33; //el primer numero son la cantidad de segundos
-    private maxCeroLeader:integer = 200;
-    private maxCeroClean:integer = 3 * 1000 / 83.33;
-    private maxCeroFood:integer = 200;
+        
+    private maxCeroMant:integer = 8 * 1000 / 83.33; //el primer numero son la cantidad de segundos
+    private maxCeroLeader:integer = 8 * 1000 / 83.33;
+    private maxCeroClean:integer = 8 * 1000 / 83.33;
+    private maxCeroFood:integer = 8 * 1000 / 83.33;
+    private ceroFood:boolean = false;
 
     private numberOfAlert:integer = 0;
     private activeAlerts:boolean[] = [false, false, false, false];
@@ -269,12 +271,12 @@ class cTrip {
         this.updateBoatSpeed();
 
         this.updateTripDistance();
-
+        
         this.updateClean();
 
-        this.updateMant();
-
         this.updateFood();
+
+        this.updateMant();
 
         this.updateLeadership();
 
@@ -393,10 +395,10 @@ class cTrip {
 
                 switch (status) {
                     case enumStatus.clean:
-                        console.log("sin limpieza");
+                        this.probSick = 2;
                     break;
                     case enumStatus.food:
-                        console.log("sin comidada");
+                        this.ceroFood = true;
                     break;
                     case enumStatus.leadership:
                     case enumStatus.maintenance:
@@ -417,6 +419,19 @@ class cTrip {
             this.activeAlerts[status] = false;
             this.scene.events.emit('barRecoverFromCero', status);
             this.numberOfAlert -= 1;
+
+            //recover the status if needed
+            switch (status) {
+                case enumStatus.clean:
+                    this.probSick = 1;
+                break;
+                case enumStatus.food:
+                    this.ceroFood = false;
+                break;
+                case enumStatus.leadership:
+                case enumStatus.maintenance:
+                break;
+            }
         }
 
 
@@ -425,7 +440,7 @@ class cTrip {
 
     private updateFood(value:number = 0) {
 
-        var crewEfficiency = 0.015;
+        var crewEfficiency = 0.018;
         var maxIncrement = 0.4;
 
         var baseLost = this.boat.crewman * 0.005; //we need to feed all the crew we have
@@ -450,6 +465,11 @@ class cTrip {
         var maxIncrement = 0.4;
         var acumIncrement = 0.02 / 100;
 
+        //if we have no food, we have no creEfficiency
+        if (this.ceroFood == true) {
+            crewEfficiency = 0;
+        }
+
         this.leadershipAcumIncrement += acumIncrement;
 
         var lost = this.leadershipAcumIncrement * this.porcLostLeader;
@@ -473,7 +493,7 @@ class cTrip {
         var maxIncrement = 0.2;
         var baseLostMin = 0.05;
         var baseLost = 0.04 * 1.75; //need 1.75 trip in base case
-        var incremLost = 0.04 * 3  //need 5 in worst case                                                                   
+        var incremLost = 0.035 * 3  //need 5 in worst case                                                                   
 
         //here when the sheep is more damaged it lost more 
         var lost = baseLost + incremLost * (1 - this.currentStatus[enumStatus.maintenance] / this.boat.mantSystem );
@@ -545,7 +565,7 @@ class cTrip {
 
         //lets calculate the efficiency of the crew, more wind speed needs more people
         if( boatMaxSpeed != 0) {
-            var crewEfficiency = ( this.usedCrew[enumTask.sails] * 5 ) / this.windSpeed
+            var crewEfficiency = ( this.usedCrew[enumTask.sails] * 4 ) / this.windSpeed
 
             if (crewEfficiency > 1) crewEfficiency = 1;
 

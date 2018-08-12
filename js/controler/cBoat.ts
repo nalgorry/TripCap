@@ -9,13 +9,12 @@ class cBoat {
     // por ahorar las  ponemos aca, luego deberian venir de algun archivo o db
     public sails = 100 //velas
     public rows = 100//remos
-    public leaderSystem = 10 //decorado
-    public fishSystem = 10 //sistema de pesca
-    public cleanSystem = 10//Sistema Limpieza
-    public foodSystem = 10//Sistema Comida
-    public mantSystem = 10//Protección
+    public leaderSystem = 100 //decorado
+    public cleanSystem = 100//Sistema Limpieza
+    public foodSystem = 100//Sistema Comida
+    public mantSystem = 100//Protección
     public crewman = 16//tripulantes
-    public gold = 250//oro
+    public gold = 300//oro
     public kg_capacity = 200 //capacidad barco
     public attack = 1//ataque barco
     public reputationPirate = 0 //reputación pirata

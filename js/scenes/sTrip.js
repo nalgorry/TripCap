@@ -83,6 +83,8 @@ var sTrip = (function (_super) {
     };
     sTrip.prototype.gameEnd = function () {
         this.cameras.main.fadeOut(500, 255, 255, 255);
+        //we only need to lister to the end game once to stop the game
+        this.events.removeAllListeners('gameEnd');
         // start the tripEnd scene
         this.time.delayedCall(500, function () {
             this.scene.start('gameEnd', this.trip);

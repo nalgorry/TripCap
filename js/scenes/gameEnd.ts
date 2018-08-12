@@ -1,7 +1,15 @@
-class gameEnd {
+class gameEnd extends Phaser.Scene{
 
-    constructor(boat:cBoat) {
-        console.log("SE TERMINO EL JUEGO PERDISTE MAL")
+    create(boat:cBoat) {
+
+        this.init();
+    }
+
+    private init() {
+
+        var back = this.add.image(0, 0, 'backGameEnd')
+        back.setOrigin(0);
+
     }
 
 
