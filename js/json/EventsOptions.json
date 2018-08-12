@@ -36,5 +36,11 @@
 {"id":1,"idEvent":"15","title":"Aceptar Pedido","desc":"Aceptar el pedido y dejarles comer la comida disponible"},
 {"id":2,"idEvent":"15","title":"Rechazar Pedido","desc":"Rechazar el pedido"},
 {"id":1,"idEvent":"16","title":"Aceptar Trato","desc":"Aceptar el intercambio"},
-{"id":2,"idEvent":"16","title":"Rechazar Trato","desc":"Rechazar el intercambio"}
+{"id":2,"idEvent":"16","title":"Rechazar Trato","desc":"Rechazar el intercambio"},
+{"id":1,"idEvent":"17","title":"Rescatar Marinero","desc":"Enviar a dos marineros a intentar rescatar al marinero"},
+{"id":2,"idEvent":"17","title":"Huir","desc":"Huir de la isla dejando al marinero atrás"},
+{"id":1,"idEvent":"18","title":"Cambiar Ruta","desc":"Cambiar Ruta para evitar la fuente de los ruidos"},
+{"id":2,"idEvent":"18","title":"Seguir Curso","desc":"Mantener el curso a pesar de los ruidos"},
+{"id":1,"idEvent":"19","title":"Encarcelar Marinero","desc":"Encarcelar al marinero por intentar tomar el control dele barco"},
+{"id":2,"idEvent":"19","title":"Permitir Navegar","desc":"Permitir que el marinero navege el barco"}
 ]}

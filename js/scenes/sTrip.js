@@ -10,12 +10,15 @@ var sTrip = (function (_super) {
         this.distShipStartx = 44;
         this.distShipEndx = 640;
         this.statusBars = new Array();
+        this.ceroBarAlerts = new Array();
+        this.countCeroBarAlerts = 0;
         this.interval = 5;
         this.t = 0;
     }
     sTrip.prototype.create = function (boat) {
         this.boat = boat;
         this.trip = new cTrip(this.boat, this); //i send the scene to be able to generate events
+        this.initScene();
         //init the comon controls
         this.crewControl = new crewControls(this.trip, this);
         //remove all the posible old events
@@ -24,13 +27,16 @@ var sTrip = (function (_super) {
         this.events.removeAllListeners('updateTrip');
         this.events.removeAllListeners('updateCrew');
         this.events.removeAllListeners('gameEnd');
+        this.events.removeAllListeners('barInCero');
+        this.events.removeAllListeners('barRecoverFromCero');
         //init all the event to conect with the controler of the trip
         this.events.on('tripEnd', this.tripEnd, this);
         this.events.on('eventStart', this.startEvent, this);
         this.events.on('updateTrip', this.updateTripText, this);
         this.events.on('updateCrew', this.crewControl.updateCrewText, this.crewControl);
         this.events.on('gameEnd', this.gameEnd, this);
-        this.initScene();
+        this.events.on('barInCero', this.barInCero, this);
+        this.events.on('barRecoverFromCero', this.barRecoverFromCero, this);
         this.createWindAndSpeedButtons();
         this.statusBars[1 /* maintenance */] = new cStatusBar(this, 60, 62);
         this.statusBars[0 /* food */] = new cStatusBar(this, 236, 62);
@@ -59,6 +65,21 @@ var sTrip = (function (_super) {
         var a = this.add.sprite(85, 278, 'showShipStatsButton');
         a.setInteractive();
         a.on('pointerdown', this.showShipStats, this);
+        //lets add the boat, so great :P
+        this.mainTripShip = this.add.sprite(360, 450, 'tripShip');
+    };
+    sTrip.prototype.barInCero = function (data) {
+        if (this.ceroBarAlerts["a" + data.status] == undefined) {
+            var a = new cCeroBarAlert(this, data);
+            this.ceroBarAlerts["a" + data.status] = a;
+        }
+        else {
+            this.ceroBarAlerts["a" + data.status].refresh(data);
+        }
+    };
+    sTrip.prototype.barRecoverFromCero = function (status) {
+        this.ceroBarAlerts["a" + status].hide(status);
+        this.ceroBarAlerts["a" + status] = undefined;
     };
     sTrip.prototype.gameEnd = function () {
         this.cameras.main.fadeOut(500, 255, 255, 255);
@@ -108,7 +129,8 @@ var sTrip = (function (_super) {
     };
     sTrip.prototype.pauseTrip = function () {
         //i must do it with a timer if not the scene will not pause
-        this.time.delayedCall(20, function () {
+        this.time.delayedCall(40, function () {
+            this.mainTripShip.alpha = 0.3;
             this.scene.pause();
             this.scene.launch('tripPause', this.trip);
             this.firstPause = false;
@@ -139,6 +161,10 @@ var sTrip = (function (_super) {
         if (this.t == this.interval) {
             //lets make the magic of the game happen
             this.trip.updateTrip();
+            //lets reset the alpha if we were in a pause before 
+            if (this.mainTripShip.alpha == 0.3) {
+                this.mainTripShip.alpha = 1;
+            }
             this.t = 0;
         }
         else {

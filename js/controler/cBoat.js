@@ -8,11 +8,11 @@ var cBoat = (function () {
         // por ahorar las  ponemos aca, luego deberian venir de algun archivo o db
         this.sails = 100; //velas
         this.rows = 100; //remos
-        this.leaderSystem = 100; //decorado
-        this.fishSystem = 100; //sistema de pesca
-        this.cleanSystem = 100; //Sistema Limpieza
-        this.foodSystem = 100; //Sistema Comida
-        this.mantSystem = 100; //Protección
+        this.leaderSystem = 10; //decorado
+        this.fishSystem = 10; //sistema de pesca
+        this.cleanSystem = 10; //Sistema Limpieza
+        this.foodSystem = 10; //Sistema Comida
+        this.mantSystem = 10; //Protección
         this.crewman = 16; //tripulantes
         this.gold = 250; //oro
         this.kg_capacity = 200; //capacidad barco

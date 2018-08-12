@@ -40,5 +40,15 @@
 {"id":1,"idEvent":"15","idOption":"1","prob":1,"desc":"Los marineros hacen un festin con la comida que tenias disponible para el viaje"},
 {"id":2,"idEvent":"15","idOption":"2","prob":1,"desc":"Los marineros no parecen para nada contentos con tu rechazo"},
 {"id":1,"idEvent":"16","idOption":"1","prob":1,"desc":"Aceptas el cambio, tus marineros no parecen contento con ver desaparecer su comida"},
-{"id":2,"idEvent":"16","idOption":"2","prob":1,"desc":"Rechazas el pedido y continuas tu viaje"}
+{"id":2,"idEvent":"16","idOption":"2","prob":1,"desc":"Rechazas el pedido y continuas tu viaje"},
+{"id":1,"idEvent":"17","idOption":"1","prob":20,"desc":"El rescate es exitoso, tus marineros además vuelven con un tesoro que estaba en la isla"},
+{"id":2,"idEvent":"17","idOption":"1","prob":50,"desc":"El rescato es exitoso, pero los tres marineros quedan mal heridos"},
+{"id":3,"idEvent":"17","idOption":"1","prob":30,"desc":"Ninguno de tus marineros vuelve con vida"},
+{"id":4,"idEvent":"17","idOption":"2","prob":1,"desc":"Te vas de la isla, a tus marineros no le gusta que dejaste un hombre atrás"},
+{"id":1,"idEvent":"18","idOption":"1","prob":1,"desc":"Te desvias para evitar la fuente de los ruidos, tu viaje se hace un poco más largo devido a esto."},
+{"id":2,"idEvent":"18","idOption":"2","prob":50,"desc":"Los ruidos parecen desaparecer sin que exista ningun problema en el caminoi"},
+{"id":3,"idEvent":"18","idOption":"2","prob":50,"desc":"Una extraña criatura ataca tu barco generando daños y heridos! Al menos su piel puede ser de valor en el pueblo"},
+{"id":1,"idEvent":"19","idOption":"1","prob":1,"desc":"Encarcelas al marinero por el resto del viaje"},
+{"id":2,"idEvent":"19","idOption":"2","prob":30,"desc":"Tu marinero te lleva a una isla donde encuentras un tesoro"},
+{"id":3,"idEvent":"19","idOption":"2","prob":70,"desc":"Tu marinero te lleva a una trampa, donde otro barco te ataca sin piedad"}
 ]}

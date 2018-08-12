@@ -10,9 +10,14 @@ class sTrip extends Phaser.Scene {
     private distShipStartx:number = 44;
     private distShipEndx:number = 640;
 
+    private mainTripShip:Phaser.GameObjects.Sprite;
+
     public textWindSpeed:Phaser.GameObjects.BitmapText;
     public textBoatSpeed:Phaser.GameObjects.BitmapText;
     public statusBars:cStatusBar[] = new Array();
+
+    public ceroBarAlerts:cCeroBarAlert[] = new Array();
+    public countCeroBarAlerts:number = 0;
 
     public textFps:Phaser.GameObjects.BitmapText;
 
@@ -28,6 +33,8 @@ class sTrip extends Phaser.Scene {
         this.boat = boat;
         this.trip = new cTrip(this.boat, this); //i send the scene to be able to generate events
 
+        this.initScene();
+
         //init the comon controls
         this.crewControl = new crewControls(this.trip, this);
 
@@ -37,6 +44,8 @@ class sTrip extends Phaser.Scene {
         this.events.removeAllListeners('updateTrip');
         this.events.removeAllListeners('updateCrew');
         this.events.removeAllListeners('gameEnd');
+        this.events.removeAllListeners('barInCero');
+        this.events.removeAllListeners('barRecoverFromCero');
 
         //init all the event to conect with the controler of the trip
         this.events.on('tripEnd', this.tripEnd, this);
@@ -44,8 +53,8 @@ class sTrip extends Phaser.Scene {
         this.events.on('updateTrip', this.updateTripText, this);
         this.events.on('updateCrew', this.crewControl.updateCrewText, this.crewControl);
         this.events.on('gameEnd', this.gameEnd, this);
-
-        this.initScene();
+        this.events.on('barInCero', this.barInCero, this);
+        this.events.on('barRecoverFromCero', this.barRecoverFromCero, this);
 
         this.createWindAndSpeedButtons();
 
@@ -85,6 +94,27 @@ class sTrip extends Phaser.Scene {
         a.setInteractive();
         a.on('pointerdown', this.showShipStats, this);
 
+        //lets add the boat, so great :P
+        this.mainTripShip = this.add.sprite(360, 450, 'tripShip');
+
+    }
+
+    private barInCero(data:{status:enumStatus, value:number, maxValue:number, numAlerts:number}) {
+
+        if (this.ceroBarAlerts["a" + data.status] == undefined) {
+            
+            var a = new cCeroBarAlert(this, data);
+            this.ceroBarAlerts["a" + data.status] = a;
+
+        } else {
+            this.ceroBarAlerts["a" + data.status].refresh(data);
+        }
+
+    }
+
+    private barRecoverFromCero(status:enumStatus) {
+        this.ceroBarAlerts["a" + status].hide(status);
+        this.ceroBarAlerts["a" + status] = undefined;
     }
 
     private gameEnd() {
@@ -159,10 +189,15 @@ class sTrip extends Phaser.Scene {
     private pauseTrip() {
         //i must do it with a timer if not the scene will not pause
         
-        this.time.delayedCall(20, function() {
-            this.scene.pause();
+        
 
+        this.time.delayedCall(40, function() {
+            this.mainTripShip.alpha = 0.3;
+
+            this.scene.pause();
             this.scene.launch('tripPause', this.trip);
+
+
             this.firstPause = false;
         }, [], this);
     }
@@ -206,6 +241,11 @@ class sTrip extends Phaser.Scene {
         if (this.t == this.interval) {
             //lets make the magic of the game happen
             this.trip.updateTrip();
+
+            //lets reset the alpha if we were in a pause before 
+            if (this.mainTripShip.alpha == 0.3){
+                this.mainTripShip.alpha = 1;
+            }
 
             this.t = 0;
         } else {

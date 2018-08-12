@@ -15,5 +15,8 @@
 {"id":13,"title":"Incendio","difficulty":"2","desc":"Una parte de tu barco comienza a incendiarse "},
 {"id":14,"title":"Barco Fantasma","difficulty":"2","desc":"Te cruzas con un barco fantasma, entienden que quiere 30 monedas de oro para no atacarte"},
 {"id":15,"title":"Comidad Extra","difficulty":"2","desc":"Tus marineros dicen tener hambre y piden que les des más comida"},
-{"id":16,"title":"Barco Amigo","difficulty":"1","desc":"Un barco te ofrece 25 monedas de oro, por 50 de comida"}
+{"id":16,"title":"Barco Amigo","difficulty":"1","desc":"Un barco te ofrece 25 monedas de oro, por 50 de comida"},
+{"id":17,"title":"Isla Maligna","difficulty":"2","desc":"Encuentras una extraña isla, uno de tus marineros sale corriendo hacia ella"},
+{"id":18,"title":"Ruidos Lejanos","difficulty":"2","desc":"Empiezas a escuchar unos ruidos lejanos en tu camino…"},
+{"id":19,"title":"Marinero Loco","difficulty":"3","desc":"Uno de tus marineros parece entrar en un transe e intenta llevar el barco hacia una dirección distinta a la que tiene que ir "}
 ]}

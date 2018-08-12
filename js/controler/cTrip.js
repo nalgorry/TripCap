@@ -14,10 +14,13 @@ var cTrip = (function () {
         this.rowsMaxSpeed = 8;
         this.rowsEff = 0.25; //number that makes the exponetial grow
         this.probSick = 1;
-        this.ceroMant = 0;
-        this.maxCeroMant = 200;
-        this.ceroLeader = 0;
+        this.maxCeroMant = 10 * 1000 / 83.33; //el primer numero son la cantidad de segundos
         this.maxCeroLeader = 200;
+        this.maxCeroClean = 3 * 1000 / 83.33;
+        this.maxCeroFood = 200;
+        this.numberOfAlert = 0;
+        this.activeAlerts = [false, false, false, false];
+        this.alertsCounter = [0, 0, 0, 0];
         this.currentDistance = 0;
         this.tripDistancePorc = 0;
         this.eventMinTime = 15; //en segundos 
@@ -87,7 +90,6 @@ var cTrip = (function () {
             callback: this.changeWind,
             callbackScope: this,
             repeat: 1 });
-        console.log("wind:" + this.finalWindSpeed);
     };
     cTrip.prototype.updateWind = function () {
         this.windSpeed += this.windIncrement;
@@ -215,9 +217,7 @@ var cTrip = (function () {
     cTrip.prototype.startEvent = function () {
         var n = Phaser.Math.Between(0, this.eventsPosible.length - 1); //we chosse one of the possible events for this trip
         this.scene.events.emit('eventStart', this.eventsPosible[n]);
-        console.log(n);
         this.eventsPosible.splice(n, 1);
-        console.log(this.eventsPosible);
     };
     cTrip.prototype.crewSick = function () {
         var baseProbSick = 2; //probabilidad en 1000
@@ -274,6 +274,45 @@ var cTrip = (function () {
         this.healtyCrew += 1;
         this.scene.events.emit('updateCrew');
     };
+    cTrip.prototype.alertCeroBar = function (status, maxValue) {
+        //lets check if the variable is in cero to a lert the capitan!!
+        if (this.currentStatus[status] <= 0) {
+            this.alertsCounter[status] += 1;
+            //increment the number of alerts
+            if (this.activeAlerts[status] == false) {
+                this.activeAlerts[status] = true;
+                this.numberOfAlert += 1;
+            }
+            var data = {
+                status: status,
+                value: this.alertsCounter[status],
+                maxValue: maxValue,
+                numAlerts: this.numberOfAlert
+            };
+            //check if we are in cero 
+            if (this.alertsCounter[status] >= maxValue) {
+                switch (status) {
+                    case 2 /* clean */:
+                        console.log("sin limpieza");
+                        break;
+                    case 0 /* food */:
+                        console.log("sin comidada");
+                        break;
+                    case 3 /* leadership */:
+                    case 1 /* maintenance */:
+                        this.scene.events.emit('gameEnd');
+                        break;
+                }
+            }
+            this.scene.events.emit('barInCero', data);
+        }
+        //lets check if we have to desactivate a alert
+        if (this.currentStatus[status] > 0 && this.activeAlerts[status] == true) {
+            this.activeAlerts[status] = false;
+            this.scene.events.emit('barRecoverFromCero', status);
+            this.numberOfAlert -= 1;
+        }
+    };
     cTrip.prototype.updateFood = function (value) {
         if (value === void 0) { value = 0; }
         var crewEfficiency = 0.015;
@@ -286,6 +325,8 @@ var cTrip = (function () {
         }
         this.currentStatus[0 /* food */] += increment + value;
         this.checkLimitsStatus(0 /* food */, this.boat.foodSystem);
+        //check if we have to do an alert
+        this.alertCeroBar(0 /* food */, this.maxCeroFood);
     };
     cTrip.prototype.updateLeadership = function (value) {
         if (value === void 0) { value = 0; }
@@ -300,14 +341,8 @@ var cTrip = (function () {
         }
         this.currentStatus[3 /* leadership */] += increment + value;
         this.checkLimitsStatus(3 /* leadership */, this.boat.leaderSystem);
-        //lets check if you have enough leadership
-        if (this.currentStatus[3 /* leadership */] <= 0) {
-            this.ceroLeader += 1;
-            console.log(this.ceroLeader);
-            if (this.ceroLeader == this.maxCeroLeader) {
-                this.scene.events.emit('gameEnd');
-            }
-        }
+        //check if we have to do an alert
+        this.alertCeroBar(3 /* leadership */, this.maxCeroLeader);
     };
     cTrip.prototype.updateMant = function (value) {
         if (value === void 0) { value = 0; }
@@ -328,14 +363,8 @@ var cTrip = (function () {
         }
         this.currentStatus[1 /* maintenance */] += increment + value;
         this.checkLimitsStatus(1 /* maintenance */, this.boat.mantSystem);
-        //lets check if the boat is too damage
-        if (this.currentStatus[1 /* maintenance */] <= 0) {
-            this.ceroMant += 1;
-            console.log(this.ceroMant);
-            if (this.ceroMant == this.maxCeroMant) {
-                this.scene.events.emit('gameEnd');
-            }
-        }
+        //check if we have to do an alert and increment the counter
+        this.alertCeroBar(1 /* maintenance */, this.maxCeroMant);
     };
     cTrip.prototype.updateClean = function (value) {
         if (value === void 0) { value = 0; }
@@ -349,6 +378,8 @@ var cTrip = (function () {
         }
         this.currentStatus[2 /* clean */] += increment + value;
         this.checkLimitsStatus(2 /* clean */, this.boat.cleanSystem);
+        //check if we have to do an alert
+        this.alertCeroBar(2 /* clean */, this.maxCeroClean);
     };
     cTrip.prototype.checkLimitsStatus = function (status, max) {
         if (this.currentStatus[status] > max) {

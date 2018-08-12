@@ -25,11 +25,14 @@ class cTrip {
     private porcLostFood;
     private porcLostLeader;
 
-    private ceroMant:integer = 0;
-    private maxCeroMant:integer = 200;
-
-    private ceroLeader:integer = 0;
+    private maxCeroMant:integer = 10 * 1000 / 83.33; //el primer numero son la cantidad de segundos
     private maxCeroLeader:integer = 200;
+    private maxCeroClean:integer = 3 * 1000 / 83.33;
+    private maxCeroFood:integer = 200;
+
+    private numberOfAlert:integer = 0;
+    private activeAlerts:boolean[] = [false, false, false, false];
+    private alertsCounter:number[] = [0, 0, 0, 0];
 
     public tripEndGold:number;
     public tripTotalDist:number; //en nudos nauticos 
@@ -131,7 +134,6 @@ class cTrip {
             callbackScope: this, 
             repeat: 1});
 
-        console.log("wind:" + this.finalWindSpeed);
 
     }
 
@@ -293,11 +295,8 @@ class cTrip {
 
         this.scene.events.emit('eventStart', this.eventsPosible[n]);
 
-        console.log(n);
-
         this.eventsPosible.splice(n , 1);
 
-        console.log(this.eventsPosible);
     }
 
     private crewSick() {
@@ -371,6 +370,59 @@ class cTrip {
 
     }
 
+    private alertCeroBar(status:enumStatus, maxValue:number ) {
+        //lets check if the variable is in cero to a lert the capitan!!
+        if (this.currentStatus[status]  <= 0) {
+            this.alertsCounter[status] += 1;
+
+            //increment the number of alerts
+            if (this.activeAlerts[status] == false) {
+                this.activeAlerts[status] = true;
+                this.numberOfAlert += 1;
+            }
+
+            var data = {
+                status:status, 
+                value:this.alertsCounter[status], 
+                maxValue:maxValue,
+                numAlerts:this.numberOfAlert
+            }
+
+            //check if we are in cero 
+            if (this.alertsCounter[status] >= maxValue) {
+
+                switch (status) {
+                    case enumStatus.clean:
+                        console.log("sin limpieza");
+                    break;
+                    case enumStatus.food:
+                        console.log("sin comidada");
+                    break;
+                    case enumStatus.leadership:
+                    case enumStatus.maintenance:
+                        this.scene.events.emit('gameEnd');
+                    break;
+                }
+
+                
+            }
+
+            this.scene.events.emit('barInCero', data);
+
+        }
+
+        //lets check if we have to desactivate a alert
+        if (this.currentStatus[status] > 0 && this.activeAlerts[status] == true) {
+            
+            this.activeAlerts[status] = false;
+            this.scene.events.emit('barRecoverFromCero', status);
+            this.numberOfAlert -= 1;
+        }
+
+
+
+    }
+
     private updateFood(value:number = 0) {
 
         var crewEfficiency = 0.015;
@@ -385,6 +437,10 @@ class cTrip {
         this.currentStatus[enumStatus.food] += increment + value;
 
         this.checkLimitsStatus(enumStatus.food, this.boat.foodSystem);
+
+        //check if we have to do an alert
+        this.alertCeroBar(enumStatus.food, this.maxCeroFood);
+
 
     }
 
@@ -406,15 +462,8 @@ class cTrip {
 
         this.checkLimitsStatus(enumStatus.leadership, this.boat.leaderSystem);
 
-        //lets check if you have enough leadership
-        if (this.currentStatus[enumStatus.leadership] <= 0) {
-            this.ceroLeader += 1;
-            console.log(this.ceroLeader);
-
-            if (this.ceroLeader == this.maxCeroLeader) {
-                this.scene.events.emit('gameEnd');
-            }
-        } 
+        //check if we have to do an alert
+        this.alertCeroBar(enumStatus.leadership, this.maxCeroLeader);
 
     }
 
@@ -440,16 +489,8 @@ class cTrip {
 
         this.checkLimitsStatus(enumStatus.maintenance, this.boat.mantSystem);
 
-        //lets check if the boat is too damage
-        if (this.currentStatus[enumStatus.maintenance] <= 0) {
-            this.ceroMant += 1;
-            console.log(this.ceroMant);
-
-            if (this.ceroMant == this.maxCeroMant) {
-                this.scene.events.emit('gameEnd');
-            }
-        }
-
+        //check if we have to do an alert and increment the counter
+        this.alertCeroBar(enumStatus.maintenance, this.maxCeroMant);
 
     }
 
@@ -468,6 +509,9 @@ class cTrip {
         this.currentStatus[enumStatus.clean] += increment + value;
 
         this.checkLimitsStatus(enumStatus.clean, this.boat.cleanSystem);
+
+        //check if we have to do an alert
+        this.alertCeroBar(enumStatus.clean, this.maxCeroClean);
     
     }
 
