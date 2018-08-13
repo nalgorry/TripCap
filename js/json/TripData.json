@@ -19,10 +19,10 @@
         "tripGold":150,
         "arrow1": {"x":124, "y":452},
         "arrow2": {"x":140, "y":515},
-        "porcLostMant": 1.1,
-        "porcLostClean":1.1,
-        "porcLostFood":1.1,
-        "porcLostLeader":1.1
+        "porcLostMant": 1.05,
+        "porcLostClean":1.05,
+        "porcLostFood":1.05,
+        "porcLostLeader":1.05
     },
     {
         "id":1.8,
@@ -31,10 +31,10 @@
         "tripGold":150,
         "arrow1": {"x":140, "y":515},
         "arrow2": {"x":181, "y":506},
-        "porcLostMant": 1.2,
-        "porcLostClean":1.2,
-        "porcLostFood":1.2,
-        "porcLostLeader":1.2
+        "porcLostMant": 1.1,
+        "porcLostClean":1.1,
+        "porcLostFood":1.1,
+        "porcLostLeader":1.1
     },
     {
         "id":4,
@@ -43,10 +43,10 @@
         "tripGold":150,
         "arrow1": {"x":181, "y":506},
         "arrow2": {"x":206, "y":544},
-        "porcLostMant": 1.1,
-        "porcLostClean":1.1,
-        "porcLostFood":1.1,
-        "porcLostLeader":1.1
+        "porcLostMant": 1.15,
+        "porcLostClean":1.15,
+        "porcLostFood":1.15,
+        "porcLostLeader":1.15
     },
     {
         "id":5,
@@ -55,10 +55,10 @@
         "tripGold":150,
         "arrow1": {"x":206, "y":544},
         "arrow2": {"x":261, "y":578},
-        "porcLostMant": 1.4,
-        "porcLostClean":1.4,
-        "porcLostFood":1.4,
-        "porcLostLeader":1.4
+        "porcLostMant": 1.2,
+        "porcLostClean":1.2,
+        "porcLostFood":1.2,
+        "porcLostLeader":1.2
     },
     {
         "id":6,
@@ -67,10 +67,10 @@
         "tripGold":150,
         "arrow1": {"x":261, "y":578},
         "arrow2": {"x":21.86, "y":61.86},
-        "porcLostMant": 1.5,
-        "porcLostClean":1.5,
-        "porcLostFood":1.5,
-        "porcLostLeader":1.5
+        "porcLostMant": 1.25,
+        "porcLostClean":1.25,
+        "porcLostFood":1.25,
+        "porcLostLeader":1.25
     },
     {
         "id":7,
@@ -79,10 +79,10 @@
         "tripGold":150,
         "arrow1": {"x":21.86, "y":61.86},
         "arrow2": {"x":211.8, "y":670},
-        "porcLostMant": 1.6,
-        "porcLostClean":1.6,
-        "porcLostFood":1.6,
-        "porcLostLeader":1.6
+        "porcLostMant": 1.3,
+        "porcLostClean":1.3,
+        "porcLostFood":1.3,
+        "porcLostLeader":1.3
     },
     {
         "id":8,
@@ -91,10 +91,10 @@
         "tripGold":150,
         "arrow1": {"x":211.8, "y":670},
         "arrow2": {"x":188, "y":720},
-        "porcLostMant": 1.7,
-        "porcLostClean":1.7,
-        "porcLostFood":1.7,
-        "porcLostLeader":1.7
+        "porcLostMant": 1.35,
+        "porcLostClean":1.35,
+        "porcLostFood":1.35,
+        "porcLostLeader":1.35
     },
     {
         "id":9,
@@ -103,10 +103,10 @@
         "tripGold":150,
         "arrow1": {"x":188, "y":720},
         "arrow2": {"x":176, "y":765},
-        "porcLostMant": 1.8,
-        "porcLostClean":1.8,
-        "porcLostFood":1.8,
-        "porcLostLeader":1.8
+        "porcLostMant": 1.4,
+        "porcLostClean":1.4,
+        "porcLostFood":1.4,
+        "porcLostLeader":1.4
     },
     {
         "id":10,
@@ -115,10 +115,10 @@
         "tripGold":150,
         "arrow1": {"x":176, "y":765},
         "arrow2": {"x":219, "y":760},
-        "porcLostMant": 1.9,
-        "porcLostClean":1.9,
-        "porcLostFood":1.9,
-        "porcLostLeader":1.9
+        "porcLostMant": 1.45,
+        "porcLostClean":1.45,
+        "porcLostFood":1.45,
+        "porcLostLeader":1.45
     }
 
     ]
