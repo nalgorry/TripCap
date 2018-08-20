@@ -98,6 +98,7 @@ var preloader = (function (_super) {
         this.load.spritesheet('ceroBarBack', 'assets/ceroBarBack.png', { frameHeight: 74, frameWidth: 386 });
         this.load.image('tripShip', 'assets/tripShip.png');
         this.load.image('backGameEnd', 'assets/backGameEnd.png');
+        this.load.image('tripDrag', 'assets/tripDrag.png');
         //help sprites
         this.load.image('help1', 'assets/help1.png');
         this.load.image('help2', 'assets/help2.png');

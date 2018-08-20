@@ -63,7 +63,7 @@ class sTrip extends Phaser.Scene {
         this.statusBars[enumStatus.clean] = new cStatusBar(this, 412, 62);
         this.statusBars[enumStatus.leadership] = new cStatusBar(this, 588, 62);
 
-        //lets add the trip boat
+         //lets add the trip boat
         this.distShip = this.add.sprite(this.distShipStartx, 796, 'distanceShip');
 
         //lets init the event controler to control the evets.
@@ -98,6 +98,8 @@ class sTrip extends Phaser.Scene {
         this.mainTripShip = this.add.sprite(360, 450, 'tripShip');
 
     }
+
+
 
     private barInCero(data:{status:enumStatus, value:number, maxValue:number, numAlerts:number}) {
 

@@ -104,6 +104,7 @@ class preloader extends Phaser.Scene {
         this.load.spritesheet('ceroBarBack', 'assets/ceroBarBack.png', {frameHeight:74, frameWidth:386});    
         this.load.image('tripShip', 'assets/tripShip.png');    
         this.load.image('backGameEnd', 'assets/backGameEnd.png');    
+        this.load.image('tripDrag', 'assets/tripDrag.png');    
         
         
         //help sprites

@@ -14,28 +14,56 @@ var crewControls = (function () {
         if (this.trip.healtyCrew == 0)
             hideUpArrow = true;
         //lets update all the used crew
-        for (var i = 0; i < 6; i++) {
+        for (var i = 0; i < 5; i++) {
             this.crewButtons[i].updateText(this.trip.usedCrew[i]);
             this.crewButtons[i].hideUpArrow(hideUpArrow);
         }
     };
     crewControls.prototype.createCrewButtons = function () {
         //lets show the avaible crew
-        this.textHealtyCrew = this.scene.add.bitmapText(120, 822, 'Pfont', this.trip.healtyCrew.toString(), 60);
-        this.textHealtyCrew.setOrigin(0);
+        this.textHealtyCrew = this.scene.add.bitmapText(355, 986 - 30, 'Pfont', this.trip.healtyCrew.toString(), 100);
+        this.textHealtyCrew.setOrigin(0.5);
         this.textSickCrew = this.scene.add.bitmapText(640, 822, 'Pfont', this.trip.sickCrew.toString(), 60);
         this.textSickCrew.setOrigin(0);
         //lets create all the options for the crew
-        this.crewButtons[0 /* sails */] = new tripButton(this.scene, 5, 896, 0 /* sails */);
-        this.crewButtons[1 /* rows */] = new tripButton(this.scene, 244, 896, 1 /* rows */);
-        this.crewButtons[2 /* leadership */] = new tripButton(this.scene, 481, 896, 2 /* leadership */);
-        this.crewButtons[3 /* maintenance */] = new tripButton(this.scene, 5, 1073, 3 /* maintenance */);
-        this.crewButtons[4 /* clean */] = new tripButton(this.scene, 244, 1073, 4 /* clean */);
-        this.crewButtons[5 /* fish */] = new tripButton(this.scene, 481, 1073, 5 /* fish */);
+        this.crewButtons[3 /* clean */] = new tripButton(this.scene, 131, 986, 3 /* clean */);
+        this.crewButtons[2 /* maintenance */] = new tripButton(this.scene, 131, 1177, 2 /* maintenance */);
+        this.crewButtons[1 /* leadership */] = new tripButton(this.scene, 576, 986, 1 /* leadership */);
+        this.crewButtons[4 /* fish */] = new tripButton(this.scene, 576, 1177, 4 /* fish */);
+        this.crewButtons[0 /* navigation */] = new tripButton(this.scene, 354, 1177, 0 /* navigation */);
         //lets check if they click a button
         this.scene.events.on('clickUp', this.buttonClick, this);
+        this.scene.events.on('dragCrew', this.dragCrew, this);
+        this.scene.events.on('dragCrewEnd', this.dragCrewEnd, this);
         //lets update the values
         this.updateCrewText();
+    };
+    crewControls.prototype.dragCrew = function (data) {
+        var mouseRect = new Phaser.Geom.Rectangle(this.scene.input.x, this.scene.input.y, 2, 2);
+        this.crewButtons.forEach(function (b) {
+            var buttonRect = b.sDrag.getBounds();
+            if (Phaser.Geom.Intersects.RectangleToRectangle(buttonRect, mouseRect)) {
+            }
+        });
+    };
+    crewControls.prototype.dragCrewEnd = function (button) {
+        var _this = this;
+        var mouseRect = new Phaser.Geom.Rectangle(this.scene.input.x, this.scene.input.y, 2, 2);
+        var avaibleCircle = new Phaser.Geom.Circle(354, 985, 170 / 2);
+        //lets check if it drop it in avaible crew
+        if (Phaser.Geom.Intersects.CircleToRectangle(avaibleCircle, mouseRect)) {
+            this.trip.updateCrew(button.task, 1 /* down */); //remove a crew from the origin
+        }
+        //lets check if it move the crew
+        this.crewButtons.forEach(function (b) {
+            var buttonRect = b.sDrag.getBounds();
+            if (Phaser.Geom.Intersects.RectangleToRectangle(buttonRect, mouseRect)) {
+                if (button.task != b.task) {
+                    _this.trip.updateCrew(button.task, 1 /* down */); //remove a crew from the origin
+                }
+                _this.trip.updateCrew(b.task, 0 /* up */); //increment where i drop the crew
+            }
+        });
     };
     crewControls.prototype.buttonClick = function (task, upDown) {
         //update the logic of the game

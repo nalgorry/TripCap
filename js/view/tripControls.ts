@@ -22,7 +22,7 @@ class crewControls {
         if (this.trip.healtyCrew == 0) hideUpArrow = true;
 
         //lets update all the used crew
-        for (var i=0; i<6; i++) {
+        for (var i=0; i<5; i++) {
             this.crewButtons[i].updateText(this.trip.usedCrew[i]);
             this.crewButtons[i].hideUpArrow(hideUpArrow);
         }
@@ -32,27 +32,79 @@ class crewControls {
     public createCrewButtons() {
 
         //lets show the avaible crew
-        this.textHealtyCrew = this.scene.add.bitmapText(120, 822, 'Pfont', this.trip.healtyCrew.toString(), 60);
-        this.textHealtyCrew.setOrigin(0);
+        this.textHealtyCrew = this.scene.add.bitmapText(355, 986-30, 'Pfont', this.trip.healtyCrew.toString(), 100);
+        this.textHealtyCrew.setOrigin(0.5);
 
         this.textSickCrew = this.scene.add.bitmapText(640, 822, 'Pfont', this.trip.sickCrew.toString(), 60);
         this.textSickCrew.setOrigin(0);
 
         //lets create all the options for the crew
-        this.crewButtons[enumTask.sails] = new tripButton(this.scene, 5, 896, enumTask.sails);
-        this.crewButtons[enumTask.rows] = new tripButton(this.scene, 244, 896, enumTask.rows);
-        this.crewButtons[enumTask.leadership] = new tripButton(this.scene, 481, 896, enumTask.leadership);
-        this.crewButtons[enumTask.maintenance] = new tripButton(this.scene, 5, 1073, enumTask.maintenance);
-        this.crewButtons[enumTask.clean] = new tripButton(this.scene, 244, 1073, enumTask.clean);
-        this.crewButtons[enumTask.fish] = new tripButton(this.scene, 481, 1073, enumTask.fish);
+        this.crewButtons[enumTask.clean] = new tripButton(this.scene, 131, 986, enumTask.clean);
+        this.crewButtons[enumTask.maintenance] = new tripButton(this.scene, 131, 1177, enumTask.maintenance);
+
+        this.crewButtons[enumTask.leadership] = new tripButton(this.scene, 576, 986, enumTask.leadership);
+        this.crewButtons[enumTask.fish] = new tripButton(this.scene, 576, 1177, enumTask.fish);
+
+        this.crewButtons[enumTask.navigation] = new tripButton(this.scene, 354, 1177, enumTask.navigation);
 
         //lets check if they click a button
         this.scene.events.on('clickUp',this.buttonClick, this);
+
+        this.scene.events.on('dragCrew', this.dragCrew,this);
+        this.scene.events.on('dragCrewEnd', this.dragCrewEnd,this);
+
 
         //lets update the values
         this.updateCrewText();
 
     }
+
+    private dragCrew(data:{x:number, y:number}) {
+
+        var mouseRect = new Phaser.Geom.Rectangle(this.scene.input.x, this.scene.input.y, 2, 2);
+
+        this.crewButtons.forEach(b => {
+            var buttonRect = b.sDrag.getBounds()
+
+            if (Phaser.Geom.Intersects.RectangleToRectangle(buttonRect, mouseRect)) {
+                //console.log(b)
+            }
+        });
+
+    }
+
+    private dragCrewEnd(button:tripButton) {
+
+        var mouseRect = new Phaser.Geom.Rectangle(this.scene.input.x, this.scene.input.y, 2, 2);
+
+        var avaibleCircle = new Phaser.Geom.Circle(354, 985, 170/2);
+
+        //lets check if it drop it in avaible crew
+        if (Phaser.Geom.Intersects.CircleToRectangle(avaibleCircle, mouseRect)) {
+
+                this.trip.updateCrew(button.task, enumUpDown.down); //remove a crew from the origin
+
+        }
+
+        //lets check if it move the crew
+        this.crewButtons.forEach(b => {
+            var buttonRect = b.sDrag.getBounds()
+
+            if (Phaser.Geom.Intersects.RectangleToRectangle(buttonRect, mouseRect)) {
+
+                if (button.task != b.task) {
+                    this.trip.updateCrew(button.task, enumUpDown.down); //remove a crew from the origin
+                }
+                
+                this.trip.updateCrew(b.task, enumUpDown.up); //increment where i drop the crew
+
+
+            }
+        });
+
+    }
+
+
 
     private buttonClick(task:enumTask, upDown:enumUpDown) {
 

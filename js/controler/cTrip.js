@@ -332,7 +332,7 @@ var cTrip = (function () {
         var maxIncrement = 0.4;
         var baseLost = this.boat.crewman * 0.005; //we need to feed all the crew we have
         var baseLost = baseLost * this.porcLostFood;
-        var increment = crewEfficiency * this.usedCrew[5 /* fish */] - baseLost;
+        var increment = crewEfficiency * this.usedCrew[4 /* fish */] - baseLost;
         if (increment > maxIncrement) {
             increment = maxIncrement;
         }
@@ -352,7 +352,7 @@ var cTrip = (function () {
         }
         this.leadershipAcumIncrement += acumIncrement;
         var lost = this.leadershipAcumIncrement * this.porcLostLeader;
-        var increment = crewEfficiency * this.usedCrew[2 /* leadership */] - lost;
+        var increment = crewEfficiency * this.usedCrew[1 /* leadership */] - lost;
         if (increment > maxIncrement) {
             increment = maxIncrement;
         }
@@ -374,7 +374,7 @@ var cTrip = (function () {
         if (lost < baseLostMin) {
             lost = baseLostMin;
         }
-        var increment = crewEfficiency * this.usedCrew[3 /* maintenance */] - lost;
+        var increment = crewEfficiency * this.usedCrew[2 /* maintenance */] - lost;
         if (increment > maxIncrement) {
             increment = maxIncrement;
         }
@@ -389,7 +389,7 @@ var cTrip = (function () {
         var crewEfficiency = 0.07 / 2;
         var maxIncrement = 0.4;
         var lost = cleanLostBase * this.porcLostClean;
-        var increment = crewEfficiency * this.usedCrew[4 /* clean */] - lost;
+        var increment = crewEfficiency * this.usedCrew[3 /* clean */] - lost;
         if (increment > maxIncrement) {
             increment = maxIncrement;
         }
@@ -420,7 +420,7 @@ var cTrip = (function () {
         var boatMaxSpeed = this.windSpeed * this.boat.maxUsedWind;
         //lets calculate the efficiency of the crew, more wind speed needs more people
         if (boatMaxSpeed != 0) {
-            var crewEfficiency = (this.usedCrew[0 /* sails */] * 4) / this.windSpeed;
+            var crewEfficiency = (this.usedCrew[0 /* navigation */] * 4) / this.windSpeed;
             if (crewEfficiency > 1)
                 crewEfficiency = 1;
             var boatFinalSpeed = boatMaxSpeed * crewEfficiency;
@@ -429,7 +429,7 @@ var cTrip = (function () {
             boatFinalSpeed = 0;
         }
         //rows speed
-        var boatRowsSpeed = this.rowsMaxSpeed * (1 - Math.exp(-this.rowsEff * this.usedCrew[1 /* rows */]));
+        var boatRowsSpeed = this.rowsMaxSpeed * (1 - Math.exp(-this.rowsEff * this.usedCrew[0 /* navigation */]));
         if (boatRowsSpeed > boatFinalSpeed) {
             boatFinalSpeed = boatRowsSpeed;
         }

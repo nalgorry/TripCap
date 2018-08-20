@@ -565,7 +565,7 @@ class cTrip {
 
         //lets calculate the efficiency of the crew, more wind speed needs more people
         if( boatMaxSpeed != 0) {
-            var crewEfficiency = ( this.usedCrew[enumTask.sails] * 4 ) / this.windSpeed
+            var crewEfficiency = ( this.usedCrew[enumTask.navigation] * 4 ) / this.windSpeed
 
             if (crewEfficiency > 1) crewEfficiency = 1;
 
@@ -575,7 +575,7 @@ class cTrip {
         }
 
         //rows speed
-        var boatRowsSpeed = this.rowsMaxSpeed * (1 - Math.exp(-this.rowsEff * this.usedCrew[enumTask.rows]));
+        var boatRowsSpeed = this.rowsMaxSpeed * (1 - Math.exp(-this.rowsEff * this.usedCrew[enumTask.navigation]));
 
         if (boatRowsSpeed > boatFinalSpeed) {
             boatFinalSpeed = boatRowsSpeed;

@@ -9,6 +9,8 @@ class tripButton {
 
     private arrowAnim:Phaser.Tweens.Tween;
 
+    public sDrag:Phaser.GameObjects.Sprite;
+
 
     public value:string = "0";
 
@@ -19,24 +21,25 @@ class tripButton {
 
             var container = this.scene.add.container(x, y);
 
-            //boton to go up 
-            var buttonUp = this.scene.add.graphics();
+              
+            //the text we show with the number
+            this.text = this.scene.add.bitmapText(0, -30, 'Pfont', '0', 100);
+            this.text.setOrigin(0.5);
 
-            container.add(buttonUp);
-    
-            buttonUp.fillStyle(0x222222, 0.5);
-            buttonUp.fillRect(170, 1, 63, 83);
-            buttonUp.fillPath();
-    
-            buttonUp.setInteractive(new Phaser.Geom.Rectangle(170, 1, 63, 83), Phaser.Geom.Rectangle.Contains);
+            container.add(this.text);
+
+            //arrow up!
+            this.arrowUp = this.scene.add.sprite(40, 0, 'buttonArrow');
+            container.add(this.arrowUp);
+            this.arrowUp.setScale(0.6);
 
             //back when up
             this.backUp = this.scene.add.graphics();
 
             container.add(this.backUp);
     
-            this.backUp.fillStyle(0x1ab500, 1);
-            this.backUp.fillRect(0, 0, 166, 172);
+            this.backUp.fillStyle(0x12412a, 1);
+            this.backUp.fillCircle(0, 0, 170/2);
             this.backUp.fillPath();
             this.backUp.alpha = 0;
 
@@ -46,55 +49,53 @@ class tripButton {
             container.add(this.backDown);
     
             this.backDown.fillStyle(0xb1160d, 1);
-            this.backDown.fillRect(0, 0, 166, 172);
+            this.backDown.fillCircle(0, 0, 170/2);
             this.backDown.fillPath();
             this.backDown.alpha = 0;
 
-            this.arrowUp = this.scene.add.sprite(201, 40, 'buttonArrow');
-            container.add(this.arrowUp);
+            //drag option
+            this.sDrag = this.scene.add.sprite(0 , 0, 'tripDrag')  
+            this.sDrag.alpha = 0.001;
+            this.sDrag.setOrigin(0.5);
+            this.sDrag.setInteractive({ pixelPerfect: true, draggable: true });
+
+            container.add(this.sDrag);
+
+            this.sDrag.on('dragstart', this.onStartDrag,this);
+
+            this.sDrag.on('drag', this.onDrag, this);
+
+            //this.sDrag.on('pointerup', this.clickUp , this);
+
+            this.sDrag.on('dragend', this.onDragEnd , this);
     
-            buttonUp.on('pointerdown', this.clickUp , this);
 
-            //boton to go down 
-            var buttonDown = this.scene.add.graphics();
-
-            container.add(buttonDown);
-    
-            buttonDown.fillStyle(0x222222, 0.5);
-            buttonDown.fillRect(170, 89, 63, 83);
-            buttonDown.fillPath();
-    
-            buttonDown.setInteractive(new Phaser.Geom.Rectangle(170, 89, 63, 83), Phaser.Geom.Rectangle.Contains);
-
-            this.arrowDown = this.scene.add.sprite(201, 128, 'buttonArrow');
-            this.arrowDown.setAngle(180);
-            container.add(this.arrowDown);
-    
-            buttonDown.on('pointerdown', this.clickDown , this);
-            
-            //the text we show with the number
-            this.text = this.scene.add.bitmapText(80, 20, 'Pfont', '0', 110);
-            this.text.setOrigin(0.5);
-
-            container.add(this.text);
-
-            //lets update the visibility
-            this.hideDownArrow()
             //lets make the up animation arrow
             this.hideUpArrow(false);
 
     }
 
-    private clickUp() {
+    private onDragEnd() {
+        this.sDrag.x = 0;
+        this.sDrag.y = 0;
 
-        this.scene.events.emit('clickUp', this.task, enumUpDown.up);
+        this.sDrag.alpha = 0.001;
 
+        this.scene.events.emit('dragCrewEnd', this);
     }
 
-    private clickDown() {
+    private onStartDrag() {
+        //this.sDrag.alpha = 0.5;
+    }
 
-        this.scene.events.emit('clickUp', this.task, enumUpDown.down);
-        
+    private onDrag(pointer, dragX, dragY) {
+        this.sDrag.x = dragX;
+        this.sDrag.y = dragY;
+
+        this.scene.events.emit('dragCrew', this);
+
+        this.sDrag.alpha = 0.5;
+
     }
 
     public updateText(newText:string) {
@@ -104,7 +105,6 @@ class tripButton {
         this.text.setText(newText);
         this.value = newText
 
-        this.hideDownArrow();
     }
 
     private animateBack(newValue:string) {
@@ -115,11 +115,12 @@ class tripButton {
             target = this.backUp;
         } else if ( parseInt(newValue) < parseInt(this.value)) {
             target = this.backDown;
+            console.log(newValue);
         } else {
             return
         }
 
-        var time = 300;
+        var time = 150;
         
         var a1 = this.scene.add.tween({
             targets: target,
@@ -138,14 +139,6 @@ class tripButton {
 
     }
 
-    private hideDownArrow() {
-        if (this.value == "0") {
-            this.arrowDown.visible = false;
-        } else {
-            this.arrowDown.visible = true;
-        }
-    }
-
     //this one needs to be call from the parent
     public hideUpArrow(hide:boolean) {
         if (hide == true) {
@@ -156,7 +149,7 @@ class tripButton {
             if (this.arrowAnim == undefined) {
                 this.arrowAnim = this.scene.tweens.add({
                     targets: this.arrowUp,
-                    y: 30,
+                    y: -10,
                     duration: 600,
                     ease: 'Power2',
                     yoyo: true,
