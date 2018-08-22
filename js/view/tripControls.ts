@@ -32,15 +32,15 @@ class crewControls {
     public createCrewButtons() {
 
         //lets show the avaible crew
-        this.textHealtyCrew = this.scene.add.bitmapText(355, 986-30, 'Pfont', this.trip.healtyCrew.toString(), 100);
+        this.textHealtyCrew = this.scene.add.bitmapText(302, 950-30, 'Pfont', this.trip.healtyCrew.toString(), 80);
         this.textHealtyCrew.setOrigin(0.5);
 
-        this.textSickCrew = this.scene.add.bitmapText(640, 822, 'Pfont', this.trip.sickCrew.toString(), 60);
-        this.textSickCrew.setOrigin(0);
+        this.textSickCrew = this.scene.add.bitmapText(405, 1004-25, 'Pfont', this.trip.sickCrew.toString(), 60);
+        this.textSickCrew.setOrigin(0.5);
 
         //lets create all the options for the crew
-        this.crewButtons[enumTask.clean] = new tripButton(this.scene, 131, 986, enumTask.clean);
-        this.crewButtons[enumTask.maintenance] = new tripButton(this.scene, 131, 1177, enumTask.maintenance);
+        this.crewButtons[enumTask.maintenance] = new tripButton(this.scene, 131, 986, enumTask.maintenance);
+        this.crewButtons[enumTask.clean] = new tripButton(this.scene, 131, 1177, enumTask.clean);
 
         this.crewButtons[enumTask.leadership] = new tripButton(this.scene, 576, 986, enumTask.leadership);
         this.crewButtons[enumTask.fish] = new tripButton(this.scene, 576, 1177, enumTask.fish);

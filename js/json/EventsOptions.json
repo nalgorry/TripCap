@@ -42,5 +42,7 @@
 {"id":1,"idEvent":"18","title":"Cambiar Ruta","desc":"Cambiar Ruta para evitar la fuente de los ruidos"},
 {"id":2,"idEvent":"18","title":"Seguir Curso","desc":"Mantener el curso a pesar de los ruidos"},
 {"id":1,"idEvent":"19","title":"Encarcelar Marinero","desc":"Encarcelar al marinero por intentar tomar el control dele barco"},
-{"id":2,"idEvent":"19","title":"Permitir Navegar","desc":"Permitir que el marinero navege el barco"}
+{"id":2,"idEvent":"19","title":"Permitir Navegar","desc":"Permitir que el marinero navege el barco"},
+{"id":1,"idEvent":"20","title":"Tomar Marinero","desc":"Tomar el polizón para que sea un marinero del barco. Esta mal herido y debes poner a alguien a cuidarlo hasta que se recupere"},
+{"id":2,"idEvent":"20","title":"Matar Polizón","desc":"Matar al polizón para demostrar tu poder en el barco"}
 ]}

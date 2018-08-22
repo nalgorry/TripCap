@@ -18,5 +18,6 @@
 {"id":16,"title":"Barco Amigo","difficulty":"1","desc":"Un barco te ofrece 25 monedas de oro, por 50 de comida"},
 {"id":17,"title":"Isla Maligna","difficulty":"2","desc":"Encuentras una extraña isla, uno de tus marineros sale corriendo hacia ella"},
 {"id":18,"title":"Ruidos Lejanos","difficulty":"2","desc":"Empiezas a escuchar unos ruidos lejanos en tu camino…"},
-{"id":19,"title":"Marinero Loco","difficulty":"3","desc":"Uno de tus marineros parece entrar en un transe e intenta llevar el barco hacia una dirección distinta a la que tiene que ir "}
+{"id":19,"title":"Marinero Loco","difficulty":"3","desc":"Uno de tus marineros parece entrar en un transe e intenta llevar el barco hacia una dirección distinta a la que tiene que ir "},
+{"id":20,"title":"Polizón","difficulty":"1","desc":"Descubres a un polizón en tu barco."}
 ]}

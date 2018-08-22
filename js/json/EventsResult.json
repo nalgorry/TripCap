@@ -13,7 +13,7 @@
 {"id":2,"idEvent":"4","idOption":"2","prob":100,"desc":"El marinero queda aislado, pero los rumores sobre el botin siguen estando presentes en tu barco"},
 {"id":3,"idEvent":"4","idOption":"3","prob":100,"desc":"Matas a todos los relacionados con el botin. Tus demas tripulantes temen por sus vidas"},
 {"id":1,"idEvent":"5","idOption":"1","prob":1,"desc":"La voz y la niebla desaparece, todo parece listo para seguir navegando"},
-{"id":2,"idEvent":"5","idOption":"2","prob":1,"desc":"La niebla parece ponerse aun mas densa, el resto del viaje no parece muy tranquilo…"},
+{"id":2,"idEvent":"5","idOption":"2","prob":1,"desc":"La niebla parece ponerse aun más densa, el resto del viaje no parece muy tranquilo…"},
 {"id":3,"idEvent":"5","idOption":"3","prob":60,"desc":"La voz y la niebla desaparece, todo parece listo para seguir navegando"},
 {"id":4,"idEvent":"5","idOption":"3","prob":40,"desc":"La niebla parece ponerse aun mas densa, el resto del viaje no parece muy tranquilo…"},
 {"id":1,"idEvent":"6","idOption":"1","prob":1,"desc":"Entragas el oro y un extraño artefacto aparece ante tus ojos"},
@@ -50,5 +50,7 @@
 {"id":3,"idEvent":"18","idOption":"2","prob":50,"desc":"Una extraña criatura ataca tu barco generando daños y heridos! Al menos su piel puede ser de valor en el pueblo"},
 {"id":1,"idEvent":"19","idOption":"1","prob":1,"desc":"Encarcelas al marinero por el resto del viaje"},
 {"id":2,"idEvent":"19","idOption":"2","prob":30,"desc":"Tu marinero te lleva a una isla donde encuentras un tesoro"},
-{"id":3,"idEvent":"19","idOption":"2","prob":70,"desc":"Tu marinero te lleva a una trampa, donde otro barco te ataca sin piedad"}
+{"id":3,"idEvent":"19","idOption":"2","prob":70,"desc":"Tu marinero te lleva a una trampa, donde otro barco te ataca sin piedad"},
+{"id":1,"idEvent":"20","idOption":"1","prob":1,"desc":"Un marinero queda a cargo del polizón enfermo."},
+{"id":2,"idEvent":"20","idOption":"2","prob":1,"desc":"Matas al polizón tirandolo a los tiburones"}
 ]}
