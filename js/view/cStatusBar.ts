@@ -13,11 +13,15 @@ class cStatusBar {
 
     private alertTimer:Phaser.Time.TimerEvent;
 
-    public value:number = 0.8; //the actual value of the bar
+    private  valueText:Phaser.GameObjects.BitmapText;
+
+
+    public porcValue:number = 0.8; //the actual value of the bar
 
     constructor(public scene:Phaser.Scene,
         public x:number, 
-        public y:number) {
+        public y:number,
+        public showValues:boolean = false) {
 
         //lets create the bar
         this.bar = this.scene.add.graphics();
@@ -31,22 +35,30 @@ class cStatusBar {
         this.barLeft.setOrigin(0, 0.5);
 
         this.barRight = this.scene.add.sprite(x + 84 , y, 'barArrow');
-        this.barRight.setOrigin(0.5, 0.5);
+        this.barRight.setOrigin(0.5);
         this.barRight.setAngle(180);
 
+        //lets create the text to show value if needed
+        if (this.showValues == true) {
+            this.valueText = this.scene.add.bitmapText(x + 68/2, y - 18, 'PfontRed', "80/100" , 28);
+            this.valueText.setOrigin(0.5);
+        }
+
         //lets update to the initial position
-        this.updateBar(this.value);
+        this.updateBar(80, 100);
 
     }
 
-    public updateBar(newValue) {
+    public updateBar(actualValue:number, maxValue:number) {
 
-        if (newValue < 0) {newValue = 0}
+        var porValue:number = actualValue / maxValue;
+
+        if (porValue < 0) {porValue = 0}
 
         //lets check the result color of the bar.
         var color:number 
 
-        if (newValue <= this.redPorc) {
+        if (porValue <= this.redPorc) {
             color = this.redColor;
             //lets also activate the red indicator
             if (this.alertTimer == undefined) {
@@ -66,7 +78,7 @@ class cStatusBar {
                 this.barRight.alpha = 1;
             }
     
-            if (newValue <= this.yellowPorc) {
+            if (porValue <= this.yellowPorc) {
                 color = this.yellowColor;
             } else {
                 color = this.greenColor;    
@@ -76,17 +88,17 @@ class cStatusBar {
         //update the bar
         this.bar.clear();
         this.bar.fillStyle(color);
-        this.bar.fillRect(this.x , this.y + 91 * (1- newValue), 68, 91 * newValue);
+        this.bar.fillRect(this.x , this.y + 91 * (1- porValue), 68, 91 * porValue);
 
         //move the max indicator
-        this.barLeft.y = this.y + 91 * (1- newValue);
-        this.barRight.y = this.y + 91 * (1- newValue);
+        this.barLeft.y = this.y + 91 * (1- porValue);
+        this.barRight.y = this.y + 91 * (1- porValue);
 
         //rotate the arrows 
-        if(newValue > this.value) {
+        if(porValue > this.porcValue) {
             //this.barLeft.setAngle(-90);
             this.barRight.setAngle(-90);
-        } else if (newValue < this.value) {
+        } else if (porValue < this.porcValue) {
             //this.barLeft.setAngle(90);
             this.barRight.setAngle(90);
         } else {
@@ -94,8 +106,11 @@ class cStatusBar {
             this.barRight.setAngle(180);
         }
 
+        this.porcValue = porValue;
 
-        this.value = newValue;
+        if (this.showValues == true) {
+            this.valueText.text = Math.round(actualValue).toString() + "/" + maxValue.toString();
+        }
 
     }
 

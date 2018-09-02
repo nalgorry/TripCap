@@ -41,10 +41,10 @@ var shipStats = (function (_super) {
                 this.boat.cleanSystem.toString();
             var textLeader = Math.round(this.trip.currentStatus[3 /* leadership */]).toString() + "/" +
                 this.boat.leaderSystem.toString();
-            food.updateBar(this.trip.barPorc[0 /* food */]);
-            clean.updateBar(this.trip.barPorc[2 /* clean */]);
-            mant.updateBar(this.trip.barPorc[1 /* maintenance */]);
-            leadership.updateBar(this.trip.barPorc[3 /* leadership */]);
+            food.updateBar(this.trip.currentStatus[0 /* food */], this.boat.foodSystem);
+            clean.updateBar(this.trip.currentStatus[2 /* clean */], this.boat.cleanSystem);
+            mant.updateBar(this.trip.currentStatus[1 /* maintenance */], this.boat.mantSystem);
+            leadership.updateBar(this.trip.currentStatus[3 /* leadership */], this.boat.leaderSystem);
         }
         else {
             var textMant = Math.round(this.boat.mantSystem * 0.8).toString() + "/" +
@@ -55,10 +55,10 @@ var shipStats = (function (_super) {
                 this.boat.cleanSystem.toString();
             var textLeader = Math.round(this.boat.leaderSystem * 0.8).toString() + "/" +
                 this.boat.leaderSystem.toString();
-            food.updateBar(0.8);
-            clean.updateBar(0.8);
-            mant.updateBar(0.8);
-            leadership.updateBar(0.8);
+            food.updateBar(Math.round(this.boat.foodSystem * 0.8), this.boat.foodSystem);
+            clean.updateBar(Math.round(this.boat.cleanSystem * 0.8), this.boat.cleanSystem);
+            mant.updateBar(Math.round(this.boat.mantSystem * 0.8), this.boat.mantSystem);
+            leadership.updateBar(Math.round(this.boat.leaderSystem * 0.8), this.boat.leaderSystem);
         }
         var stat = this.add.bitmapText(95, 635, 'PfontRed', textMant, 40);
         stat.setOrigin(0.5, 0.5);

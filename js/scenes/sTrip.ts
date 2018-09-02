@@ -85,6 +85,9 @@ class sTrip extends Phaser.Scene {
         //to test the end of the trip
         //this.tripEnd(); 
 
+        //to test battles
+        this.scene.start('battle', this.trip);
+
         //to shop fps
         this.textFps = this.add.bitmapText(10, 10, 'Pfont', this.trip.healtyCrew.toString(), 20);
         this.textFps.setOrigin(0);
@@ -96,6 +99,7 @@ class sTrip extends Phaser.Scene {
 
         //lets add the boat, so great :P
         this.mainTripShip = this.add.sprite(360, 450, 'tripShip');
+
 
     }
 
@@ -151,10 +155,10 @@ class sTrip extends Phaser.Scene {
         this.textBoatSpeed.text = Phaser.Math.RoundTo(this.trip.boatSpeed, 0).toString();
         this.textWindSpeed.text = Phaser.Math.RoundTo(this.trip.windSpeed, 0).toString();
 
-        this.statusBars[enumStatus.food].updateBar(this.trip.barPorc[enumStatus.food]);
-        this.statusBars[enumStatus.clean].updateBar(this.trip.barPorc[enumStatus.clean]);
-        this.statusBars[enumStatus.maintenance].updateBar(this.trip.barPorc[enumStatus.maintenance]);
-        this.statusBars[enumStatus.leadership].updateBar(this.trip.barPorc[enumStatus.leadership]);
+        this.statusBars[enumStatus.food].updateBar(this.trip.currentStatus[enumStatus.food], this.boat.foodSystem);
+        this.statusBars[enumStatus.clean].updateBar(this.trip.currentStatus[enumStatus.clean], this.boat.cleanSystem);
+        this.statusBars[enumStatus.maintenance].updateBar(this.trip.currentStatus[enumStatus.maintenance], this.boat.mantSystem);
+        this.statusBars[enumStatus.leadership].updateBar(this.trip.currentStatus[enumStatus.leadership], this.boat.leaderSystem);
 
         //lets update the position of the ship
         this.distShip.x = (this.distShipEndx - this.distShipStartx) * this.trip.tripDistancePorc + this.distShipStartx;

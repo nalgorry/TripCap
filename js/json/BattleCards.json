@@ -1,0 +1,84 @@
+{ 
+    "battleCards": [
+    {
+        "id": 0,
+        "abilities":[
+            {"id": 1,"lvl": 2}
+        ]
+        
+    },
+    {
+        "id": 1,
+        "abilities":[
+            {"id": 2,"lvl": 2}
+        ]
+    },
+    {
+        "id": 2,
+        "abilities":[
+            {"id":0,"lvl":2}
+        ]
+    },
+    {
+        "id": 3,
+        "abilities":[
+            {"id":3,"lvl":2}
+        ]
+    },
+    {
+        "id": 4,
+        "abilities":[
+            {"id":4,"lvl":2}
+        ]
+    },
+    {
+        "id": 5,
+        "abilities":[
+            {"id":5,"lvl":2}
+        ]
+    },
+    {
+        "id": 6,
+        "abilities":[
+            {"id":1,"lvl":1},
+            {"id":3,"lvl":1}
+        ]
+    },
+    {
+        "id": 7,
+        "abilities":[
+            {"id":3,"lvl":1},
+            {"id":4,"lvl":1}
+        ]
+    },
+    {
+        "id": 8,
+        "abilities":[
+            {"id":2,"lvl":1},
+            {"id":5,"lvl":1}
+        ]
+    },
+    {
+        "id": 9,
+        "abilities":[
+            {"id":1,"lvl":1},
+            {"id":2,"lvl":1}   
+        ]
+    },
+    {
+        "id": 10,
+        "abilities":[
+            {"id":6,"lvl":1}
+        ]
+    },
+    {
+        "id": 11,
+        "abilities":[
+            {"id":0,"lvl":1},
+            {"id":5,"lvl":1}   
+        ]
+    }
+
+]
+
+}

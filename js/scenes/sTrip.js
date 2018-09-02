@@ -58,6 +58,8 @@ var sTrip = (function (_super) {
         this.pauseTrip();
         //to test the end of the trip
         //this.tripEnd(); 
+        //to test battles
+        this.scene.start('battle', this.trip);
         //to shop fps
         this.textFps = this.add.bitmapText(10, 10, 'Pfont', this.trip.healtyCrew.toString(), 20);
         this.textFps.setOrigin(0);
@@ -103,10 +105,10 @@ var sTrip = (function (_super) {
         //wind and ship speed
         this.textBoatSpeed.text = Phaser.Math.RoundTo(this.trip.boatSpeed, 0).toString();
         this.textWindSpeed.text = Phaser.Math.RoundTo(this.trip.windSpeed, 0).toString();
-        this.statusBars[0 /* food */].updateBar(this.trip.barPorc[0 /* food */]);
-        this.statusBars[2 /* clean */].updateBar(this.trip.barPorc[2 /* clean */]);
-        this.statusBars[1 /* maintenance */].updateBar(this.trip.barPorc[1 /* maintenance */]);
-        this.statusBars[3 /* leadership */].updateBar(this.trip.barPorc[3 /* leadership */]);
+        this.statusBars[0 /* food */].updateBar(this.trip.currentStatus[0 /* food */], this.boat.foodSystem);
+        this.statusBars[2 /* clean */].updateBar(this.trip.currentStatus[2 /* clean */], this.boat.cleanSystem);
+        this.statusBars[1 /* maintenance */].updateBar(this.trip.currentStatus[1 /* maintenance */], this.boat.mantSystem);
+        this.statusBars[3 /* leadership */].updateBar(this.trip.currentStatus[3 /* leadership */], this.boat.leaderSystem);
         //lets update the position of the ship
         this.distShip.x = (this.distShipEndx - this.distShipStartx) * this.trip.tripDistancePorc + this.distShipStartx;
     };

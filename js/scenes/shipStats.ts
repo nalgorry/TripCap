@@ -57,11 +57,10 @@ class shipStats extends Phaser.Scene {
             var textLeader:string = Math.round(this.trip.currentStatus[enumStatus.leadership]).toString() + "/" +
             this.boat.leaderSystem.toString();
 
-            
-            food.updateBar(this.trip.barPorc[enumStatus.food]);
-            clean.updateBar(this.trip.barPorc[enumStatus.clean]);
-            mant.updateBar(this.trip.barPorc[enumStatus.maintenance]);
-            leadership.updateBar(this.trip.barPorc[enumStatus.leadership]);
+            food.updateBar(this.trip.currentStatus[enumStatus.food], this.boat.foodSystem);
+            clean.updateBar(this.trip.currentStatus[enumStatus.clean], this.boat.cleanSystem);
+            mant.updateBar(this.trip.currentStatus[enumStatus.maintenance], this.boat.mantSystem);
+            leadership.updateBar(this.trip.currentStatus[enumStatus.leadership], this.boat.leaderSystem);
 
         } else {
 
@@ -77,10 +76,10 @@ class shipStats extends Phaser.Scene {
             var textLeader:string = Math.round(this.boat.leaderSystem * 0.8).toString() + "/" +
             this.boat.leaderSystem.toString();
             
-            food.updateBar(0.8);
-            clean.updateBar(0.8);
-            mant.updateBar(0.8);
-            leadership.updateBar(0.8);
+            food.updateBar(Math.round(this.boat.foodSystem * 0.8), this.boat.foodSystem);
+            clean.updateBar(Math.round(this.boat.cleanSystem * 0.8), this.boat.cleanSystem);
+            mant.updateBar(Math.round(this.boat.mantSystem * 0.8), this.boat.mantSystem);
+            leadership.updateBar(Math.round(this.boat.leaderSystem * 0.8), this.boat.leaderSystem);
 
         }
 

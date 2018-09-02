@@ -105,8 +105,16 @@ class preloader extends Phaser.Scene {
         this.load.image('tripShip', 'assets/tripShip.png');    
         this.load.image('backGameEnd', 'assets/backGameEnd.png');    
         this.load.image('tripDrag', 'assets/tripDrag.png');    
-        
-        
+
+        //anim try!
+        this.load.atlas('boat_anim', 'assets/anim/boat_anim.png', 'assets/anim/boat_texture.json');
+        this.load.json('boat_data', 'assets/animations/boat_anim.json');
+
+        //all the battle elements
+        this.load.image('battle_back', 'assets/battle/back.png');    
+        this.load.spritesheet('battle_cards', 'assets/battle/cards.png', {frameHeight:278, frameWidth:194} )
+        this.load.spritesheet('battle_icons', 'assets/battle/icons.png', {frameHeight:50, frameWidth:50} )
+
         //help sprites
         this.load.image('help1', 'assets/help1.png');  
         this.load.image('help2', 'assets/help2.png');    
@@ -125,7 +133,8 @@ class preloader extends Phaser.Scene {
         this.load.json('eventResult', 'js/json/EventsResult.json');
         this.load.json('eventEffect', 'js/json/EventsEffect.json');
         this.load.json('tripData', 'js/json/TripData.json');
-
+        this.load.json('battleCards', 'js/json/BattleCards.json');
+ 
         
         
                

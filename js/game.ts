@@ -29,6 +29,7 @@ class InitGame {
         this.game.scene.add('tripGlobal', tripGlobal, false);
         this.game.scene.add('shipStats', shipStats, false);
         this.game.scene.add('gameEnd', gameEnd, false);
+        this.game.scene.add('battle', battle, false);
         
 
         this.game.scene.start('boot');
