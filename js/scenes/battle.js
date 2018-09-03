@@ -8,6 +8,7 @@ var battle = (function (_super) {
     function battle() {
         _super.apply(this, arguments);
         this.cards = Array();
+        this.arrayEnemy = [];
     }
     battle.prototype.create = function (trip) {
         this.trip = trip;
@@ -15,6 +16,7 @@ var battle = (function (_super) {
         this.cBattle = new cBattle(this.trip, this.boat, this);
         this.initScene();
         this.initCards();
+        this.initEnemies();
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
         this.events.on('dragCard', this.cardDrag, this);
@@ -23,7 +25,6 @@ var battle = (function (_super) {
     };
     battle.prototype.dragStart = function (card) {
         this.selCard = card;
-        console.log(this.selCard);
         this.initDragRect();
     };
     battle.prototype.dragEnd = function (card) {
@@ -31,10 +32,29 @@ var battle = (function (_super) {
         this.rectContainer.destroy();
         if (this.targetAllowed == true) {
             //lets do some magic!
-            //this.cBattle.doTurn();
+            this.cBattle.doTurn(card.cCard); //calculate the logic of the atack 
+            this.showTurnResults(card.cCard);
             //lets select three new cards
             this.initCards();
         }
+    };
+    battle.prototype.showTurnResults = function (card) {
+        //show defensive skills first
+        if (card.defendAbilities[0] != undefined) {
+            this.ownActionIcon.activateIcon(card.defendAbilities[0].id);
+        }
+        //activate the atack icons
+        this.arrayEnemy.forEach(function (e) {
+            e.actionIcon.activateIcon(e.data.defendAbilities[0].id);
+        });
+    };
+    battle.prototype.initEnemies = function () {
+        var _this = this;
+        //lets create the visualization for each enemy
+        this.cBattle.arrayEnemy.forEach(function (e) {
+            var enemy = new vEnemy(_this, e);
+            _this.arrayEnemy.push(enemy);
+        });
     };
     battle.prototype.initDragRect = function () {
         var _this = this;
@@ -98,6 +118,10 @@ var battle = (function (_super) {
         var back = this.add.image(0, 0, 'battle_back');
         back.setOrigin(0);
         this.showStats();
+        var c = this.add.container(154, 582);
+        var s = this.add.sprite(0, 0, 'ownShip');
+        c.add(s);
+        this.ownActionIcon = new vBattleIcons(this, s, c);
     };
     battle.prototype.updateValues = function () {
         this.textHealtyCrew.text = this.trip.healtyCrew.toString();

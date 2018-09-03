@@ -106,6 +106,8 @@ var preloader = (function (_super) {
         this.load.image('battle_back', 'assets/battle/back.png');
         this.load.spritesheet('battle_cards', 'assets/battle/cards.png', { frameHeight: 278, frameWidth: 194 });
         this.load.spritesheet('battle_icons', 'assets/battle/icons.png', { frameHeight: 50, frameWidth: 50 });
+        this.load.image('ownShip', 'assets/battle/ownShip.png');
+        this.load.image('enemy_1', 'assets/battle/enemy/enemy_1.png');
         //help sprites
         this.load.image('help1', 'assets/help1.png');
         this.load.image('help2', 'assets/help2.png');

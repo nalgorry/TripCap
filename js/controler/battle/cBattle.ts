@@ -17,6 +17,24 @@ class cBattle {
 
     }
 
+    public doTurn(card:cBattleCard) {
+
+    // Process card
+
+    // Defensive abilities first
+
+    
+
+
+
+    // Own Atack abilities
+    // Enemy Atack abilities
+    //define next turn enemy abilities
+    //next turn needed?
+
+
+    }
+
     private initCardsTypes() {
 
         var data = this.scene.cache.json.get('battleCards'); 
@@ -36,8 +54,8 @@ class cBattle {
 
         data.mant = 100;
         data.crew = 10;
-        data.x = 50;
-        data.y = 50;
+        data.x = 570;
+        data.y = 490;
         data.rectX = 420;
         data.rectY = 440;
         data.rectWidth = 360;
@@ -47,8 +65,8 @@ class cBattle {
 
         data.mant = 50;
         data.crew = 10;
-        data.x = 50;
-        data.y = 50;
+        data.x = 570;
+        data.y = 730;
         data.rectX = 420;
         data.rectY = 672;
         data.rectWidth = 360;

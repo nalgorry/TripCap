@@ -11,6 +11,14 @@ var cBattle = (function () {
         this.initEnemy();
         this.initCardsTypes();
     }
+    cBattle.prototype.doTurn = function (card) {
+        // Process card
+        // Defensive abilities first
+        // Own Atack abilities
+        // Enemy Atack abilities
+        //define next turn enemy abilities
+        //next turn needed?
+    };
     cBattle.prototype.initCardsTypes = function () {
         var _this = this;
         var data = this.scene.cache.json.get('battleCards');
@@ -24,8 +32,8 @@ var cBattle = (function () {
         var data = {};
         data.mant = 100;
         data.crew = 10;
-        data.x = 50;
-        data.y = 50;
+        data.x = 570;
+        data.y = 490;
         data.rectX = 420;
         data.rectY = 440;
         data.rectWidth = 360;
@@ -33,8 +41,8 @@ var cBattle = (function () {
         this.arrayEnemy.push(new cEnemy(data));
         data.mant = 50;
         data.crew = 10;
-        data.x = 50;
-        data.y = 50;
+        data.x = 570;
+        data.y = 730;
         data.rectX = 420;
         data.rectY = 672;
         data.rectWidth = 360;

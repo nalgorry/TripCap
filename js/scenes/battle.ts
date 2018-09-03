@@ -9,12 +9,16 @@ class battle extends Phaser.Scene{
     private cards:vBattleCard[] = Array();
     private rectContainer:Phaser.GameObjects.Container;
 
+    private arrayEnemy:vEnemy[] = [];
+
     private cBattle:cBattle;
 
     private ownRect:Phaser.Geom.Rectangle;
 
     private selCard:vBattleCard;
     private targetAllowed:boolean;
+
+    private ownActionIcon:vBattleIcons;
 
     create(trip:cTrip) {
 
@@ -24,6 +28,7 @@ class battle extends Phaser.Scene{
 
         this.initScene();
         this.initCards();
+        this.initEnemies();
 
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
@@ -38,8 +43,6 @@ class battle extends Phaser.Scene{
 
         this.selCard = card;
 
-        console.log(this.selCard);
-
         this.initDragRect();
     }
 
@@ -52,13 +55,41 @@ class battle extends Phaser.Scene{
         if (this.targetAllowed == true) {
             //lets do some magic!
             
-            //this.cBattle.doTurn();
+            this.cBattle.doTurn(card.cCard); //calculate the logic of the atack 
+
+            this.showTurnResults(card.cCard);
 
             
             //lets select three new cards
             this.initCards();
         }
 
+
+    }
+
+    private showTurnResults(card:cBattleCard) {
+
+        //show defensive skills first
+        if (card.defendAbilities[0] != undefined) {
+            this.ownActionIcon.activateIcon(card.defendAbilities[0].id);
+        }
+        //activate the atack icons
+        this.arrayEnemy.forEach(e => {
+            e.actionIcon.activateIcon(e.data.defendAbilities[0].id);
+        })
+        
+    }
+
+    private initEnemies() {
+
+        //lets create the visualization for each enemy
+        this.cBattle.arrayEnemy.forEach(e => {
+
+            var enemy = new vEnemy(this, e)
+
+            this.arrayEnemy.push(enemy);
+
+        })
 
     }
 
@@ -147,6 +178,12 @@ class battle extends Phaser.Scene{
         back.setOrigin(0);
 
         this.showStats();
+
+        var c = this.add.container(154, 582);
+        var s = this.add.sprite(0, 0,'ownShip');
+        c.add(s);
+
+        this.ownActionIcon = new vBattleIcons(this, s, c);
 
     }
 
