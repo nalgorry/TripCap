@@ -17,6 +17,7 @@ class battle extends Phaser.Scene{
 
     private selCard:vBattleCard;
     private targetAllowed:boolean;
+    private selEnemy:vEnemy;
 
     private ownActionIcon:vBattleIcons;
 
@@ -55,29 +56,105 @@ class battle extends Phaser.Scene{
         if (this.targetAllowed == true) {
             //lets do some magic!
             
-            this.cBattle.doTurn(card.cCard); //calculate the logic of the atack 
+            var enemyData = undefined
+            if (this.selEnemy != undefined) {
+                enemyData = this.selEnemy.data;
+            }
 
-            this.showTurnResults(card.cCard);
+            this.cBattle.doTurn(card.cCard, enemyData); //calculate the logic of the atack 
 
-            
-            //lets select three new cards
-            this.initCards();
+            this.showTurnResults();
+
+            this.selCard = card;
+
         }
 
 
     }
 
-    private showTurnResults(card:cBattleCard) {
+    private showTurnResults() {
 
-        //show defensive skills first
-        if (card.defendAbilities[0] != undefined) {
-            this.ownActionIcon.activateIcon(card.defendAbilities[0].id);
-        }
+        this.initTurnHideElements();
+
+        this.showDefensiveSkills();
+
+        this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
+
+        this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
+
+        this.time.delayedCall(6000, this.endTurnShowElements, [], this);
+        
+    }
+
+    private endTurnShowElements() {
+
+        this.cBattle.endTurn();
+  
+        //lets select three new cards
+        this.initCards();
+
+        //show iddle icons
+        this.arrayEnemy.forEach(e => {
+            e.actionIcon.loadIddleIcon(e.data.atackAbilities);
+        })
+
+    }
+
+    private initTurnHideElements() {
+
+        //hide the cards
+        this.cards.forEach(e => {
+            e.hideCard();
+        })
+
+        //hide the intensions icons
+        this.arrayEnemy.forEach(e => {
+            e.actionIcon.hideIddleIcon();
+        })
+
+
+
+    }
+
+    private showEnemyAtackSkills() {
+
         //activate the atack icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.activateIcon(e.data.defendAbilities[0].id);
+            e.actionIcon.activateIcon(e.data.atackAbilities);
         })
+
+    }
+
+    private showOwnAtackSkills() {
+
+        var cardData = this.selCard.cCard;
         
+        this.ownActionIcon.activateIcon(cardData.atackAbilities);
+
+        this.time.delayedCall(2000, this.updateEnemies, [], this);
+
+
+    }
+
+    private updateEnemies() {
+        this.arrayEnemy.forEach(e => {
+            e.updateBars();
+        })
+    }
+
+    private showDefensiveSkills() {
+
+        var cardData = this.selCard.cCard;
+
+        //show defensive skills first
+        if (cardData.defendAbilities[0] != undefined) {
+            this.ownActionIcon.activateIcon(cardData.defendAbilities);
+        } 
+        //activate the atack icons
+        this.arrayEnemy.forEach(e => {
+            e.actionIcon.activateIcon(e.data.defenceAbilities);
+        })
+
     }
 
     private initEnemies() {
@@ -97,7 +174,7 @@ class battle extends Phaser.Scene{
 
         this.rectContainer = this.add.container(0, 0);
 
-        if (this.selCard.cCard.atackAbilities.length == 0) { //no need to get a target
+        if (this.selCard.cCard.atackAbilities[0].id == enBattleAbilities.noAtack) { //no need to get a target
             this.ownRect = new Phaser.Geom.Rectangle(0, 365, 760, 460);
 
             //this boat rectangle
@@ -105,7 +182,7 @@ class battle extends Phaser.Scene{
             ownGreenRect.fillStyle(0x008000);
             ownGreenRect.fillRect(this.ownRect.x , this.ownRect.y, this.ownRect.width, this.ownRect.height);
             ownGreenRect.fillPath();
-            ownGreenRect.alpha = 0.5;
+            ownGreenRect.alpha = 0.2;
 
             this.rectContainer.add(ownGreenRect);
 
@@ -117,7 +194,7 @@ class battle extends Phaser.Scene{
                 rect.fillStyle(0xFF0000);
                 rect.fillRect(enemy.selRect.x , enemy.selRect.y, enemy.selRect.width, enemy.selRect.height);
                 rect.fillPath();
-                rect.alpha = 0.5;
+                rect.alpha = 0.2;
 
                 this.rectContainer.add(rect);
 
@@ -130,6 +207,7 @@ class battle extends Phaser.Scene{
     private cardDrag() {
 
         this.targetAllowed = false;
+        this.selEnemy = undefined;
 
         var mouseRect = new Phaser.Geom.Rectangle(this.input.x, this.input.y, 2, 2);
 
@@ -142,10 +220,11 @@ class battle extends Phaser.Scene{
 
         } else { //need a target
 
-            this.cBattle.arrayEnemy.forEach(enemy => {
+            this.arrayEnemy.forEach(enemy => {
 
-                if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.selRect, mouseRect)) {
+                if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.data.selRect, mouseRect)) {
                     this.targetAllowed = true;
+                    this.selEnemy = enemy;
                 }
             });
     }

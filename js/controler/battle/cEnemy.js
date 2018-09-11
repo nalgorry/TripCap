@@ -1,16 +1,38 @@
 var cEnemy = (function () {
     function cEnemy(data) {
-        this.mant = 100;
-        this.crew = 10;
+        this.maxMant = 100;
+        this.maxCrew = 10;
+        this.mant = 60;
+        this.crew = 4;
+        this.avaibleAtackAbilities = [];
+        this.avaibleDefenceAbilities = [];
         this.atackAbilities = [];
-        this.defendAbilities = [];
-        this.mant = data.mant;
-        this.crew = data.crew;
+        this.defenceAbilities = [];
+        this.isDead = false;
         this.x = data.x;
         this.y = data.y;
         this.selRect = new Phaser.Geom.Rectangle(data.rectX, data.rectY, data.rectWidth, data.rectHeight);
         this.spriteName = "enemy_1";
-        this.defendAbilities.push(new cBattleAbility(enBattleAbilities.defendBoat, 2));
+        this.defineAvaibleAbilities();
+        this.defineAbilities();
     }
+    cEnemy.prototype.defineAvaibleAbilities = function () {
+        this.avaibleAtackAbilities.push(new cBattleAbility(enBattleAbilities.arrows, 1));
+        this.avaibleAtackAbilities.push(new cBattleAbility(enBattleAbilities.cannons, 1));
+        this.avaibleAtackAbilities.push(new cBattleAbility(enBattleAbilities.axes, 1));
+        this.avaibleAtackAbilities.push(new cBattleAbility(enBattleAbilities.noAtack, 1));
+        this.avaibleDefenceAbilities.push(new cBattleAbility(enBattleAbilities.defendBoat, 1));
+        this.avaibleDefenceAbilities.push(new cBattleAbility(enBattleAbilities.defendCrew, 1));
+        this.avaibleDefenceAbilities.push(new cBattleAbility(enBattleAbilities.defendBoat, 1));
+        this.avaibleDefenceAbilities.push(new cBattleAbility(enBattleAbilities.noDefense, 1));
+    };
+    cEnemy.prototype.defineAbilities = function () {
+        this.atackAbilities = [];
+        this.defenceAbilities = [];
+        var rnd = Phaser.Math.Between(0, this.avaibleAtackAbilities.length - 1);
+        this.atackAbilities.push(this.avaibleAtackAbilities[rnd]);
+        var rnd = Phaser.Math.Between(0, this.avaibleDefenceAbilities.length - 1);
+        this.defenceAbilities.push(this.avaibleDefenceAbilities[rnd]);
+    };
     return cEnemy;
 }());

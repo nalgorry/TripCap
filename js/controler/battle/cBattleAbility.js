@@ -7,6 +7,8 @@ var enBattleAbilities;
     enBattleAbilities[enBattleAbilities["cannons"] = 4] = "cannons";
     enBattleAbilities[enBattleAbilities["axes"] = 5] = "axes";
     enBattleAbilities[enBattleAbilities["updateAtack"] = 6] = "updateAtack";
+    enBattleAbilities[enBattleAbilities["noAtack"] = 7] = "noAtack";
+    enBattleAbilities[enBattleAbilities["noDefense"] = 8] = "noDefense";
 })(enBattleAbilities || (enBattleAbilities = {}));
 var cBattleAbility = (function () {
     function cBattleAbility(id, lvl) {

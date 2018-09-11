@@ -11,12 +11,32 @@ var cBattle = (function () {
         this.initEnemy();
         this.initCardsTypes();
     }
-    cBattle.prototype.doTurn = function (card) {
-        // Process card
-        // Defensive abilities first
-        // Own Atack abilities
-        // Enemy Atack abilities
+    cBattle.prototype.doTurn = function (card, target) {
+        //Own atack first
+        if (target != undefined) {
+            var a = new cProcessAtack(card.atackAbilities, target.defenceAbilities);
+            if (a.missAtack != true) {
+                target.crew -= a.crewDamage;
+                target.mant -= a.boatDamage;
+            }
+            else {
+                console.log("erraste el golpe! UPS");
+            }
+            console.log(target.mant);
+            if (target.crew <= 0 || target.mant <= 0) {
+                target.isDead = true;
+            }
+        }
+        this.arrayEnemy.forEach(function (e) {
+            // Enemy Atack abilities    
+            var a = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+        });
+    };
+    cBattle.prototype.endTurn = function () {
         //define next turn enemy abilities
+        this.arrayEnemy.forEach(function (e) {
+            e.defineAbilities();
+        });
         //next turn needed?
     };
     cBattle.prototype.initCardsTypes = function () {
@@ -30,8 +50,6 @@ var cBattle = (function () {
     };
     cBattle.prototype.initEnemy = function () {
         var data = {};
-        data.mant = 100;
-        data.crew = 10;
         data.x = 570;
         data.y = 490;
         data.rectX = 420;
@@ -39,8 +57,6 @@ var cBattle = (function () {
         data.rectWidth = 360;
         data.rectHeight = 600 - 440;
         this.arrayEnemy.push(new cEnemy(data));
-        data.mant = 50;
-        data.crew = 10;
         data.x = 570;
         data.y = 730;
         data.rectX = 420;
@@ -56,7 +72,6 @@ var cBattle = (function () {
         arrayCards.push(this.arrayCardsData[this.selectCard()]);
         arrayCards.push(this.arrayCardsData[this.selectCard()]);
         //lets reset the avaible cards if necesary
-        console.log(this.arrayAvaibleCards.length);
         if (this.arrayAvaibleCards.length == 0) {
             this.arrayAvaibleCards = this.allPosibleCards.slice();
         }
@@ -67,8 +82,6 @@ var cBattle = (function () {
         var rnd = Phaser.Math.Between(0, this.arrayAvaibleCards.length - 1);
         var cardId = this.arrayAvaibleCards[rnd];
         this.arrayAvaibleCards.splice(rnd, 1);
-        console.log(cardId);
-        console.log(this.arrayAvaibleCards);
         return cardId;
     };
     return cBattle;

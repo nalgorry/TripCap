@@ -32,20 +32,66 @@ var battle = (function (_super) {
         this.rectContainer.destroy();
         if (this.targetAllowed == true) {
             //lets do some magic!
-            this.cBattle.doTurn(card.cCard); //calculate the logic of the atack 
-            this.showTurnResults(card.cCard);
-            //lets select three new cards
-            this.initCards();
+            var enemyData = undefined;
+            if (this.selEnemy != undefined) {
+                enemyData = this.selEnemy.data;
+            }
+            this.cBattle.doTurn(card.cCard, enemyData); //calculate the logic of the atack 
+            this.showTurnResults();
+            this.selCard = card;
         }
     };
-    battle.prototype.showTurnResults = function (card) {
+    battle.prototype.showTurnResults = function () {
+        this.initTurnHideElements();
+        this.showDefensiveSkills();
+        this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
+        this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
+        this.time.delayedCall(6000, this.endTurnShowElements, [], this);
+    };
+    battle.prototype.endTurnShowElements = function () {
+        this.cBattle.endTurn();
+        //lets select three new cards
+        this.initCards();
+        //show iddle icons
+        this.arrayEnemy.forEach(function (e) {
+            e.actionIcon.loadIddleIcon(e.data.atackAbilities);
+        });
+    };
+    battle.prototype.initTurnHideElements = function () {
+        //hide the cards
+        this.cards.forEach(function (e) {
+            e.hideCard();
+        });
+        //hide the intensions icons
+        this.arrayEnemy.forEach(function (e) {
+            e.actionIcon.hideIddleIcon();
+        });
+    };
+    battle.prototype.showEnemyAtackSkills = function () {
+        //activate the atack icons
+        this.arrayEnemy.forEach(function (e) {
+            e.actionIcon.activateIcon(e.data.atackAbilities);
+        });
+    };
+    battle.prototype.showOwnAtackSkills = function () {
+        var cardData = this.selCard.cCard;
+        this.ownActionIcon.activateIcon(cardData.atackAbilities);
+        this.time.delayedCall(2000, this.updateEnemies, [], this);
+    };
+    battle.prototype.updateEnemies = function () {
+        this.arrayEnemy.forEach(function (e) {
+            e.updateBars();
+        });
+    };
+    battle.prototype.showDefensiveSkills = function () {
+        var cardData = this.selCard.cCard;
         //show defensive skills first
-        if (card.defendAbilities[0] != undefined) {
-            this.ownActionIcon.activateIcon(card.defendAbilities[0].id);
+        if (cardData.defendAbilities[0] != undefined) {
+            this.ownActionIcon.activateIcon(cardData.defendAbilities);
         }
         //activate the atack icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.activateIcon(e.data.defendAbilities[0].id);
+            e.actionIcon.activateIcon(e.data.defenceAbilities);
         });
     };
     battle.prototype.initEnemies = function () {
@@ -59,14 +105,14 @@ var battle = (function (_super) {
     battle.prototype.initDragRect = function () {
         var _this = this;
         this.rectContainer = this.add.container(0, 0);
-        if (this.selCard.cCard.atackAbilities.length == 0) {
+        if (this.selCard.cCard.atackAbilities[0].id == enBattleAbilities.noAtack) {
             this.ownRect = new Phaser.Geom.Rectangle(0, 365, 760, 460);
             //this boat rectangle
             var ownGreenRect = this.add.graphics();
             ownGreenRect.fillStyle(0x008000);
             ownGreenRect.fillRect(this.ownRect.x, this.ownRect.y, this.ownRect.width, this.ownRect.height);
             ownGreenRect.fillPath();
-            ownGreenRect.alpha = 0.5;
+            ownGreenRect.alpha = 0.2;
             this.rectContainer.add(ownGreenRect);
         }
         else {
@@ -76,7 +122,7 @@ var battle = (function (_super) {
                 rect.fillStyle(0xFF0000);
                 rect.fillRect(enemy.selRect.x, enemy.selRect.y, enemy.selRect.width, enemy.selRect.height);
                 rect.fillPath();
-                rect.alpha = 0.5;
+                rect.alpha = 0.2;
                 _this.rectContainer.add(rect);
             });
         }
@@ -84,6 +130,7 @@ var battle = (function (_super) {
     battle.prototype.cardDrag = function () {
         var _this = this;
         this.targetAllowed = false;
+        this.selEnemy = undefined;
         var mouseRect = new Phaser.Geom.Rectangle(this.input.x, this.input.y, 2, 2);
         if (this.selCard.cCard.atackAbilities.length == 0) {
             if (Phaser.Geom.Intersects.RectangleToRectangle(this.ownRect, mouseRect)) {
@@ -92,9 +139,10 @@ var battle = (function (_super) {
             }
         }
         else {
-            this.cBattle.arrayEnemy.forEach(function (enemy) {
-                if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.selRect, mouseRect)) {
+            this.arrayEnemy.forEach(function (enemy) {
+                if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.data.selRect, mouseRect)) {
                     _this.targetAllowed = true;
+                    _this.selEnemy = enemy;
                 }
             });
         }

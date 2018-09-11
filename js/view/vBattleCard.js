@@ -5,13 +5,31 @@ var vBattleCard = (function () {
         this.y = y;
         this.cCard = cCard;
         this.initCard();
+        this.showCard();
     }
+    vBattleCard.prototype.hideCard = function () {
+        var t = this.scene.tweens.add({
+            targets: this.back,
+            alpha: 0,
+            duration: 500,
+            ease: 'Power2'
+        });
+    };
+    vBattleCard.prototype.showCard = function () {
+        var t = this.scene.tweens.add({
+            targets: this.back,
+            alpha: 1,
+            duration: 600,
+            ease: 'Power2'
+        });
+    };
     vBattleCard.prototype.initCard = function () {
         this.back = this.scene.add.sprite(this.x, this.y, 'battle_cards', this.cCard.id);
         this.back.setInteractive({ pixelPerfect: true, draggable: true });
         this.back.on('dragstart', this.onDragStart, this);
         this.back.on('drag', this.onDrag, this);
         this.back.on('dragend', this.onDragEnd, this);
+        this.back.alpha = 0;
     };
     vBattleCard.prototype.onDragStart = function () {
         this.scene.events.emit('dragStart', this);

@@ -5,8 +5,7 @@ class cBattle {
 
     public arrayEnemy:cEnemy[] = [];
     private arrayCardsData:cBattleCard[] = [];
-
-
+  
     constructor(public trip:cTrip,
         public boat:cBoat, 
         public scene:Phaser.Scene) {
@@ -17,22 +16,46 @@ class cBattle {
 
     }
 
-    public doTurn(card:cBattleCard) {
+    public doTurn(card:cBattleCard, target:cEnemy) {
 
-    // Process card
+        //Own atack first
+        if (target != undefined) {
+            var a = new cProcessAtack(card.atackAbilities, target.defenceAbilities);
+            
+            if (a.missAtack != true) {
+                target.crew -= a.crewDamage;
+                target.mant -= a.boatDamage;
+            } else {
+                console.log("erraste el golpe! UPS");
+            }
 
-    // Defensive abilities first
+            console.log(target.mant);
 
-    
+            if (target.crew <= 0 || target.mant <= 0) {
+                target.isDead = true;
+            }
+
+        }
+
+        this.arrayEnemy.forEach(e => {
+            // Enemy Atack abilities    
+            var a = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+
+        });
 
 
 
-    // Own Atack abilities
-    // Enemy Atack abilities
-    //define next turn enemy abilities
-    //next turn needed?
 
+    }
 
+    public endTurn() {
+        //define next turn enemy abilities
+        this.arrayEnemy.forEach(e => {
+            e.defineAbilities();
+        });
+
+        //next turn needed?
+        
     }
 
     private initCardsTypes() {
@@ -52,8 +75,6 @@ class cBattle {
 
         var data:any = {};
 
-        data.mant = 100;
-        data.crew = 10;
         data.x = 570;
         data.y = 490;
         data.rectX = 420;
@@ -63,8 +84,6 @@ class cBattle {
 
         this.arrayEnemy.push(new cEnemy(data));
 
-        data.mant = 50;
-        data.crew = 10;
         data.x = 570;
         data.y = 730;
         data.rectX = 420;
@@ -86,7 +105,6 @@ class cBattle {
         arrayCards.push(this.arrayCardsData[this.selectCard()]);
 
         //lets reset the avaible cards if necesary
-        console.log(this.arrayAvaibleCards.length);
         if (this.arrayAvaibleCards.length == 0) {
             this.arrayAvaibleCards = this.allPosibleCards.slice();
         }
@@ -103,11 +121,7 @@ class cBattle {
         var cardId =this.arrayAvaibleCards[rnd];
 
         this.arrayAvaibleCards.splice(rnd, 1);
-
-        console.log(cardId);
-
-        console.log(this.arrayAvaibleCards);
-
+        
         return cardId
 
     }

@@ -5,7 +5,9 @@ enum enBattleAbilities {
     arrows = 3,
     cannons = 4,
     axes = 5,
-    updateAtack = 6
+    updateAtack = 6,
+    noAtack = 7,
+    noDefense = 8
 }
 
 

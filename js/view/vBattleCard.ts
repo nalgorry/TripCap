@@ -9,6 +9,30 @@ class vBattleCard {
 
             this.initCard();
 
+            this.showCard();
+
+
+        }
+
+        public hideCard() {
+
+            var t = this.scene.tweens.add({
+                targets: this.back,
+                alpha: 0,
+                duration: 500,
+                ease: 'Power2'
+            });
+
+        }
+
+        public showCard() {
+
+            var t = this.scene.tweens.add({
+                targets: this.back,
+                alpha: 1,
+                duration: 600,
+                ease: 'Power2'
+            });
 
         }
 
@@ -22,6 +46,8 @@ class vBattleCard {
 
 
             this.back.on('dragend', this.onDragEnd , this);
+
+            this.back.alpha = 0;
         }
 
         private onDragStart() {
