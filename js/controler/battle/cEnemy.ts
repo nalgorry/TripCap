@@ -2,7 +2,7 @@ class cEnemy{
 
     public maxMant:number = 100;
     public maxCrew:number = 10;
-    public mant:number = 60;
+    public mant:number = 10;
     public crew = 4;
     public x:number;
     public y:number;

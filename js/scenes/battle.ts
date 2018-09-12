@@ -19,6 +19,8 @@ class battle extends Phaser.Scene{
     private targetAllowed:boolean;
     private selEnemy:vEnemy;
 
+    private statusBars:cStatusBar[] = [];
+
     private ownActionIcon:vBattleIcons;
 
     create(trip:cTrip) {
@@ -69,7 +71,6 @@ class battle extends Phaser.Scene{
 
         }
 
-
     }
 
     private showTurnResults() {
@@ -81,6 +82,8 @@ class battle extends Phaser.Scene{
         this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
 
         this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
+
+        this.time.delayedCall(5000, this.updateEnemyDamage, [], this);
 
         this.time.delayedCall(6000, this.endTurnShowElements, [], this);
         
@@ -120,9 +123,21 @@ class battle extends Phaser.Scene{
 
         //activate the atack icons
         this.arrayEnemy.forEach(e => {
+            console.log(this.arrayEnemy);
             e.actionIcon.activateIcon(e.data.atackAbilities);
         })
 
+
+    }
+
+    private updateEnemyDamage() {
+        this.statusBars[enumStatus.food].updateBar(this.trip.currentStatus[enumStatus.food], this.boat.foodSystem);
+        this.statusBars[enumStatus.clean].updateBar(this.trip.currentStatus[enumStatus.clean], this.boat.cleanSystem);
+        this.statusBars[enumStatus.maintenance].updateBar(this.trip.currentStatus[enumStatus.maintenance], this.boat.mantSystem);
+        this.statusBars[enumStatus.leadership].updateBar(this.trip.currentStatus[enumStatus.leadership], this.boat.leaderSystem);
+
+        this.textHealtyCrew.text = this.trip.healtyCrew.toString();
+        this.textSickCrew.text = this.trip.sickCrew.toString();
     }
 
     private showOwnAtackSkills() {
@@ -131,7 +146,7 @@ class battle extends Phaser.Scene{
         
         this.ownActionIcon.activateIcon(cardData.atackAbilities);
 
-        this.time.delayedCall(2000, this.updateEnemies, [], this);
+        this.time.delayedCall(1500, this.updateEnemies, [], this);
 
 
     }
@@ -139,8 +154,24 @@ class battle extends Phaser.Scene{
     private updateEnemies() {
         this.arrayEnemy.forEach(e => {
             e.updateBars();
+
+            if (e.data.isDead == true) {
+                
+                e.killEnemy();
+
+                //remove the enemy from the array
+                var idx = this.arrayEnemy.indexOf(e);
+                    if (idx != -1) {
+                        this.arrayEnemy.splice(idx, 1); 
+                        console.log(this.arrayEnemy);
+                }
+
+            }
+
         })
     }
+
+
 
     private showDefensiveSkills() {
 
@@ -211,7 +242,7 @@ class battle extends Phaser.Scene{
 
         var mouseRect = new Phaser.Geom.Rectangle(this.input.x, this.input.y, 2, 2);
 
-        if (this.selCard.cCard.atackAbilities.length == 0) { //no need to get a target
+        if (this.selCard.cCard.atackAbilities[0].id == enBattleAbilities.noAtack) { //no need to get a target
 
             if (Phaser.Geom.Intersects.RectangleToRectangle(this.ownRect, mouseRect)) {
                 console.log("carta en cuadro verde")
@@ -276,10 +307,10 @@ class battle extends Phaser.Scene{
     private showStats() {
 
         //complete the bars
-        var mant  = new cStatusBar(this, 208, 210, true);
-        var food = new cStatusBar(this, 208 + 132 * 1, 210, true);
-        var clean = new cStatusBar(this, 208 + 132 * 2, 210, true);
-        var leadership = new cStatusBar(this, 208 + 132 * 3, 210, true);
+        this.statusBars[enumStatus.maintenance]  = new cStatusBar(this, 208, 210, true);
+        this.statusBars[enumStatus.food] = new cStatusBar(this, 208 + 132 * 1, 210, true);
+        this.statusBars[enumStatus.clean] = new cStatusBar(this, 208 + 132 * 2, 210, true);
+        this.statusBars[enumStatus.leadership] = new cStatusBar(this, 208 + 132 * 3, 210, true);
 
         //lets show the avaible crew
         this.textHealtyCrew = this.add.bitmapText(66, 230-20, 'Pfont', this.trip.healtyCrew.toString(), 40);

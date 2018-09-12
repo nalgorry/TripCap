@@ -21,5 +21,14 @@ var vEnemy = (function () {
         this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container);
         this.actionIcon.loadIddleIcon(this.data.atackAbilities);
     };
+    vEnemy.prototype.killEnemy = function () {
+        var t = this.scene.tweens.add({
+            targets: this.container,
+            alpha: 0,
+            duration: 1500,
+            ease: 'Power2',
+        });
+        this.actionIcon.killIcons();
+    };
     return vEnemy;
 }());

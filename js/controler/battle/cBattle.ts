@@ -3,6 +3,8 @@ class cBattle {
     private arrayAvaibleCards:number[] = Array();
     private allPosibleCards:number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
+    private avaibleCrew:number; //cree with decimals 
+
     public arrayEnemy:cEnemy[] = [];
     private arrayCardsData:cBattleCard[] = [];
   
@@ -13,6 +15,8 @@ class cBattle {
             this.arrayAvaibleCards = this.allPosibleCards.slice();
             this.initEnemy();
             this.initCardsTypes();
+
+            this.avaibleCrew = this.trip.healtyCrew;
 
     }
 
@@ -25,11 +29,7 @@ class cBattle {
             if (a.missAtack != true) {
                 target.crew -= a.crewDamage;
                 target.mant -= a.boatDamage;
-            } else {
-                console.log("erraste el golpe! UPS");
             }
-
-            console.log(target.mant);
 
             if (target.crew <= 0 || target.mant <= 0) {
                 target.isDead = true;
@@ -37,15 +37,35 @@ class cBattle {
 
         }
 
+        //Now enemy atacks
+        var shipDamage:number = 0;
+        var crewDamage:number = 0;
+
         this.arrayEnemy.forEach(e => {
-            // Enemy Atack abilities    
+
             var a = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+
+            if (a.missAtack != true && e.isDead == false) {
+                shipDamage += a.boatDamage;
+                crewDamage += a.crewDamage;
+            } else {
+                console.log("erraste el golpe! UPS");
+            }
 
         });
 
+        this.trip.updateMant(-shipDamage);
 
+        this.avaibleCrew -= crewDamage;
 
+        console.log(Math.round(this.avaibleCrew));
+        console.log(this.trip.healtyCrew);
 
+        if (Math.round(this.avaibleCrew) < this.trip.healtyCrew) {
+            console.log("entra")
+            this.trip.addSickCrew(this.trip.healtyCrew -Math.round(this.avaibleCrew))
+        }
+        
     }
 
     public endTurn() {

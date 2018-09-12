@@ -22,6 +22,9 @@ var vEnemyBar = (function () {
     vEnemyBar.prototype.updateBar = function (newValue) {
         this.bar.clear();
         this.value = newValue;
+        if (this.value < 0) {
+            this.value = 0;
+        }
         this.bar.fillStyle(this.barColor);
         this.bar.fillRect(0, 0, this.barWidth * this.value / this.maxValue, 18);
         this.bar.fillPath();

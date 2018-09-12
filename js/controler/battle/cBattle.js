@@ -10,6 +10,7 @@ var cBattle = (function () {
         this.arrayAvaibleCards = this.allPosibleCards.slice();
         this.initEnemy();
         this.initCardsTypes();
+        this.avaibleCrew = this.trip.healtyCrew;
     }
     cBattle.prototype.doTurn = function (card, target) {
         //Own atack first
@@ -19,18 +20,31 @@ var cBattle = (function () {
                 target.crew -= a.crewDamage;
                 target.mant -= a.boatDamage;
             }
-            else {
-                console.log("erraste el golpe! UPS");
-            }
-            console.log(target.mant);
             if (target.crew <= 0 || target.mant <= 0) {
                 target.isDead = true;
             }
         }
+        //Now enemy atacks
+        var shipDamage = 0;
+        var crewDamage = 0;
         this.arrayEnemy.forEach(function (e) {
-            // Enemy Atack abilities    
             var a = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+            if (a.missAtack != true && e.isDead == false) {
+                shipDamage += a.boatDamage;
+                crewDamage += a.crewDamage;
+            }
+            else {
+                console.log("erraste el golpe! UPS");
+            }
         });
+        this.trip.updateMant(-shipDamage);
+        this.avaibleCrew -= crewDamage;
+        console.log(Math.round(this.avaibleCrew));
+        console.log(this.trip.healtyCrew);
+        if (Math.round(this.avaibleCrew) < this.trip.healtyCrew) {
+            console.log("entra");
+            this.trip.addSickCrew(this.trip.healtyCrew - Math.round(this.avaibleCrew));
+        }
     };
     cBattle.prototype.endTurn = function () {
         //define next turn enemy abilities

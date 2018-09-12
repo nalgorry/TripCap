@@ -357,7 +357,7 @@ class cTrip {
         }
     }
 
-    private addSickCrew(value:integer) {
+    public addSickCrew(value:integer) {
         for (var i=0; i<value ; i++ ) {
             this.oneCrewSick();
         }
@@ -487,7 +487,7 @@ class cTrip {
 
     }
 
-    private updateMant(value:number = 0) {
+    public updateMant(value:number = 0) {
         
         var crewEfficiency = 0.04;
         var maxIncrement = 0.2;

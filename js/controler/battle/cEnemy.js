@@ -2,7 +2,7 @@ var cEnemy = (function () {
     function cEnemy(data) {
         this.maxMant = 100;
         this.maxCrew = 10;
-        this.mant = 60;
+        this.mant = 10;
         this.crew = 4;
         this.avaibleAtackAbilities = [];
         this.avaibleDefenceAbilities = [];

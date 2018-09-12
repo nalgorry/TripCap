@@ -9,6 +9,7 @@ var battle = (function (_super) {
         _super.apply(this, arguments);
         this.cards = Array();
         this.arrayEnemy = [];
+        this.statusBars = [];
     }
     battle.prototype.create = function (trip) {
         this.trip = trip;
@@ -46,6 +47,7 @@ var battle = (function (_super) {
         this.showDefensiveSkills();
         this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
         this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
+        this.time.delayedCall(5000, this.updateEnemyDamage, [], this);
         this.time.delayedCall(6000, this.endTurnShowElements, [], this);
     };
     battle.prototype.endTurnShowElements = function () {
@@ -68,19 +70,39 @@ var battle = (function (_super) {
         });
     };
     battle.prototype.showEnemyAtackSkills = function () {
+        var _this = this;
         //activate the atack icons
         this.arrayEnemy.forEach(function (e) {
+            console.log(_this.arrayEnemy);
             e.actionIcon.activateIcon(e.data.atackAbilities);
         });
+    };
+    battle.prototype.updateEnemyDamage = function () {
+        this.statusBars[0 /* food */].updateBar(this.trip.currentStatus[0 /* food */], this.boat.foodSystem);
+        this.statusBars[2 /* clean */].updateBar(this.trip.currentStatus[2 /* clean */], this.boat.cleanSystem);
+        this.statusBars[1 /* maintenance */].updateBar(this.trip.currentStatus[1 /* maintenance */], this.boat.mantSystem);
+        this.statusBars[3 /* leadership */].updateBar(this.trip.currentStatus[3 /* leadership */], this.boat.leaderSystem);
+        this.textHealtyCrew.text = this.trip.healtyCrew.toString();
+        this.textSickCrew.text = this.trip.sickCrew.toString();
     };
     battle.prototype.showOwnAtackSkills = function () {
         var cardData = this.selCard.cCard;
         this.ownActionIcon.activateIcon(cardData.atackAbilities);
-        this.time.delayedCall(2000, this.updateEnemies, [], this);
+        this.time.delayedCall(1500, this.updateEnemies, [], this);
     };
     battle.prototype.updateEnemies = function () {
+        var _this = this;
         this.arrayEnemy.forEach(function (e) {
             e.updateBars();
+            if (e.data.isDead == true) {
+                e.killEnemy();
+                //remove the enemy from the array
+                var idx = _this.arrayEnemy.indexOf(e);
+                if (idx != -1) {
+                    _this.arrayEnemy.splice(idx, 1);
+                    console.log(_this.arrayEnemy);
+                }
+            }
         });
     };
     battle.prototype.showDefensiveSkills = function () {
@@ -132,7 +154,7 @@ var battle = (function (_super) {
         this.targetAllowed = false;
         this.selEnemy = undefined;
         var mouseRect = new Phaser.Geom.Rectangle(this.input.x, this.input.y, 2, 2);
-        if (this.selCard.cCard.atackAbilities.length == 0) {
+        if (this.selCard.cCard.atackAbilities[0].id == enBattleAbilities.noAtack) {
             if (Phaser.Geom.Intersects.RectangleToRectangle(this.ownRect, mouseRect)) {
                 console.log("carta en cuadro verde");
                 this.targetAllowed = true;
@@ -177,10 +199,10 @@ var battle = (function (_super) {
     };
     battle.prototype.showStats = function () {
         //complete the bars
-        var mant = new cStatusBar(this, 208, 210, true);
-        var food = new cStatusBar(this, 208 + 132 * 1, 210, true);
-        var clean = new cStatusBar(this, 208 + 132 * 2, 210, true);
-        var leadership = new cStatusBar(this, 208 + 132 * 3, 210, true);
+        this.statusBars[1 /* maintenance */] = new cStatusBar(this, 208, 210, true);
+        this.statusBars[0 /* food */] = new cStatusBar(this, 208 + 132 * 1, 210, true);
+        this.statusBars[2 /* clean */] = new cStatusBar(this, 208 + 132 * 2, 210, true);
+        this.statusBars[3 /* leadership */] = new cStatusBar(this, 208 + 132 * 3, 210, true);
         //lets show the avaible crew
         this.textHealtyCrew = this.add.bitmapText(66, 230 - 20, 'Pfont', this.trip.healtyCrew.toString(), 40);
         this.textHealtyCrew.setOrigin(0.5);

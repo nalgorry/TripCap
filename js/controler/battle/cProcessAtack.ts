@@ -38,7 +38,7 @@ class cProcessAtack {
                     this.activateArrows(e);
                     break;
                 case enBattleAbilities.axes:
-                this.activateAxes(e);
+                    this.activateAxes(e);
                     break;
                 case enBattleAbilities.updateAtack:
                     

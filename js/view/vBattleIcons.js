@@ -69,5 +69,13 @@ var vBattleIcons = (function () {
             });
         });
     };
+    vBattleIcons.prototype.killIcons = function () {
+        var t = this.scene.tweens.add({
+            targets: this.container,
+            alpha: 0,
+            duration: 1500,
+            ease: 'Power2',
+        });
+    };
     return vBattleIcons;
 }());
