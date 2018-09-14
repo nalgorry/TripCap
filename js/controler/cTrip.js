@@ -34,6 +34,7 @@ var cTrip = (function () {
         this.tripEnd = false; //flag to activate when the trip ends
         this.startTime = new Date();
         this.numOfEvents = 0;
+        this.numOfBattles = 0;
         this.tripTotalDist = boat.tripData.tripDistance;
         this.tripEndGold = boat.tripData.tripGold;
         this.healtyCrew = boat.crewman;

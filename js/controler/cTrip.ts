@@ -60,6 +60,7 @@ class cTrip {
     public startTime = new Date();
 
     public numOfEvents:number = 0;
+    public numOfBattles:number = 0;
 
     public boatStartStats:cBoat;
 

@@ -21,6 +21,9 @@ class cEnemy{
         this.selRect = new Phaser.Geom.Rectangle(data.rectX, data.rectY, data.rectWidth, data.rectHeight);
         this.spriteName = "enemy_1";
 
+        this.mant = Phaser.Math.Between(10, 50);
+        this.crew = Phaser.Math.Between(2, 10);
+
         this.defineAvaibleAbilities();
 
         this.defineAbilities();

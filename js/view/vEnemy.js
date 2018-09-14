@@ -18,8 +18,8 @@ var vEnemy = (function () {
         this.crewBar.updateBar(this.data.crew);
     };
     vEnemy.prototype.showAtackIcon = function () {
-        this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container);
-        this.actionIcon.loadIddleIcon(this.data.atackAbilities);
+        this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container, true);
+        this.actionIcon.loadAtackIntention(this.data.atackAbilities);
     };
     vEnemy.prototype.killEnemy = function () {
         var t = this.scene.tweens.add({

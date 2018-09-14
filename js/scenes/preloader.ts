@@ -112,11 +112,11 @@ class preloader extends Phaser.Scene {
 
         //all the battle elements
         this.load.image('battle_back', 'assets/battle/back.png');    
-        this.load.spritesheet('battle_cards', 'assets/battle/cards.png', {frameHeight:278, frameWidth:194} )
-        this.load.spritesheet('battle_icons', 'assets/battle/icons.png', {frameHeight:50, frameWidth:50} )
+        this.load.spritesheet('battle_cards', 'assets/battle/cards.png', {frameHeight:278, frameWidth:194});
+        this.load.spritesheet('battle_icons', 'assets/battle/icons.png', {frameHeight:50, frameWidth:50});
+        this.load.image('battle_refresh', 'assets/battle/refresh.png');
 
         this.load.image('ownShip', 'assets/battle/ownShip.png');    
-
         this.load.image('enemy_1', 'assets/battle/enemy/enemy_1.png');    
 
         

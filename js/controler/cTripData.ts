@@ -12,7 +12,6 @@ class cTripData {
     public porcLostFood:number;
     public porcLostLeader:number;
 
-
     constructor(data:any) {
 
         this.id = data.id;

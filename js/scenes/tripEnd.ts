@@ -29,7 +29,7 @@ class tripEnd extends Phaser.Scene {
 
         var dist:string = Math.round(this.trip.tripTotalDist).toString();
         var efect = new cEventEffectText(105, 380 + 50, this, dist , "Nudos Recorridos" );
-        var efect = new cEventEffectText(105, 380 + 50 * 2, this, this.trip.tripEndGold.toString() , "Oro entraga carga" );
+        var efect = new cEventEffectText(105, 380 + 50 * 2, this, this.trip.tripEndGold.toString() , "Oro entrega carga" );
         
         var tripGold:number = this.trip.boat.gold - this.trip.boatStartStats.gold; 
         var efect = new cEventEffectText(105, 380 + 50 * 3, this, tripGold.toString()  , "Oro Ganado en Viaje" );

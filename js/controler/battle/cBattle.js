@@ -7,6 +7,7 @@ var cBattle = (function () {
         this.allPosibleCards = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
         this.arrayEnemy = [];
         this.arrayCardsData = [];
+        this.battleEnd = false;
         this.arrayAvaibleCards = this.allPosibleCards.slice();
         this.initEnemy();
         this.initCardsTypes();
@@ -42,16 +43,22 @@ var cBattle = (function () {
         console.log(Math.round(this.avaibleCrew));
         console.log(this.trip.healtyCrew);
         if (Math.round(this.avaibleCrew) < this.trip.healtyCrew) {
-            console.log("entra");
             this.trip.addSickCrew(this.trip.healtyCrew - Math.round(this.avaibleCrew));
         }
     };
     cBattle.prototype.endTurn = function () {
+        var _this = this;
         //define next turn enemy abilities
         this.arrayEnemy.forEach(function (e) {
             e.defineAbilities();
         });
         //next turn needed?
+        this.battleEnd = true;
+        this.arrayEnemy.forEach(function (e) {
+            if (e.isDead == false) {
+                _this.battleEnd = false;
+            }
+        });
     };
     cBattle.prototype.initCardsTypes = function () {
         var _this = this;

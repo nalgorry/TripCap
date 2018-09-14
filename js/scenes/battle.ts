@@ -23,6 +23,11 @@ class battle extends Phaser.Scene{
 
     private ownActionIcon:vBattleIcons;
 
+    private refreshButton:Phaser.GameObjects.Sprite;
+    private refreshText:Phaser.GameObjects.BitmapText;
+    private refreshTurns:number = 3; //turns to have the refresh avaible again
+    private refreshCount:number = 0; //actual turns
+
     create(trip:cTrip) {
 
         this.trip = trip;
@@ -35,6 +40,7 @@ class battle extends Phaser.Scene{
 
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
+        this.events.removeAllListeners('dragStart');
 
         this.events.on('dragCard', this.cardDrag, this);
         this.events.on('dragEnd', this.dragEnd, this);
@@ -85,8 +91,23 @@ class battle extends Phaser.Scene{
 
         this.time.delayedCall(5000, this.updateEnemyDamage, [], this);
 
+        this.time.delayedCall(5500, this.hideIcons, [], this);
+
         this.time.delayedCall(6000, this.endTurnShowElements, [], this);
         
+    }
+
+    private hideIcons() {
+
+        this.ownActionIcon.hideIddleIcon();
+
+        this.ownActionIcon.killIcons();
+
+        this.arrayEnemy.forEach(e => {
+            e.actionIcon.killIcons();
+        })
+
+
     }
 
     private endTurnShowElements() {
@@ -98,9 +119,60 @@ class battle extends Phaser.Scene{
 
         //show iddle icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.loadIddleIcon(e.data.atackAbilities);
+            e.actionIcon.loadAtackIntention(e.data.atackAbilities);
         })
 
+        //lets check if we have to end the battle
+        if (this.cBattle.battleEnd == true) {
+            this.battleEnd();
+        }
+
+        //update the refresh cards button
+        if (this.refreshCount != 0) {
+            
+            var turns:number = this.refreshTurns - this.refreshCount;
+            this.refreshText.text = turns.toString();
+
+            this.refreshCount += 1;
+
+            if (this.refreshTurns == this.refreshCount) {
+                this.refreshText.alpha = 0;
+                this.refreshButton.alpha = 1;
+                this.refreshCount = 0;
+            }
+            
+        }
+
+    }
+
+
+    private battleEnd() {
+        //lets continue or trip
+
+        this.trip.numOfBattles += 1;
+
+        var numBattle:number = this.trip.numOfBattles + 1;
+
+        //for test, we reset the fight now
+        var a  = this.add.bitmapText(360, 600, 'Pfont', "Batalla Numero: " + numBattle, 60);
+        a.setOrigin(0.5);
+
+        this.add.tween(
+        {
+            targets: a,
+            scaleX: 1.5,
+            scaleY: 1.5,
+            duration: 1500,
+            ease: 'Linear', 
+        })
+
+            this.time.delayedCall(2000, this.newBattle, [], this);
+        
+    }
+
+    private newBattle() {
+        
+        this.scene.start('battle', this.trip);
     }
 
     private initTurnHideElements() {
@@ -123,8 +195,7 @@ class battle extends Phaser.Scene{
 
         //activate the atack icons
         this.arrayEnemy.forEach(e => {
-            console.log(this.arrayEnemy);
-            e.actionIcon.activateIcon(e.data.atackAbilities);
+            e.actionIcon.activateAtackIcon(e.data.atackAbilities);
         })
 
 
@@ -144,7 +215,7 @@ class battle extends Phaser.Scene{
 
         var cardData = this.selCard.cCard;
         
-        this.ownActionIcon.activateIcon(cardData.atackAbilities);
+        this.ownActionIcon.activateAtackIcon(cardData.atackAbilities);
 
         this.time.delayedCall(1500, this.updateEnemies, [], this);
 
@@ -179,11 +250,11 @@ class battle extends Phaser.Scene{
 
         //show defensive skills first
         if (cardData.defendAbilities[0] != undefined) {
-            this.ownActionIcon.activateIcon(cardData.defendAbilities);
+            this.ownActionIcon.activateDefensiveIcons(cardData.defendAbilities);
         } 
         //activate the atack icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.activateIcon(e.data.defenceAbilities);
+            e.actionIcon.activateDefensiveIcons(e.data.defenceAbilities);
         })
 
     }
@@ -293,8 +364,33 @@ class battle extends Phaser.Scene{
         var s = this.add.sprite(0, 0,'ownShip');
         c.add(s);
 
-        this.ownActionIcon = new vBattleIcons(this, s, c);
+        this.ownActionIcon = new vBattleIcons(this, s, c, false);
 
+        //lets add the refresh button
+
+        this.refreshButton = this.add.sprite(600, 880, 'battle_refresh');
+        this.refreshButton.setOrigin(0.5);
+        this.refreshButton.setInteractive();
+        this.refreshButton.on('pointerup', this.refreshCards, this);
+
+        this.refreshText = this.add.bitmapText(600, 880 - 8, 'Pfont', '3', 40);
+        this.refreshText.setOrigin(0.5);
+        this.refreshText.alpha = 0;
+
+    }
+
+    private refreshCards() {
+
+        console.log(this.refreshCount);
+
+        if (this.refreshCount == 0) {
+            this.initCards();
+            this.refreshText.alpha = 1;
+            this.refreshText.text = "3";
+            this.refreshButton.alpha = 0.5;
+            this.refreshCount += 1;
+        }
+        
     }
 
     public updateValues() {

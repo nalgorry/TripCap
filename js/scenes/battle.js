@@ -10,6 +10,8 @@ var battle = (function (_super) {
         this.cards = Array();
         this.arrayEnemy = [];
         this.statusBars = [];
+        this.refreshTurns = 3; //turns to have the refresh avaible again
+        this.refreshCount = 0; //actual turns
     }
     battle.prototype.create = function (trip) {
         this.trip = trip;
@@ -20,6 +22,7 @@ var battle = (function (_super) {
         this.initEnemies();
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
+        this.events.removeAllListeners('dragStart');
         this.events.on('dragCard', this.cardDrag, this);
         this.events.on('dragEnd', this.dragEnd, this);
         this.events.on('dragStart', this.dragStart, this);
@@ -48,7 +51,15 @@ var battle = (function (_super) {
         this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
         this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
         this.time.delayedCall(5000, this.updateEnemyDamage, [], this);
+        this.time.delayedCall(5500, this.hideIcons, [], this);
         this.time.delayedCall(6000, this.endTurnShowElements, [], this);
+    };
+    battle.prototype.hideIcons = function () {
+        this.ownActionIcon.hideIddleIcon();
+        this.ownActionIcon.killIcons();
+        this.arrayEnemy.forEach(function (e) {
+            e.actionIcon.killIcons();
+        });
     };
     battle.prototype.endTurnShowElements = function () {
         this.cBattle.endTurn();
@@ -56,8 +67,42 @@ var battle = (function (_super) {
         this.initCards();
         //show iddle icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.loadIddleIcon(e.data.atackAbilities);
+            e.actionIcon.loadAtackIntention(e.data.atackAbilities);
         });
+        //lets check if we have to end the battle
+        if (this.cBattle.battleEnd == true) {
+            this.battleEnd();
+        }
+        //update the refresh cards button
+        if (this.refreshCount != 0) {
+            var turns = this.refreshTurns - this.refreshCount;
+            this.refreshText.text = turns.toString();
+            this.refreshCount += 1;
+            if (this.refreshTurns == this.refreshCount) {
+                this.refreshText.alpha = 0;
+                this.refreshButton.alpha = 1;
+                this.refreshCount = 0;
+            }
+        }
+    };
+    battle.prototype.battleEnd = function () {
+        //lets continue or trip
+        this.trip.numOfBattles += 1;
+        var numBattle = this.trip.numOfBattles + 1;
+        //for test, we reset the fight now
+        var a = this.add.bitmapText(360, 600, 'Pfont', "Batalla Numero: " + numBattle, 60);
+        a.setOrigin(0.5);
+        this.add.tween({
+            targets: a,
+            scaleX: 1.5,
+            scaleY: 1.5,
+            duration: 1500,
+            ease: 'Linear',
+        });
+        this.time.delayedCall(2000, this.newBattle, [], this);
+    };
+    battle.prototype.newBattle = function () {
+        this.scene.start('battle', this.trip);
     };
     battle.prototype.initTurnHideElements = function () {
         //hide the cards
@@ -70,11 +115,9 @@ var battle = (function (_super) {
         });
     };
     battle.prototype.showEnemyAtackSkills = function () {
-        var _this = this;
         //activate the atack icons
         this.arrayEnemy.forEach(function (e) {
-            console.log(_this.arrayEnemy);
-            e.actionIcon.activateIcon(e.data.atackAbilities);
+            e.actionIcon.activateAtackIcon(e.data.atackAbilities);
         });
     };
     battle.prototype.updateEnemyDamage = function () {
@@ -87,7 +130,7 @@ var battle = (function (_super) {
     };
     battle.prototype.showOwnAtackSkills = function () {
         var cardData = this.selCard.cCard;
-        this.ownActionIcon.activateIcon(cardData.atackAbilities);
+        this.ownActionIcon.activateAtackIcon(cardData.atackAbilities);
         this.time.delayedCall(1500, this.updateEnemies, [], this);
     };
     battle.prototype.updateEnemies = function () {
@@ -109,11 +152,11 @@ var battle = (function (_super) {
         var cardData = this.selCard.cCard;
         //show defensive skills first
         if (cardData.defendAbilities[0] != undefined) {
-            this.ownActionIcon.activateIcon(cardData.defendAbilities);
+            this.ownActionIcon.activateDefensiveIcons(cardData.defendAbilities);
         }
         //activate the atack icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.activateIcon(e.data.defenceAbilities);
+            e.actionIcon.activateDefensiveIcons(e.data.defenceAbilities);
         });
     };
     battle.prototype.initEnemies = function () {
@@ -191,7 +234,25 @@ var battle = (function (_super) {
         var c = this.add.container(154, 582);
         var s = this.add.sprite(0, 0, 'ownShip');
         c.add(s);
-        this.ownActionIcon = new vBattleIcons(this, s, c);
+        this.ownActionIcon = new vBattleIcons(this, s, c, false);
+        //lets add the refresh button
+        this.refreshButton = this.add.sprite(600, 880, 'battle_refresh');
+        this.refreshButton.setOrigin(0.5);
+        this.refreshButton.setInteractive();
+        this.refreshButton.on('pointerup', this.refreshCards, this);
+        this.refreshText = this.add.bitmapText(600, 880 - 8, 'Pfont', '3', 40);
+        this.refreshText.setOrigin(0.5);
+        this.refreshText.alpha = 0;
+    };
+    battle.prototype.refreshCards = function () {
+        console.log(this.refreshCount);
+        if (this.refreshCount == 0) {
+            this.initCards();
+            this.refreshText.alpha = 1;
+            this.refreshText.text = "3";
+            this.refreshButton.alpha = 0.5;
+            this.refreshCount += 1;
+        }
     };
     battle.prototype.updateValues = function () {
         this.textHealtyCrew.text = this.trip.healtyCrew.toString();

@@ -53,8 +53,8 @@ class vEnemy {
 
     private showAtackIcon() {
 
-        this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container);
-        this.actionIcon.loadIddleIcon(this.data.atackAbilities);
+        this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container, true);
+        this.actionIcon.loadAtackIntention(this.data.atackAbilities);
 
     }
 

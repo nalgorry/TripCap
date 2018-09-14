@@ -7,6 +7,8 @@ class cBattle {
 
     public arrayEnemy:cEnemy[] = [];
     private arrayCardsData:cBattleCard[] = [];
+
+    public battleEnd:boolean = false;
   
     constructor(public trip:cTrip,
         public boat:cBoat, 
@@ -61,8 +63,7 @@ class cBattle {
         console.log(Math.round(this.avaibleCrew));
         console.log(this.trip.healtyCrew);
 
-        if (Math.round(this.avaibleCrew) < this.trip.healtyCrew) {
-            console.log("entra")
+        if (Math.round(this.avaibleCrew) < this.trip.healtyCrew) {            
             this.trip.addSickCrew(this.trip.healtyCrew -Math.round(this.avaibleCrew))
         }
         
@@ -75,7 +76,13 @@ class cBattle {
         });
 
         //next turn needed?
-        
+        this.battleEnd = true;
+
+        this.arrayEnemy.forEach(e => {
+            if (e.isDead == false) {
+                this.battleEnd = false;
+            }
+        });
     }
 
     private initCardsTypes() {
