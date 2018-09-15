@@ -16,7 +16,8 @@ var cBattle = (function () {
     cBattle.prototype.doTurn = function (card, target) {
         //Own atack first
         if (target != undefined) {
-            var a = new cProcessAtack(card.atackAbilities, target.defenceAbilities);
+            target.damageData = new cProcessAtack(card.atackAbilities, target.defenceAbilities);
+            var a = target.damageData;
             if (a.missAtack != true) {
                 target.crew -= a.crewDamage;
                 target.mant -= a.boatDamage;
@@ -29,7 +30,8 @@ var cBattle = (function () {
         var shipDamage = 0;
         var crewDamage = 0;
         this.arrayEnemy.forEach(function (e) {
-            var a = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+            e.atackData = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+            var a = e.atackData;
             if (a.missAtack != true && e.isDead == false) {
                 shipDamage += a.boatDamage;
                 crewDamage += a.crewDamage;

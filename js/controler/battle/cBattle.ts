@@ -9,6 +9,7 @@ class cBattle {
     private arrayCardsData:cBattleCard[] = [];
 
     public battleEnd:boolean = false;
+
   
     constructor(public trip:cTrip,
         public boat:cBoat, 
@@ -26,7 +27,9 @@ class cBattle {
 
         //Own atack first
         if (target != undefined) {
-            var a = new cProcessAtack(card.atackAbilities, target.defenceAbilities);
+            target.damageData = new cProcessAtack(card.atackAbilities, target.defenceAbilities);
+    
+            var a = target.damageData;
             
             if (a.missAtack != true) {
                 target.crew -= a.crewDamage;
@@ -45,7 +48,8 @@ class cBattle {
 
         this.arrayEnemy.forEach(e => {
 
-            var a = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+            e.atackData = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+            var a = e.atackData;
 
             if (a.missAtack != true && e.isDead == false) {
                 shipDamage += a.boatDamage;

@@ -3,6 +3,7 @@ class vBattleIcons {
     public container:Phaser.GameObjects.Container;
     public arrayDefSprite:Phaser.GameObjects.Sprite[] = [];
     public arrayOffSprite:Phaser.GameObjects.Sprite[] = [];
+    public arrayIdAbility:Phaser.GameObjects.Sprite[] = [];
 
     private moveTween:Phaser.Tweens.Tween;
 
@@ -34,8 +35,10 @@ class vBattleIcons {
         //lets create one icon for each iconNumber
         data.forEach(e => {
             var sprite = this.scene.add.sprite(0, 0, 'battle_icons', e.id)
-
             toArray.push(sprite);
+
+            this.arrayIdAbility[e.id] = sprite;
+
             this.container.add(sprite);
 
         });
@@ -74,6 +77,31 @@ class vBattleIcons {
                 ease: 'Power2'
             });
         });
+
+    }
+
+    public animationDefIcon(id:enBattleAbilities) {
+
+        console.log("llega hasta aca");
+
+        var sprite = this.arrayIdAbility[id];
+
+        var t = this.scene.tweens.add({
+            targets: sprite,
+            scaleX: 1.5,
+            scaleY: 1.5,
+            duration: 400,
+            ease: 'Power2',
+        });
+
+        var t = this.scene.tweens.add({
+            targets: sprite,
+            scaleX: 1,
+            scaleY: 1,
+            duration: 400,
+            ease: 'Power2',
+            delay: 600
+        }); 
 
     }
 
@@ -164,6 +192,7 @@ class vBattleIcons {
 
         this.arrayDefSprite = [];
         this.arrayOffSprite = [];
+        this.arrayIdAbility = [];
     }
 
 

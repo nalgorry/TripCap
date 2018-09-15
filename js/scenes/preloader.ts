@@ -116,6 +116,9 @@ class preloader extends Phaser.Scene {
         this.load.spritesheet('battle_icons', 'assets/battle/icons.png', {frameHeight:50, frameWidth:50});
         this.load.image('battle_refresh', 'assets/battle/refresh.png');
 
+        this.load.spritesheet('battle_crewHit', 'assets/battle/crewHit.png', {frameHeight:192, frameWidth:192});
+        this.load.spritesheet('battle_boatHit', 'assets/battle/boatHit.png', {frameHeight:192, frameWidth:192});
+
         this.load.image('ownShip', 'assets/battle/ownShip.png');    
         this.load.image('enemy_1', 'assets/battle/enemy/enemy_1.png');    
 

@@ -26,6 +26,7 @@ var battle = (function (_super) {
         this.events.on('dragCard', this.cardDrag, this);
         this.events.on('dragEnd', this.dragEnd, this);
         this.events.on('dragStart', this.dragStart, this);
+        this.updateBoatDamage(); //to update the bars of our boat
     };
     battle.prototype.dragStart = function (card) {
         this.selCard = card;
@@ -49,8 +50,9 @@ var battle = (function (_super) {
         this.initTurnHideElements();
         this.showDefensiveSkills();
         this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
+        this.time.delayedCall(3500, this.updateEnemies, [], this);
         this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
-        this.time.delayedCall(5000, this.updateEnemyDamage, [], this);
+        this.time.delayedCall(5000, this.updateBoatDamage, [], this);
         this.time.delayedCall(5500, this.hideIcons, [], this);
         this.time.delayedCall(6000, this.endTurnShowElements, [], this);
     };
@@ -77,11 +79,13 @@ var battle = (function (_super) {
         if (this.refreshCount != 0) {
             var turns = this.refreshTurns - this.refreshCount;
             this.refreshText.text = turns.toString();
-            this.refreshCount += 1;
             if (this.refreshTurns == this.refreshCount) {
                 this.refreshText.alpha = 0;
                 this.refreshButton.alpha = 1;
                 this.refreshCount = 0;
+            }
+            else {
+                this.refreshCount += 1;
             }
         }
     };
@@ -120,18 +124,35 @@ var battle = (function (_super) {
             e.actionIcon.activateAtackIcon(e.data.atackAbilities);
         });
     };
-    battle.prototype.updateEnemyDamage = function () {
+    battle.prototype.updateBoatDamage = function () {
+        var _this = this;
         this.statusBars[0 /* food */].updateBar(this.trip.currentStatus[0 /* food */], this.boat.foodSystem);
         this.statusBars[2 /* clean */].updateBar(this.trip.currentStatus[2 /* clean */], this.boat.cleanSystem);
         this.statusBars[1 /* maintenance */].updateBar(this.trip.currentStatus[1 /* maintenance */], this.boat.mantSystem);
         this.statusBars[3 /* leadership */].updateBar(this.trip.currentStatus[3 /* leadership */], this.boat.leaderSystem);
         this.textHealtyCrew.text = this.trip.healtyCrew.toString();
         this.textSickCrew.text = this.trip.sickCrew.toString();
+        //show the defense if used 
+        this.arrayEnemy.forEach(function (e) {
+            if (e.data.atackData != undefined) {
+                if (e.data.atackData.boatDefended == true) {
+                    console.log("boat def");
+                    _this.ownActionIcon.animationDefIcon(enBattleAbilities.defendBoat);
+                }
+                if (e.data.atackData.crewDefended == true) {
+                    console.log("crew def");
+                    _this.ownActionIcon.animationDefIcon(enBattleAbilities.defendCrew);
+                }
+                if (e.data.atackData.missAtack == true) {
+                    console.log("crew def");
+                    _this.ownActionIcon.animationDefIcon(enBattleAbilities.dodge);
+                }
+            }
+        });
     };
     battle.prototype.showOwnAtackSkills = function () {
         var cardData = this.selCard.cCard;
         this.ownActionIcon.activateAtackIcon(cardData.atackAbilities);
-        this.time.delayedCall(1500, this.updateEnemies, [], this);
     };
     battle.prototype.updateEnemies = function () {
         var _this = this;
@@ -143,7 +164,6 @@ var battle = (function (_super) {
                 var idx = _this.arrayEnemy.indexOf(e);
                 if (idx != -1) {
                     _this.arrayEnemy.splice(idx, 1);
-                    console.log(_this.arrayEnemy);
                 }
             }
         });

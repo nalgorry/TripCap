@@ -5,6 +5,8 @@ var cProcessAtack = (function () {
         this.boatDamage = 0;
         this.crewDamage = 0;
         this.missAtack = false;
+        this.boatDefended = false;
+        this.crewDefended = false;
         this.boatDefense = 0;
         this.crewDefense = 0;
         this.missPorc = 0;
@@ -23,6 +25,19 @@ var cProcessAtack = (function () {
                 default:
                     break;
             }
+        });
+        //lets check the miss 
+        if (this.missPorc != 0) {
+            var rnd = Phaser.Math.Between(0, 100);
+            //lets check if the miss is done
+            if (this.missPorc * 100 >= rnd) {
+                this.missAtack = true;
+                this.crewDamage = 0;
+                this.boatDamage = 0;
+            }
+        }
+        if (this.missAtack == false) {
+            //if not miss we continue
             //process the atack abilities
             atackerAbilites.forEach(function (e) {
                 switch (e.id) {
@@ -41,20 +56,30 @@ var cProcessAtack = (function () {
                         break;
                 }
             });
-        });
+            this.processDefense();
+            console.log(this);
+        }
         //lets correct the crew atack 
         this.crewDamage = this.crewDamage / 10;
-        //lets check the miss 
-        if (this.missPorc != 0) {
-            var rnd = Phaser.Math.Between(0, 100);
-            //lets check if the miss is done
-            if (this.missPorc * 100 >= rnd) {
-                this.missAtack = true;
-                this.crewDamage = 0;
+    }
+    cProcessAtack.prototype.processDefense = function () {
+        //lets process the boat defense 
+        if (this.boatDefense > 0 && this.boatDamage > 0) {
+            this.boatDefended = true;
+            this.boatDamage -= this.boatDefense;
+            if (this.boatDamage < 0) {
                 this.boatDamage = 0;
             }
         }
-    }
+        //lets process the crew defense 
+        if (this.crewDefense > 0 && this.crewDamage > 0) {
+            this.crewDefended = true;
+            this.crewDamage -= this.crewDefense;
+            if (this.crewDamage < 0) {
+                this.crewDamage = 0;
+            }
+        }
+    };
     cProcessAtack.prototype.activateCannons = function (data) {
         switch (data.lvl) {
             case 1:

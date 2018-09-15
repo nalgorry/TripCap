@@ -6,6 +6,7 @@ var vBattleIcons = (function () {
         this.isEnemy = isEnemy;
         this.arrayDefSprite = [];
         this.arrayOffSprite = [];
+        this.arrayIdAbility = [];
         this.container = this.scene.add.container(this.enemyContainer.x, this.enemyContainer.y - this.actorSprite.height / 2 - 30);
         //lets add some animation to the container
         this.moveTween = this.scene.tweens.add({
@@ -26,6 +27,7 @@ var vBattleIcons = (function () {
         data.forEach(function (e) {
             var sprite = _this.scene.add.sprite(0, 0, 'battle_icons', e.id);
             toArray.push(sprite);
+            _this.arrayIdAbility[e.id] = sprite;
             _this.container.add(sprite);
         });
         //lets put the icons in the right place
@@ -53,6 +55,25 @@ var vBattleIcons = (function () {
                 duration: 200,
                 ease: 'Power2'
             });
+        });
+    };
+    vBattleIcons.prototype.animationDefIcon = function (id) {
+        console.log("llega hasta aca");
+        var sprite = this.arrayIdAbility[id];
+        var t = this.scene.tweens.add({
+            targets: sprite,
+            scaleX: 1.5,
+            scaleY: 1.5,
+            duration: 400,
+            ease: 'Power2',
+        });
+        var t = this.scene.tweens.add({
+            targets: sprite,
+            scaleX: 1,
+            scaleY: 1,
+            duration: 400,
+            ease: 'Power2',
+            delay: 600
         });
     };
     vBattleIcons.prototype.animateDefIcon = function () {
@@ -125,6 +146,7 @@ var vBattleIcons = (function () {
         });
         this.arrayDefSprite = [];
         this.arrayOffSprite = [];
+        this.arrayIdAbility = [];
     };
     return vBattleIcons;
 }());

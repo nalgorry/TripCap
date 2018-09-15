@@ -13,6 +13,8 @@ class cEnemy{
     public atackAbilities:cBattleAbility[] = [];
     public defenceAbilities:cBattleAbility[] = [];
     public isDead = false;
+    public atackData:cProcessAtack; //the atack done but this enemy
+    public damageData:cProcessAtack; //the atack done to this enemy
 
     constructor(data:any) {
 
@@ -46,6 +48,9 @@ class cEnemy{
 
         this.atackAbilities = [];
         this.defenceAbilities = [];
+
+        this.atackData = undefined;
+        this.damageData = undefined;
 
         var rnd = Phaser.Math.Between(0, this.avaibleAtackAbilities.length - 1);
         this.atackAbilities.push(this.avaibleAtackAbilities[rnd]);

@@ -4,6 +4,8 @@ class cProcessAtack {
     public boatDamage:number = 0;
     public crewDamage:number = 0;
     public missAtack:boolean = false;
+    public boatDefended:boolean = false;
+    public crewDefended:boolean = false;
 
     private boatDefense:number = 0;
     private crewDefense:number = 0;
@@ -27,33 +29,9 @@ class cProcessAtack {
                 default:
                     break;
             }
-    
-        //process the atack abilities
-        atackerAbilites.forEach( e => {
-            switch (e.id) {
-                case enBattleAbilities.cannons:
-                    this.activateCannons(e);
-                    break;
-                case enBattleAbilities.arrows:
-                    this.activateArrows(e);
-                    break;
-                case enBattleAbilities.axes:
-                    this.activateAxes(e);
-                    break;
-                case enBattleAbilities.updateAtack:
-                    
-                    break;
-            
-                default:
-                    break;
-            }
-        })
-    
+
         });
-
-        //lets correct the crew atack 
-        this.crewDamage = this.crewDamage / 10;
-
+    
         //lets check the miss 
         if (this.missPorc != 0) {
 
@@ -61,15 +39,61 @@ class cProcessAtack {
 
             //lets check if the miss is done
             if (this.missPorc * 100 >= rnd) {
-
                 this.missAtack = true;
                 this.crewDamage = 0;
                 this.boatDamage = 0;
-
             }
 
+        } 
+        
+        if (this.missAtack == false) {
+            //if not miss we continue
+            //process the atack abilities
+            atackerAbilites.forEach( e => {
+                switch (e.id) {
+                    case enBattleAbilities.cannons:
+                        this.activateCannons(e);
+                        break;
+                    case enBattleAbilities.arrows:
+                        this.activateArrows(e);
+                        break;
+                    case enBattleAbilities.axes:
+                        this.activateAxes(e);
+                        break;
+                    case enBattleAbilities.updateAtack:
+                        
+                        break;
+                
+                    default:
+                        break;
+                }
+            })
+
+            this.processDefense();
+
+            console.log(this);
         }
 
+        //lets correct the crew atack 
+        this.crewDamage = this.crewDamage / 10;
+
+    }
+
+    private processDefense() {
+
+        //lets process the boat defense 
+        if (this.boatDefense > 0 && this.boatDamage > 0) {
+            this.boatDefended = true;
+            this.boatDamage -= this.boatDefense;
+            if (this.boatDamage < 0) {this.boatDamage = 0}
+        }
+
+        //lets process the crew defense 
+        if (this.crewDefense > 0 && this.crewDamage > 0) {
+            this.crewDefended = true;
+            this.crewDamage -= this.crewDefense;
+            if (this.crewDamage < 0) {this.crewDamage = 0}
+        }
     }
 
     private activateCannons(data:cBattleAbility) {
@@ -87,6 +111,8 @@ class cProcessAtack {
             default:
                 break;
         }
+
+        
     }
 
     private activateArrows(data:cBattleAbility) {
@@ -104,6 +130,8 @@ class cProcessAtack {
             default:
                 break;
         }
+
+        
     }
 
     private activateAxes(data:cBattleAbility) {

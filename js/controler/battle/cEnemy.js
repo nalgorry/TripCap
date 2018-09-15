@@ -31,6 +31,8 @@ var cEnemy = (function () {
     cEnemy.prototype.defineAbilities = function () {
         this.atackAbilities = [];
         this.defenceAbilities = [];
+        this.atackData = undefined;
+        this.damageData = undefined;
         var rnd = Phaser.Math.Between(0, this.avaibleAtackAbilities.length - 1);
         this.atackAbilities.push(this.avaibleAtackAbilities[rnd]);
         var rnd = Phaser.Math.Between(0, this.avaibleDefenceAbilities.length - 1);

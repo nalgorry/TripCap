@@ -45,6 +45,8 @@ class battle extends Phaser.Scene{
         this.events.on('dragCard', this.cardDrag, this);
         this.events.on('dragEnd', this.dragEnd, this);
         this.events.on('dragStart',this.dragStart, this);
+
+        this.updateBoatDamage(); //to update the bars of our boat
         
     }
 
@@ -87,9 +89,11 @@ class battle extends Phaser.Scene{
 
         this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
 
+        this.time.delayedCall(3500, this.updateEnemies, [], this);
+
         this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
 
-        this.time.delayedCall(5000, this.updateEnemyDamage, [], this);
+        this.time.delayedCall(5000, this.updateBoatDamage, [], this);
 
         this.time.delayedCall(5500, this.hideIcons, [], this);
 
@@ -133,18 +137,19 @@ class battle extends Phaser.Scene{
             var turns:number = this.refreshTurns - this.refreshCount;
             this.refreshText.text = turns.toString();
 
-            this.refreshCount += 1;
-
             if (this.refreshTurns == this.refreshCount) {
                 this.refreshText.alpha = 0;
                 this.refreshButton.alpha = 1;
                 this.refreshCount = 0;
+            } else {
+                this.refreshCount += 1;
             }
+
+            
             
         }
 
     }
-
 
     private battleEnd() {
         //lets continue or trip
@@ -201,7 +206,8 @@ class battle extends Phaser.Scene{
 
     }
 
-    private updateEnemyDamage() {
+    private updateBoatDamage() {
+        
         this.statusBars[enumStatus.food].updateBar(this.trip.currentStatus[enumStatus.food], this.boat.foodSystem);
         this.statusBars[enumStatus.clean].updateBar(this.trip.currentStatus[enumStatus.clean], this.boat.cleanSystem);
         this.statusBars[enumStatus.maintenance].updateBar(this.trip.currentStatus[enumStatus.maintenance], this.boat.mantSystem);
@@ -209,6 +215,29 @@ class battle extends Phaser.Scene{
 
         this.textHealtyCrew.text = this.trip.healtyCrew.toString();
         this.textSickCrew.text = this.trip.sickCrew.toString();
+
+        //show the defense if used 
+        this.arrayEnemy.forEach(e => {
+
+            if (e.data.atackData != undefined) {
+                if (e.data.atackData.boatDefended == true) {
+                    console.log("boat def");
+                    this.ownActionIcon.animationDefIcon(enBattleAbilities.defendBoat);
+                }
+
+                if (e.data.atackData.crewDefended == true) {
+                    console.log("crew def");
+                    this.ownActionIcon.animationDefIcon(enBattleAbilities.defendCrew);
+                }
+
+                if (e.data.atackData.missAtack == true) {
+                    console.log("crew def");
+                    this.ownActionIcon.animationDefIcon(enBattleAbilities.dodge);
+                }
+            }
+            
+        });
+
     }
 
     private showOwnAtackSkills() {
@@ -216,9 +245,6 @@ class battle extends Phaser.Scene{
         var cardData = this.selCard.cCard;
         
         this.ownActionIcon.activateAtackIcon(cardData.atackAbilities);
-
-        this.time.delayedCall(1500, this.updateEnemies, [], this);
-
 
     }
 
@@ -234,7 +260,6 @@ class battle extends Phaser.Scene{
                 var idx = this.arrayEnemy.indexOf(e);
                     if (idx != -1) {
                         this.arrayEnemy.splice(idx, 1); 
-                        console.log(this.arrayEnemy);
                 }
 
             }
