@@ -11,9 +11,11 @@ var enBattleAbilities;
     enBattleAbilities[enBattleAbilities["noDefense"] = 8] = "noDefense";
 })(enBattleAbilities || (enBattleAbilities = {}));
 var cBattleAbility = (function () {
-    function cBattleAbility(id, lvl) {
+    function cBattleAbility(id, lvl, prob, value) {
         this.id = id;
         this.lvl = lvl;
+        this.prob = prob;
+        this.value = value;
     }
     return cBattleAbility;
 }());

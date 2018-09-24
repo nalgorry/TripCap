@@ -13,9 +13,11 @@ enum enBattleAbilities {
 
 class cBattleAbility {
 
-    constructor(public id:enBattleAbilities, 
-        public lvl:number) {
-
+    constructor(
+        public id:enBattleAbilities, 
+        public lvl:number,
+        public prob:number,
+        public value:number) {
     }
 
     

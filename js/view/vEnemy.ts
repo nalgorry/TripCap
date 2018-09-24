@@ -3,6 +3,8 @@ class vEnemy {
     public container:Phaser.GameObjects.Container;
     public sprite:Phaser.GameObjects.Sprite;
 
+    public selRect:Phaser.Geom.Rectangle;
+
     public mantBar:vEnemyBar;
     public crewBar:vEnemyBar;
 
@@ -10,94 +12,63 @@ class vEnemy {
    
 
     constructor(public scene:Phaser.Scene, 
-        public data:cEnemy ) {
+        public enemy:cEnemy ) {
 
             this.initEnemy();
+
+            console.log(this);
 
 
     }
 
     private initEnemy() { 
 
-        this.container = this.scene.add.container(this.data.x, this.data.y);
-        this.sprite = this.scene.add.sprite(0, 0, this.data.spriteName);
+        this.container = this.scene.add.container(this.enemy.x, this.enemy.y);
+        this.sprite = this.scene.add.sprite(0, 0, this.enemy.data.spriteName);
         this.container.add(this.sprite);
 
-        this.showAtackIcon()
+        this.showAtackIcon();
 
+        //lest define the bars to show the health of the enemies
         this.mantBar = new vEnemyBar(this.scene, 
             -76 - 10,
             this.sprite.height / 2 + 10,
             0x1ab500, 
             this.container,
-            this.data.maxMant,
-            this.data.mant);
+            this.enemy.data.maxMant,
+            this.enemy.mant);
 
         this.crewBar = new vEnemyBar(this.scene, 
             10 , 
             this.sprite.height / 2 + 10,
             0x005cb5,
             this.container,
-            this.data.maxCrew,
-            this.data.crew);
+            this.enemy.data.maxCrew,
+            this.enemy.crew);
+
+        //lets define the rect to use the cards, we have to define it in cBattle
+        var marginX = 30;
+        var marginY = 30;
+        this.selRect = new Phaser.Geom.Rectangle(
+            this.container.x - this.sprite.width / 2 - marginX, 
+            this.container.y - this.sprite.height / 2 - marginY, 
+            this.sprite.width + marginX * 2,
+            this.sprite.height + marginY * 2);
 
     }
 
     public updateBars() {
-        this.mantBar.updateBar(this.data.mant);
-        this.crewBar.updateBar(this.data.crew);
-
-        if (this.data.damageData != undefined) {
-
-            //lets check if we have to animate the defence icons (if the do something)
-            if (this.data.damageData.boatDefended == true) {
-                console.log("boat def");
-                this.actionIcon.animationDefIcon(enBattleAbilities.defendBoat);
-            }
-
-            if (this.data.damageData.crewDefended == true) {
-                console.log("crew def");
-                this.actionIcon.animationDefIcon(enBattleAbilities.defendCrew);
-            }
-
-            if (this.data.damageData.missAtack == true) {
-                console.log("crew def");
-                this.actionIcon.animationDefIcon(enBattleAbilities.dodge);
-            }
-
-            //lets put the hit animation 
-            if (this.data.damageData.crewDamage > 0) {
-                this.animateHit('battle_crewHit');
-            }
-
-            if (this.data.damageData.boatDamage > 0) {
-                this.animateHit('battle_boatHit');
-            }
-
-        }
-    }
-
-    private animateHit(animName:string) {
-        var config = {
-            key: animName,
-            frames: this.scene.anims.generateFrameNumbers(animName, {start: 0}),
-            frameRate: 20
-        };
-
-        this.scene.anims.create(config);
-    
-        var boom = this.scene.add.sprite(0, 0, animName);
-
-        boom.anims.play(animName);
-
-        this.container.add(boom);
+        
+        this.mantBar.updateBar(this.enemy.mant);
+        this.crewBar.updateBar(this.enemy.crew);
+        this.actionIcon.checkDefIconAnim(this.enemy.damageData);
 
     }
 
     private showAtackIcon() {
 
         this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container, true);
-        this.actionIcon.loadAtackIntention(this.data.atackAbilities);
+        this.actionIcon.loadAtackIntention(this.enemy.turnAtackAbilities);
 
     }
 

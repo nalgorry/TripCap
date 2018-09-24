@@ -39,7 +39,7 @@ var battle = (function (_super) {
             //lets do some magic!
             var enemyData = undefined;
             if (this.selEnemy != undefined) {
-                enemyData = this.selEnemy.data;
+                enemyData = this.selEnemy.enemy;
             }
             this.cBattle.doTurn(card.cCard, enemyData); //calculate the logic of the atack 
             this.showTurnResults();
@@ -69,7 +69,7 @@ var battle = (function (_super) {
         this.initCards();
         //show iddle icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.loadAtackIntention(e.data.atackAbilities);
+            e.actionIcon.loadAtackIntention(e.enemy.turnAtackAbilities);
         });
         //lets check if we have to end the battle
         if (this.cBattle.battleEnd == true) {
@@ -121,7 +121,7 @@ var battle = (function (_super) {
     battle.prototype.showEnemyAtackSkills = function () {
         //activate the atack icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.activateAtackIcon(e.data.atackAbilities);
+            e.actionIcon.activateAtackIcon(e.enemy.turnAtackAbilities);
         });
     };
     battle.prototype.updateBoatDamage = function () {
@@ -134,20 +134,7 @@ var battle = (function (_super) {
         this.textSickCrew.text = this.trip.sickCrew.toString();
         //show the defense if used 
         this.arrayEnemy.forEach(function (e) {
-            if (e.data.atackData != undefined) {
-                if (e.data.atackData.boatDefended == true) {
-                    console.log("boat def");
-                    _this.ownActionIcon.animationDefIcon(enBattleAbilities.defendBoat);
-                }
-                if (e.data.atackData.crewDefended == true) {
-                    console.log("crew def");
-                    _this.ownActionIcon.animationDefIcon(enBattleAbilities.defendCrew);
-                }
-                if (e.data.atackData.missAtack == true) {
-                    console.log("crew def");
-                    _this.ownActionIcon.animationDefIcon(enBattleAbilities.dodge);
-                }
-            }
+            _this.ownActionIcon.checkDefIconAnim(e.enemy.atackData);
         });
     };
     battle.prototype.showOwnAtackSkills = function () {
@@ -158,7 +145,7 @@ var battle = (function (_super) {
         var _this = this;
         this.arrayEnemy.forEach(function (e) {
             e.updateBars();
-            if (e.data.isDead == true) {
+            if (e.enemy.isDead == true) {
                 e.killEnemy();
                 //remove the enemy from the array
                 var idx = _this.arrayEnemy.indexOf(e);
@@ -176,7 +163,7 @@ var battle = (function (_super) {
         }
         //activate the atack icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.activateDefensiveIcons(e.data.defenceAbilities);
+            e.actionIcon.activateDefensiveIcons(e.enemy.turnDefenceAbilities);
         });
     };
     battle.prototype.initEnemies = function () {
@@ -202,7 +189,7 @@ var battle = (function (_super) {
         }
         else {
             //enemy rectangles
-            this.cBattle.arrayEnemy.forEach(function (enemy) {
+            this.arrayEnemy.forEach(function (enemy) {
                 var rect = _this.add.graphics();
                 rect.fillStyle(0xFF0000);
                 rect.fillRect(enemy.selRect.x, enemy.selRect.y, enemy.selRect.width, enemy.selRect.height);
@@ -225,7 +212,7 @@ var battle = (function (_super) {
         }
         else {
             this.arrayEnemy.forEach(function (enemy) {
-                if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.data.selRect, mouseRect)) {
+                if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.selRect, mouseRect)) {
                     _this.targetAllowed = true;
                     _this.selEnemy = enemy;
                 }

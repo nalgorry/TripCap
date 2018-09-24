@@ -16,7 +16,7 @@ var cBattle = (function () {
     cBattle.prototype.doTurn = function (card, target) {
         //Own atack first
         if (target != undefined) {
-            target.damageData = new cProcessAtack(card.atackAbilities, target.defenceAbilities);
+            target.damageData = new cProcessAtack(card.atackAbilities, target.turnDefenceAbilities);
             var a = target.damageData;
             if (a.missAtack != true) {
                 target.crew -= a.crewDamage;
@@ -30,7 +30,7 @@ var cBattle = (function () {
         var shipDamage = 0;
         var crewDamage = 0;
         this.arrayEnemy.forEach(function (e) {
-            e.atackData = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+            e.atackData = new cProcessAtack(e.turnAtackAbilities, card.defendAbilities);
             var a = e.atackData;
             if (a.missAtack != true && e.isDead == false) {
                 shipDamage += a.boatDamage;
@@ -52,7 +52,7 @@ var cBattle = (function () {
         var _this = this;
         //define next turn enemy abilities
         this.arrayEnemy.forEach(function (e) {
-            e.defineAbilities();
+            e.defineTurnAbilities();
         });
         //next turn needed?
         this.battleEnd = true;
@@ -73,20 +73,11 @@ var cBattle = (function () {
     };
     cBattle.prototype.initEnemy = function () {
         var data = {};
-        data.x = 570;
-        data.y = 490;
-        data.rectX = 420;
-        data.rectY = 440;
-        data.rectWidth = 360;
-        data.rectHeight = 600 - 440;
-        this.arrayEnemy.push(new cEnemy(data));
-        data.x = 570;
-        data.y = 730;
-        data.rectX = 420;
-        data.rectY = 672;
-        data.rectWidth = 360;
-        data.rectHeight = 840 - 672;
-        this.arrayEnemy.push(new cEnemy(data));
+        var enemyData;
+        enemyData = this.boat.arrayEnemyData[0];
+        this.arrayEnemy.push(new cEnemy(enemyData, 570, 490));
+        enemyData = this.boat.arrayEnemyData[0];
+        this.arrayEnemy.push(new cEnemy(enemyData, 570, 730));
     };
     cBattle.prototype.getSelectedCards = function () {
         var arrayCards = new Array();

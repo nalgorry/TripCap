@@ -128,6 +128,7 @@ var preloader = (function (_super) {
         this.load.json('eventEffect', 'js/json/EventsEffect.json');
         this.load.json('tripData', 'js/json/TripData.json');
         this.load.json('battleCards', 'js/json/BattleCards.json');
+        this.load.json('enemys', 'js/json/Enemys.json');
     };
     preloader.prototype.create = function () {
         this.scene.start('startMenu');

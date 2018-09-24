@@ -32,6 +32,10 @@ class startMenu extends Phaser.Scene {
 
             var boat:cBoat = new cBoat(data);
 
+            var enemyData = this.cache.json.get('enemys');
+
+            boat.loadEnemyData(enemyData);
+
             this.scene.start('tripGlobal', boat);
 
             //to the the city faster

@@ -22,6 +22,8 @@ var startMenu = (function (_super) {
         this.startButton.on('pointerup', function (pointer) {
             var data = this.cache.json.get('tripData');
             var boat = new cBoat(data);
+            var enemyData = this.cache.json.get('enemys');
+            boat.loadEnemyData(enemyData);
             this.scene.start('tripGlobal', boat);
             //to the the city faster
             //this.scene.start("city", boat)

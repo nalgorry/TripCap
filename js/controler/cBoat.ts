@@ -2,7 +2,8 @@ class cBoat {
 
     //data of the trips
     private tripNumber = 1;
-    private arrayTripData:cTripData[] = new Array();
+    private arrayTripData:cTripData[] = new Array(); //data de todos los viajes
+    public arrayEnemyData:mEnemy[] = new Array(); //data de todos los posibles enemigos
     public numberOfTrips:number = 0; //cantidad de viajes que hizo el barco
     public tripData:cTripData
 
@@ -34,14 +35,23 @@ class cBoat {
 
         this.tripData = this.arrayTripData[0];
 
-        console.log(this.arrayTripData);
-
     }
 
     public nextTrip() {
         this.tripNumber += 1;
         this.numberOfTrips += 1;
         this.tripData = this.arrayTripData[this.tripNumber - 1]
+    }
+
+    public loadEnemyData(data:any) {
+
+        data["enemys"].forEach(element => {
+
+            var enemy = new mEnemy(element);
+            this.arrayEnemyData.push(enemy);
+
+        });
+
     }
     
 }

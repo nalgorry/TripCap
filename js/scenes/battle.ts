@@ -68,7 +68,7 @@ class battle extends Phaser.Scene{
             
             var enemyData = undefined
             if (this.selEnemy != undefined) {
-                enemyData = this.selEnemy.data;
+                enemyData = this.selEnemy.enemy;
             }
 
             this.cBattle.doTurn(card.cCard, enemyData); //calculate the logic of the atack 
@@ -123,7 +123,7 @@ class battle extends Phaser.Scene{
 
         //show iddle icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.loadAtackIntention(e.data.atackAbilities);
+            e.actionIcon.loadAtackIntention(e.enemy.turnAtackAbilities);
         })
 
         //lets check if we have to end the battle
@@ -200,7 +200,7 @@ class battle extends Phaser.Scene{
 
         //activate the atack icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.activateAtackIcon(e.data.atackAbilities);
+            e.actionIcon.activateAtackIcon(e.enemy.turnAtackAbilities);
         })
 
 
@@ -218,24 +218,7 @@ class battle extends Phaser.Scene{
 
         //show the defense if used 
         this.arrayEnemy.forEach(e => {
-
-            if (e.data.atackData != undefined) {
-                if (e.data.atackData.boatDefended == true) {
-                    console.log("boat def");
-                    this.ownActionIcon.animationDefIcon(enBattleAbilities.defendBoat);
-                }
-
-                if (e.data.atackData.crewDefended == true) {
-                    console.log("crew def");
-                    this.ownActionIcon.animationDefIcon(enBattleAbilities.defendCrew);
-                }
-
-                if (e.data.atackData.missAtack == true) {
-                    console.log("crew def");
-                    this.ownActionIcon.animationDefIcon(enBattleAbilities.dodge);
-                }
-            }
-            
+            this.ownActionIcon.checkDefIconAnim(e.enemy.atackData);
         });
 
     }
@@ -252,7 +235,7 @@ class battle extends Phaser.Scene{
         this.arrayEnemy.forEach(e => {
             e.updateBars();
 
-            if (e.data.isDead == true) {
+            if (e.enemy.isDead == true) {
                 
                 e.killEnemy();
 
@@ -279,7 +262,7 @@ class battle extends Phaser.Scene{
         } 
         //activate the atack icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.activateDefensiveIcons(e.data.defenceAbilities);
+            e.actionIcon.activateDefensiveIcons(e.enemy.turnDefenceAbilities);
         })
 
     }
@@ -315,7 +298,7 @@ class battle extends Phaser.Scene{
 
         } else {
             //enemy rectangles
-            this.cBattle.arrayEnemy.forEach (enemy => {
+            this.arrayEnemy.forEach (enemy => {
                 var rect = this.add.graphics();
 
                 rect.fillStyle(0xFF0000);
@@ -349,7 +332,7 @@ class battle extends Phaser.Scene{
 
             this.arrayEnemy.forEach(enemy => {
 
-                if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.data.selRect, mouseRect)) {
+                if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.selRect, mouseRect)) {
                     this.targetAllowed = true;
                     this.selEnemy = enemy;
                 }

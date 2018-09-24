@@ -9,10 +9,10 @@ class vBattleIcons {
 
     constructor(public scene:Phaser.Scene,
     public actorSprite:Phaser.GameObjects.Sprite,
-    public enemyContainer:Phaser.GameObjects.Container,
+    public actorContainer:Phaser.GameObjects.Container,
     public isEnemy:boolean) {
 
-        this.container = this.scene.add.container(this.enemyContainer.x, this.enemyContainer.y - this.actorSprite.height/2 - 30);
+        this.container = this.scene.add.container(this.actorContainer.x, this.actorContainer.y - this.actorSprite.height/2 - 30);
 
         //lets add some animation to the container
         this.moveTween = this.scene.tweens.add({
@@ -24,6 +24,20 @@ class vBattleIcons {
             repeat: -1
             });
 
+        this.initHitAnim('battle_crewHit');
+        this.initHitAnim('battle_boatHit');
+        
+
+    }
+
+    private initHitAnim(animName:string) {
+        var config = {
+            key: animName,
+            frames: this.scene.anims.generateFrameNumbers(animName, {start: 0}),
+            frameRate: 20
+        };
+
+        this.scene.anims.create(config);
     }
 
     public loadAtackIntention(data:cBattleAbility[]) {
@@ -50,6 +64,45 @@ class vBattleIcons {
         } else if (data.length == 3) {
 
         }
+
+    }
+
+    public checkDefIconAnim(damageData:cProcessAtack) {
+
+        if (damageData != undefined) {
+
+            //lets check if we have to animate the defence icons (if the do something)
+            if (damageData.boatDefended == true) {
+                this.animationDefIcon(enBattleAbilities.defendBoat);
+            }
+
+            if (damageData.crewDefended == true) {
+                this.animationDefIcon(enBattleAbilities.defendCrew);
+            }
+
+            if (damageData.missAtack == true) {
+                this.animationDefIcon(enBattleAbilities.dodge);
+            }
+
+            //lets put the hit animation 
+            if (damageData.crewDamage > 0) {
+                this.animateHit('battle_crewHit');
+            }
+
+            if (damageData.boatDamage > 0) {
+                this.animateHit('battle_boatHit');
+            }
+
+        }
+    }
+
+    private animateHit(animName:string) {
+    
+        var boom = this.scene.add.sprite(0, 0, animName);
+
+        boom.anims.play(animName);
+
+        this.actorContainer.add(boom);
 
     }
 

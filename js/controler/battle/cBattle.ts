@@ -27,7 +27,7 @@ class cBattle {
 
         //Own atack first
         if (target != undefined) {
-            target.damageData = new cProcessAtack(card.atackAbilities, target.defenceAbilities);
+            target.damageData = new cProcessAtack(card.atackAbilities, target.turnDefenceAbilities);
     
             var a = target.damageData;
             
@@ -48,7 +48,7 @@ class cBattle {
 
         this.arrayEnemy.forEach(e => {
 
-            e.atackData = new cProcessAtack(e.atackAbilities, card.defendAbilities);
+            e.atackData = new cProcessAtack(e.turnAtackAbilities, card.defendAbilities);
             var a = e.atackData;
 
             if (a.missAtack != true && e.isDead == false) {
@@ -76,7 +76,7 @@ class cBattle {
     public endTurn() {
         //define next turn enemy abilities
         this.arrayEnemy.forEach(e => {
-            e.defineAbilities();
+            e.defineTurnAbilities();
         });
 
         //next turn needed?
@@ -106,23 +106,15 @@ class cBattle {
 
         var data:any = {};
 
-        data.x = 570;
-        data.y = 490;
-        data.rectX = 420;
-        data.rectY = 440;
-        data.rectWidth = 360;
-        data.rectHeight = 600 - 440;
+        var enemyData:mEnemy;
 
-        this.arrayEnemy.push(new cEnemy(data));
+        enemyData = this.boat.arrayEnemyData[0];
 
-        data.x = 570;
-        data.y = 730;
-        data.rectX = 420;
-        data.rectY = 672;
-        data.rectWidth = 360;
-        data.rectHeight = 840 - 672;
+        this.arrayEnemy.push(new cEnemy(enemyData, 570, 490));
 
-        this.arrayEnemy.push(new cEnemy(data));
+        enemyData = this.boat.arrayEnemyData[0];
+
+        this.arrayEnemy.push(new cEnemy(enemyData, 570, 730));
 
     }
 

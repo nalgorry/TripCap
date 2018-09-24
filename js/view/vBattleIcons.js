@@ -1,13 +1,13 @@
 var vBattleIcons = (function () {
-    function vBattleIcons(scene, actorSprite, enemyContainer, isEnemy) {
+    function vBattleIcons(scene, actorSprite, actorContainer, isEnemy) {
         this.scene = scene;
         this.actorSprite = actorSprite;
-        this.enemyContainer = enemyContainer;
+        this.actorContainer = actorContainer;
         this.isEnemy = isEnemy;
         this.arrayDefSprite = [];
         this.arrayOffSprite = [];
         this.arrayIdAbility = [];
-        this.container = this.scene.add.container(this.enemyContainer.x, this.enemyContainer.y - this.actorSprite.height / 2 - 30);
+        this.container = this.scene.add.container(this.actorContainer.x, this.actorContainer.y - this.actorSprite.height / 2 - 30);
         //lets add some animation to the container
         this.moveTween = this.scene.tweens.add({
             targets: this.container,
@@ -17,7 +17,17 @@ var vBattleIcons = (function () {
             yoyo: true,
             repeat: -1
         });
+        this.initHitAnim('battle_crewHit');
+        this.initHitAnim('battle_boatHit');
     }
+    vBattleIcons.prototype.initHitAnim = function (animName) {
+        var config = {
+            key: animName,
+            frames: this.scene.anims.generateFrameNumbers(animName, { start: 0 }),
+            frameRate: 20
+        };
+        this.scene.anims.create(config);
+    };
     vBattleIcons.prototype.loadAtackIntention = function (data) {
         this.loadIddleIcon(data, this.arrayOffSprite);
     };
@@ -37,6 +47,32 @@ var vBattleIcons = (function () {
         }
         else if (data.length == 3) {
         }
+    };
+    vBattleIcons.prototype.checkDefIconAnim = function (damageData) {
+        if (damageData != undefined) {
+            //lets check if we have to animate the defence icons (if the do something)
+            if (damageData.boatDefended == true) {
+                this.animationDefIcon(enBattleAbilities.defendBoat);
+            }
+            if (damageData.crewDefended == true) {
+                this.animationDefIcon(enBattleAbilities.defendCrew);
+            }
+            if (damageData.missAtack == true) {
+                this.animationDefIcon(enBattleAbilities.dodge);
+            }
+            //lets put the hit animation 
+            if (damageData.crewDamage > 0) {
+                this.animateHit('battle_crewHit');
+            }
+            if (damageData.boatDamage > 0) {
+                this.animateHit('battle_boatHit');
+            }
+        }
+    };
+    vBattleIcons.prototype.animateHit = function (animName) {
+        var boom = this.scene.add.sprite(0, 0, animName);
+        boom.anims.play(animName);
+        this.actorContainer.add(boom);
     };
     vBattleIcons.prototype.activateAtackIcon = function (data) {
         this.loadIddleIcon(data, this.arrayOffSprite);

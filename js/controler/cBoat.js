@@ -3,7 +3,8 @@ var cBoat = (function () {
         var _this = this;
         //data of the trips
         this.tripNumber = 1;
-        this.arrayTripData = new Array();
+        this.arrayTripData = new Array(); //data de todos los viajes
+        this.arrayEnemyData = new Array(); //data de todos los posibles enemigos
         this.numberOfTrips = 0; //cantidad de viajes que hizo el barco
         // por ahorar las  ponemos aca, luego deberian venir de algun archivo o db
         this.sails = 100; //velas
@@ -25,12 +26,18 @@ var cBoat = (function () {
             _this.arrayTripData.push(event);
         });
         this.tripData = this.arrayTripData[0];
-        console.log(this.arrayTripData);
     }
     cBoat.prototype.nextTrip = function () {
         this.tripNumber += 1;
         this.numberOfTrips += 1;
         this.tripData = this.arrayTripData[this.tripNumber - 1];
+    };
+    cBoat.prototype.loadEnemyData = function (data) {
+        var _this = this;
+        data["enemys"].forEach(function (element) {
+            var enemy = new mEnemy(element);
+            _this.arrayEnemyData.push(enemy);
+        });
     };
     return cBoat;
 }());

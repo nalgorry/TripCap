@@ -1,62 +1,42 @@
 class cEnemy{
 
-    public maxMant:number = 100;
-    public maxCrew:number = 10;
-    public mant:number = 10;
-    public crew = 4;
-    public x:number;
-    public y:number;
-    public selRect:Phaser.Geom.Rectangle;
+    public mant:number;
+    public crew;
     public spriteName:string;
-    public avaibleAtackAbilities:cBattleAbility[] = [];
-    public avaibleDefenceAbilities:cBattleAbility[] = [];
-    public atackAbilities:cBattleAbility[] = [];
-    public defenceAbilities:cBattleAbility[] = [];
+    public turnAtackAbilities:cBattleAbility[] = [];
+    public turnDefenceAbilities:cBattleAbility[] = [];
     public isDead = false;
     public atackData:cProcessAtack; //the atack done but this enemy
     public damageData:cProcessAtack; //the atack done to this enemy
+    
 
-    constructor(data:any) {
+    constructor(public data:mEnemy, public x:number, public y:number) {
 
-        this.x  = data.x ;
-        this.y = data.y;
-        this.selRect = new Phaser.Geom.Rectangle(data.rectX, data.rectY, data.rectWidth, data.rectHeight);
+        
         this.spriteName = "enemy_1";
 
-        this.mant = Phaser.Math.Between(10, 50);
-        this.crew = Phaser.Math.Between(2, 10);
 
-        this.defineAvaibleAbilities();
+        this.mant = Phaser.Math.Between(1, data.maxMant);
+        this.crew = Phaser.Math.Between(1, data.maxCrew);
 
-        this.defineAbilities();
+        this.defineTurnAbilities();
     }
 
-    private defineAvaibleAbilities() {
-        this.avaibleAtackAbilities.push(new cBattleAbility(enBattleAbilities.arrows, 1));
-        this.avaibleAtackAbilities.push(new cBattleAbility(enBattleAbilities.cannons, 1));
-        this.avaibleAtackAbilities.push(new cBattleAbility(enBattleAbilities.axes, 1));
-        this.avaibleAtackAbilities.push(new cBattleAbility(enBattleAbilities.noAtack, 1));
+    public defineTurnAbilities() {
 
-        this.avaibleDefenceAbilities.push(new cBattleAbility(enBattleAbilities.defendBoat, 1));
-        this.avaibleDefenceAbilities.push(new cBattleAbility(enBattleAbilities.defendCrew, 1));
-        this.avaibleDefenceAbilities.push(new cBattleAbility(enBattleAbilities.defendBoat, 1));
-        this.avaibleDefenceAbilities.push(new cBattleAbility(enBattleAbilities.noDefense, 1));
+        //TODO this should use the % of each ability to chose
 
-    }
-
-    public defineAbilities() {
-
-        this.atackAbilities = [];
-        this.defenceAbilities = [];
+        this.turnAtackAbilities = [];
+        this.turnDefenceAbilities = [];
 
         this.atackData = undefined;
         this.damageData = undefined;
 
-        var rnd = Phaser.Math.Between(0, this.avaibleAtackAbilities.length - 1);
-        this.atackAbilities.push(this.avaibleAtackAbilities[rnd]);
+        var rnd = Phaser.Math.Between(0, this.data.offAbilities.length - 1);
+        this.turnAtackAbilities.push(this.data.offAbilities[rnd]);
 
-        var rnd = Phaser.Math.Between(0, this.avaibleDefenceAbilities.length - 1);
-        this.defenceAbilities.push(this.avaibleDefenceAbilities[rnd]);
+        var rnd = Phaser.Math.Between(0, this.data.defAbilities.length - 1);
+        this.turnDefenceAbilities.push(this.data.defAbilities[rnd]);
 
     }
 
