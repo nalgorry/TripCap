@@ -49,12 +49,19 @@ var battle = (function (_super) {
     battle.prototype.showTurnResults = function () {
         this.initTurnHideElements();
         this.showDefensiveSkills();
-        this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
-        this.time.delayedCall(3500, this.updateEnemies, [], this);
-        this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
-        this.time.delayedCall(5000, this.updateBoatDamage, [], this);
-        this.time.delayedCall(5500, this.hideIcons, [], this);
-        this.time.delayedCall(6000, this.endTurnShowElements, [], this);
+        var time = 0;
+        time += 1000;
+        this.time.delayedCall(time, this.showOwnAtackSkills, [], this);
+        time += 1000;
+        this.time.delayedCall(time, this.updateEnemies, [], this);
+        time += 500;
+        this.time.delayedCall(time, this.showEnemyAtackSkills, [], this);
+        time += 500;
+        this.time.delayedCall(time, this.updateBoatDamage, [], this);
+        time += 500;
+        this.time.delayedCall(time, this.hideIcons, [], this);
+        time += 500;
+        this.time.delayedCall(time, this.endTurnShowElements, [], this);
     };
     battle.prototype.hideIcons = function () {
         this.ownActionIcon.hideIddleIcon();
@@ -69,7 +76,7 @@ var battle = (function (_super) {
         this.initCards();
         //show iddle icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.loadAtackIntention(e.enemy.turnAtackAbilities);
+            e.showAtackIcon();
         });
         //lets check if we have to end the battle
         if (this.cBattle.battleEnd == true) {
@@ -115,13 +122,13 @@ var battle = (function (_super) {
         });
         //hide the intensions icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.hideIddleIcon();
+            //e.actionIcon.hideIddleIcon();
         });
     };
     battle.prototype.showEnemyAtackSkills = function () {
         //activate the atack icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.activateAtackIcon(e.enemy.turnAtackAbilities);
+            e.actionIcon.activateAtackIcon();
         });
     };
     battle.prototype.updateBoatDamage = function () {
@@ -163,7 +170,7 @@ var battle = (function (_super) {
         }
         //activate the atack icons
         this.arrayEnemy.forEach(function (e) {
-            e.actionIcon.activateDefensiveIcons(e.enemy.turnDefenceAbilities);
+            e.actionIcon.activateDefensiveIcons();
         });
     };
     battle.prototype.initEnemies = function () {

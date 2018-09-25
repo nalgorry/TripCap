@@ -10,29 +10,23 @@ class cBattleCard {
 
         data.abilities.forEach(e => {
 
-            switch (e.id) {
-                case enBattleAbilities.dodge:
-                case enBattleAbilities.defendCrew:
-                case enBattleAbilities.defendBoat:
-                    this.defendAbilities.push(new cBattleAbility(e.id, e.lvl));
-                break;
-                case enBattleAbilities.arrows:
-                case enBattleAbilities.cannons:
-                case enBattleAbilities.axes:
-                case enBattleAbilities.updateAtack:
-                    this.atackAbilities.push(new cBattleAbility(e.id, e.lvl));
-                break;
-            }
+            var ability = new cBattleAbility(e.id, e.lvl, 100, 10)
 
+            if (ability.isAtack == true) {
+                this.atackAbilities.push(ability);
+            } else if (ability.isDef == true) {
+                this.defendAbilities.push(ability);
+            }
+            
         });
 
         //lets put the no atack if needed
         if (this.atackAbilities.length == 0) {
-            this.atackAbilities.push(new cBattleAbility(enBattleAbilities.noAtack,1))
+            this.atackAbilities.push(new cBattleAbility(enBattleAbilities.noAtack,1, 100, 0))
         }
 
         if (this.defendAbilities.length == 0) {
-            this.defendAbilities.push(new cBattleAbility(enBattleAbilities.noDefense,1))
+            this.defendAbilities.push(new cBattleAbility(enBattleAbilities.noDefense,1, 100, 0))
         }
 
     }

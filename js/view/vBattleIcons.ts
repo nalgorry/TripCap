@@ -40,18 +40,27 @@ class vBattleIcons {
         this.scene.anims.create(config);
     }
 
-    public loadAtackIntention(data:cBattleAbility[]) {
-        this.loadIddleIcon(data, this.arrayOffSprite);
+    public loadIntention(data:cBattleAbility[]) {
+        this.loadIddleIcon(data);
     }
 
-    private loadIddleIcon(data:cBattleAbility[], toArray:Phaser.GameObjects.Sprite[]) {
+    private loadIddleIcon(data:cBattleAbility[]) {
+
+        var iconSprites:Phaser.GameObjects.Sprite[] = []
 
         //lets create one icon for each iconNumber
         data.forEach(e => {
             var sprite = this.scene.add.sprite(0, 0, 'battle_icons', e.id)
-            toArray.push(sprite);
 
+            if (e.isDef == true) {
+                this.arrayDefSprite.push(sprite)
+            } else if (e.isAtack == true) {
+                this.arrayOffSprite.push(sprite)
+            }
+            
             this.arrayIdAbility[e.id] = sprite;
+
+            iconSprites.push(sprite);
 
             this.container.add(sprite);
 
@@ -59,8 +68,8 @@ class vBattleIcons {
 
         //lets put the icons in the right place
         if (data.length == 2) {
-            toArray[0].x -= toArray[0].width/2 + 15;
-            toArray[1].x += toArray[1].width/2 + 15;
+            iconSprites[0].x -= iconSprites[0].width/2 + 15;
+            iconSprites[1].x += iconSprites[1].width/2 + 15;
         } else if (data.length == 3) {
 
         }
@@ -73,15 +82,15 @@ class vBattleIcons {
 
             //lets check if we have to animate the defence icons (if the do something)
             if (damageData.boatDefended == true) {
-                this.animationDefIcon(enBattleAbilities.defendBoat);
+                this.activateDefIcon(enBattleAbilities.defendBoat);
             }
 
             if (damageData.crewDefended == true) {
-                this.animationDefIcon(enBattleAbilities.defendCrew);
+                this.activateDefIcon(enBattleAbilities.defendCrew);
             }
 
             if (damageData.missAtack == true) {
-                this.animationDefIcon(enBattleAbilities.dodge);
+                this.activateDefIcon(enBattleAbilities.dodge);
             }
 
             //lets put the hit animation 
@@ -106,18 +115,23 @@ class vBattleIcons {
 
     }
 
-    public activateAtackIcon(data:cBattleAbility[]) {
+    public activateAtackIcon(data:cBattleAbility[] = undefined) {
 
-        this.loadIddleIcon(data, this.arrayOffSprite);
+        if (data != undefined){
+            this.loadIddleIcon(data);
+        }
 
-        this.scene.time.delayedCall(1000, this.animateOffIcon, [], this);
+        this.scene.time.delayedCall(500, this.animateOffIcon, [], this);
         
     }
 
-    public activateDefensiveIcons(data:cBattleAbility[]) {
-        this.loadIddleIcon(data, this.arrayDefSprite);
+    public activateDefensiveIcons(data:cBattleAbility[] = undefined) {
+        
+        if (data != undefined) {
+            this.loadIddleIcon(data);
+        }
 
-        this.scene.time.delayedCall(1000, this.animateDefIcon, [], this);
+        this.scene.time.delayedCall(100, this.animateDefIcon, [], this);
     }
 
     public hideIddleIcon() {
@@ -133,9 +147,7 @@ class vBattleIcons {
 
     }
 
-    public animationDefIcon(id:enBattleAbilities) {
-
-        console.log("llega hasta aca");
+    public activateDefIcon(id:enBattleAbilities) {
 
         var sprite = this.arrayIdAbility[id];
 

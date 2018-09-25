@@ -27,6 +27,8 @@ class vEnemy {
         this.sprite = this.scene.add.sprite(0, 0, this.enemy.data.spriteName);
         this.container.add(this.sprite);
 
+        this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container, true);
+
         this.showAtackIcon();
 
         //lest define the bars to show the health of the enemies
@@ -65,10 +67,11 @@ class vEnemy {
 
     }
 
-    private showAtackIcon() {
+    public showAtackIcon() {
 
-        this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container, true);
-        this.actionIcon.loadAtackIntention(this.enemy.turnAtackAbilities);
+        var allAbilities = this.enemy.turnDefenceAbilities.concat(this.enemy.turnAtackAbilities);
+
+        this.actionIcon.loadIntention(allAbilities);
 
     }
 

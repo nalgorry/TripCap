@@ -16,6 +16,26 @@ var cBattleAbility = (function () {
         this.lvl = lvl;
         this.prob = prob;
         this.value = value;
+        this.isAtack = false;
+        this.isDef = false;
+        this.defineAbilityType();
     }
+    cBattleAbility.prototype.defineAbilityType = function () {
+        switch (this.id) {
+            case enBattleAbilities.dodge:
+            case enBattleAbilities.defendCrew:
+            case enBattleAbilities.defendBoat:
+            case enBattleAbilities.noDefense:
+                this.isDef = true;
+                break;
+            case enBattleAbilities.arrows:
+            case enBattleAbilities.cannons:
+            case enBattleAbilities.axes:
+            case enBattleAbilities.updateAtack:
+            case enBattleAbilities.noAtack:
+                this.isAtack = true;
+                break;
+        }
+    };
     return cBattleAbility;
 }());

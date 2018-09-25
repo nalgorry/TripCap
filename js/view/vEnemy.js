@@ -9,6 +9,7 @@ var vEnemy = (function () {
         this.container = this.scene.add.container(this.enemy.x, this.enemy.y);
         this.sprite = this.scene.add.sprite(0, 0, this.enemy.data.spriteName);
         this.container.add(this.sprite);
+        this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container, true);
         this.showAtackIcon();
         //lest define the bars to show the health of the enemies
         this.mantBar = new vEnemyBar(this.scene, -76 - 10, this.sprite.height / 2 + 10, 0x1ab500, this.container, this.enemy.data.maxMant, this.enemy.mant);
@@ -24,8 +25,8 @@ var vEnemy = (function () {
         this.actionIcon.checkDefIconAnim(this.enemy.damageData);
     };
     vEnemy.prototype.showAtackIcon = function () {
-        this.actionIcon = new vBattleIcons(this.scene, this.sprite, this.container, true);
-        this.actionIcon.loadAtackIntention(this.enemy.turnAtackAbilities);
+        var allAbilities = this.enemy.turnDefenceAbilities.concat(this.enemy.turnAtackAbilities);
+        this.actionIcon.loadIntention(allAbilities);
     };
     vEnemy.prototype.killEnemy = function () {
         var t = this.scene.tweens.add({

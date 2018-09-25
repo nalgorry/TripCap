@@ -87,17 +87,26 @@ class battle extends Phaser.Scene{
 
         this.showDefensiveSkills();
 
-        this.time.delayedCall(2000, this.showOwnAtackSkills, [], this);
+        var time = 0 
 
-        this.time.delayedCall(3500, this.updateEnemies, [], this);
 
-        this.time.delayedCall(4000, this.showEnemyAtackSkills, [], this);
+        time += 1000;
+        this.time.delayedCall(time, this.showOwnAtackSkills, [], this);
 
-        this.time.delayedCall(5000, this.updateBoatDamage, [], this);
+        time += 1000;
+        this.time.delayedCall(time, this.updateEnemies, [], this);
 
-        this.time.delayedCall(5500, this.hideIcons, [], this);
+        time += 500;
+        this.time.delayedCall(time, this.showEnemyAtackSkills, [], this);
 
-        this.time.delayedCall(6000, this.endTurnShowElements, [], this);
+        time += 500;
+        this.time.delayedCall(time, this.updateBoatDamage, [], this);
+
+        time += 500;
+        this.time.delayedCall(time, this.hideIcons, [], this);
+
+        time += 500;
+        this.time.delayedCall(time, this.endTurnShowElements, [], this);
         
     }
 
@@ -123,7 +132,7 @@ class battle extends Phaser.Scene{
 
         //show iddle icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.loadAtackIntention(e.enemy.turnAtackAbilities);
+            e.showAtackIcon();
         })
 
         //lets check if we have to end the battle
@@ -189,7 +198,7 @@ class battle extends Phaser.Scene{
 
         //hide the intensions icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.hideIddleIcon();
+            //e.actionIcon.hideIddleIcon();
         })
 
 
@@ -200,7 +209,7 @@ class battle extends Phaser.Scene{
 
         //activate the atack icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.activateAtackIcon(e.enemy.turnAtackAbilities);
+            e.actionIcon.activateAtackIcon();
         })
 
 
@@ -262,7 +271,7 @@ class battle extends Phaser.Scene{
         } 
         //activate the atack icons
         this.arrayEnemy.forEach(e => {
-            e.actionIcon.activateDefensiveIcons(e.enemy.turnDefenceAbilities);
+            e.actionIcon.activateDefensiveIcons();
         })
 
     }

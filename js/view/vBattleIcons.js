@@ -28,22 +28,29 @@ var vBattleIcons = (function () {
         };
         this.scene.anims.create(config);
     };
-    vBattleIcons.prototype.loadAtackIntention = function (data) {
-        this.loadIddleIcon(data, this.arrayOffSprite);
+    vBattleIcons.prototype.loadIntention = function (data) {
+        this.loadIddleIcon(data);
     };
-    vBattleIcons.prototype.loadIddleIcon = function (data, toArray) {
+    vBattleIcons.prototype.loadIddleIcon = function (data) {
         var _this = this;
+        var iconSprites = [];
         //lets create one icon for each iconNumber
         data.forEach(function (e) {
             var sprite = _this.scene.add.sprite(0, 0, 'battle_icons', e.id);
-            toArray.push(sprite);
+            if (e.isDef == true) {
+                _this.arrayDefSprite.push(sprite);
+            }
+            else if (e.isAtack == true) {
+                _this.arrayOffSprite.push(sprite);
+            }
             _this.arrayIdAbility[e.id] = sprite;
+            iconSprites.push(sprite);
             _this.container.add(sprite);
         });
         //lets put the icons in the right place
         if (data.length == 2) {
-            toArray[0].x -= toArray[0].width / 2 + 15;
-            toArray[1].x += toArray[1].width / 2 + 15;
+            iconSprites[0].x -= iconSprites[0].width / 2 + 15;
+            iconSprites[1].x += iconSprites[1].width / 2 + 15;
         }
         else if (data.length == 3) {
         }
@@ -52,13 +59,13 @@ var vBattleIcons = (function () {
         if (damageData != undefined) {
             //lets check if we have to animate the defence icons (if the do something)
             if (damageData.boatDefended == true) {
-                this.animationDefIcon(enBattleAbilities.defendBoat);
+                this.activateDefIcon(enBattleAbilities.defendBoat);
             }
             if (damageData.crewDefended == true) {
-                this.animationDefIcon(enBattleAbilities.defendCrew);
+                this.activateDefIcon(enBattleAbilities.defendCrew);
             }
             if (damageData.missAtack == true) {
-                this.animationDefIcon(enBattleAbilities.dodge);
+                this.activateDefIcon(enBattleAbilities.dodge);
             }
             //lets put the hit animation 
             if (damageData.crewDamage > 0) {
@@ -75,12 +82,18 @@ var vBattleIcons = (function () {
         this.actorContainer.add(boom);
     };
     vBattleIcons.prototype.activateAtackIcon = function (data) {
-        this.loadIddleIcon(data, this.arrayOffSprite);
-        this.scene.time.delayedCall(1000, this.animateOffIcon, [], this);
+        if (data === void 0) { data = undefined; }
+        if (data != undefined) {
+            this.loadIddleIcon(data);
+        }
+        this.scene.time.delayedCall(500, this.animateOffIcon, [], this);
     };
     vBattleIcons.prototype.activateDefensiveIcons = function (data) {
-        this.loadIddleIcon(data, this.arrayDefSprite);
-        this.scene.time.delayedCall(1000, this.animateDefIcon, [], this);
+        if (data === void 0) { data = undefined; }
+        if (data != undefined) {
+            this.loadIddleIcon(data);
+        }
+        this.scene.time.delayedCall(100, this.animateDefIcon, [], this);
     };
     vBattleIcons.prototype.hideIddleIcon = function () {
         var _this = this;
@@ -93,8 +106,7 @@ var vBattleIcons = (function () {
             });
         });
     };
-    vBattleIcons.prototype.animationDefIcon = function (id) {
-        console.log("llega hasta aca");
+    vBattleIcons.prototype.activateDefIcon = function (id) {
         var sprite = this.arrayIdAbility[id];
         var t = this.scene.tweens.add({
             targets: sprite,
