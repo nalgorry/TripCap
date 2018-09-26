@@ -122,6 +122,9 @@ class preloader extends Phaser.Scene {
         this.load.image('ownShip', 'assets/battle/ownShip.png');    
         this.load.image('enemy_1', 'assets/battle/enemy/enemy_1.png');    
 
+        this.load.image('boatDamage', 'assets/battle/boatDamage.png');    
+        this.load.image('crewDamage', 'assets/battle/crewDamage.png');    
+
         
 
         //help sprites

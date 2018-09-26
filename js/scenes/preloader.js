@@ -111,6 +111,8 @@ var preloader = (function (_super) {
         this.load.spritesheet('battle_boatHit', 'assets/battle/boatHit.png', { frameHeight: 192, frameWidth: 192 });
         this.load.image('ownShip', 'assets/battle/ownShip.png');
         this.load.image('enemy_1', 'assets/battle/enemy/enemy_1.png');
+        this.load.image('boatDamage', 'assets/battle/boatDamage.png');
+        this.load.image('crewDamage', 'assets/battle/crewDamage.png');
         //help sprites
         this.load.image('help1', 'assets/help1.png');
         this.load.image('help2', 'assets/help2.png');

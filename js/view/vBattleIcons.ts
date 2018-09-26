@@ -95,23 +95,81 @@ class vBattleIcons {
 
             //lets put the hit animation 
             if (damageData.crewDamage > 0) {
-                this.animateHit('battle_crewHit');
+            
+                var delay = 0;
+                if (damageData.boatDamage > 0) {
+                    delay = 600;
+                }
+
+                this.animateHit('battle_crewHit', damageData.crewDamage,delay);
             }
 
             if (damageData.boatDamage > 0) {
-                this.animateHit('battle_boatHit');
+    
+                this.animateHit('battle_boatHit', damageData.boatDamage,0);
             }
 
         }
     }
 
-    private animateHit(animName:string) {
+    private animateHit(animName:string, damage:number, delay:number) {
     
+        //create the animation of the hit
         var boom = this.scene.add.sprite(0, 0, animName);
 
         boom.anims.play(animName);
 
         this.actorContainer.add(boom);
+
+        //lets show the damage done
+        if (animName == 'battle_boatHit') {
+            this.showDamage('boatDamage', damage, 60, 0);
+        } else if (animName == 'battle_crewHit') {
+            this.showDamage('crewDamage', damage, -60, delay);
+        }
+        
+
+    }
+
+    private showDamage(spriteName:string, damage:number, xOffset:number, delay:number) {
+
+        //lets create the container
+        var damContainer = this.scene.add.container(xOffset, 20);
+        this.actorContainer.add(damContainer);
+
+        //lets add a image of what was damage
+        var s = this.scene.add.sprite(0, 0, spriteName);
+        damContainer.add(s);
+
+        //lets show the damage value
+        var damText = this.scene.add.bitmapText(-40, 0, 'PfontRed', "-" + damage.toString() ,30);
+        damText.setOrigin(0.5);
+        damContainer.add(damText);
+
+        var t = this.scene.tweens.add({
+            targets: damContainer,
+            y: s.y - 40,
+            duration: 2500,
+            ease: 'Power2',
+            delay: delay
+        });
+
+        this.scene.time.delayedCall(2500 + delay, this.hideDamage, [damContainer], this);
+
+    }
+
+    private hideDamage(data:any) {
+
+        console.log(data);
+
+        var damContainer:Phaser.GameObjects.Container = data;
+
+        var t = this.scene.tweens.add({
+            targets: damContainer,
+            alpha: 0,
+            duration: 1200,
+            ease: 'Power2',
+        });
 
     }
 

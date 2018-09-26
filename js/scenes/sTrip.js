@@ -59,9 +59,11 @@ var sTrip = (function (_super) {
         //to test the end of the trip
         //this.tripEnd(); 
         //to test battles
-        this.scene.start('battle', this.trip);
+        this.time.delayedCall(500, function () {
+            this.scene.start('battle', this.trip);
+        }, [], this);
         //to shop fps
-        this.textFps = this.add.bitmapText(10, 10, 'Pfont', this.trip.healtyCrew.toString(), 20);
+        this.textFps = this.add.bitmapText(10, 10, 'Pfont', this.trip.healtyCrew.toString(), 25);
         this.textFps.setOrigin(0);
         //lets show the button to show the ship starts
         var a = this.add.sprite(85, 278, 'showShipStatsButton');
