@@ -4,6 +4,8 @@ class mEnemy {
     public spriteName:string;
     public maxMant:number;
     public maxCrew:number;
+    public minMant:number;
+    public minCrew:number;
     public offAbilities:cBattleAbility[] = [];
     public defAbilities:cBattleAbility[] = [];
 
@@ -14,8 +16,8 @@ class mEnemy {
         this.spriteName = JSONdata.spriteName;
         this.maxMant = JSONdata.maxMant;
         this.maxCrew = JSONdata.maxCrew;
-
-        console.log(JSONdata.offAbilities);
+        this.minMant = JSONdata.minMant;
+        this.minCrew = JSONdata.minCrew;
 
         JSONdata.offAbilities.forEach(e => {
             this.offAbilities.push(new cBattleAbility(e.id, e.lvl, e.prob, e.value))

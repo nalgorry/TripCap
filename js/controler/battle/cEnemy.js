@@ -6,9 +6,8 @@ var cEnemy = (function () {
         this.turnAtackAbilities = [];
         this.turnDefenceAbilities = [];
         this.isDead = false;
-        this.spriteName = "enemy_1";
-        this.mant = Phaser.Math.Between(1, data.maxMant);
-        this.crew = Phaser.Math.Between(1, data.maxCrew);
+        this.mant = Phaser.Math.Between(data.minMant, data.maxMant);
+        this.crew = Phaser.Math.Between(data.minCrew, data.maxCrew);
         this.defineTurnAbilities();
     }
     cEnemy.prototype.defineTurnAbilities = function () {
@@ -17,10 +16,22 @@ var cEnemy = (function () {
         this.turnDefenceAbilities = [];
         this.atackData = undefined;
         this.damageData = undefined;
-        var rnd = Phaser.Math.Between(0, this.data.offAbilities.length - 1);
-        this.turnAtackAbilities.push(this.data.offAbilities[rnd]);
-        var rnd = Phaser.Math.Between(0, this.data.defAbilities.length - 1);
-        this.turnDefenceAbilities.push(this.data.defAbilities[rnd]);
+        //lets define the new abilites
+        this.turnAtackAbilities.push(this.selectRandomAbility(this.data.offAbilities));
+        this.turnDefenceAbilities.push(this.selectRandomAbility(this.data.defAbilities));
+    };
+    cEnemy.prototype.selectRandomAbility = function (array) {
+        var selectedResult;
+        var rand = Phaser.Math.Between(0, 100);
+        var probAcum = 0;
+        array.some(function (element) {
+            probAcum += element.prob;
+            if (rand <= probAcum) {
+                selectedResult = element;
+                return true; //this stop the loop
+            }
+        });
+        return selectedResult;
     };
     return cEnemy;
 }());

@@ -29,9 +29,9 @@ var vBattleIcons = (function () {
         this.scene.anims.create(config);
     };
     vBattleIcons.prototype.loadIntention = function (data) {
-        this.loadIddleIcon(data);
+        this.loadIddleIcon(data, true);
     };
-    vBattleIcons.prototype.loadIddleIcon = function (data) {
+    vBattleIcons.prototype.loadIddleIcon = function (data, showSplitCircle) {
         var _this = this;
         var iconSprites = [];
         //lets create one icon for each iconNumber
@@ -47,6 +47,11 @@ var vBattleIcons = (function () {
             iconSprites.push(sprite);
             _this.container.add(sprite);
         });
+        //show a circle to split enemy intentions
+        if (showSplitCircle == true) {
+            var circle = this.scene.add.circle(0, 0, 5, 0x6666ff);
+            this.container.add(circle);
+        }
         //lets put the icons in the right place
         if (data.length == 2) {
             iconSprites[0].x -= iconSprites[0].width / 2 + 15;
@@ -126,14 +131,14 @@ var vBattleIcons = (function () {
     vBattleIcons.prototype.activateAtackIcon = function (data) {
         if (data === void 0) { data = undefined; }
         if (data != undefined) {
-            this.loadIddleIcon(data);
+            this.loadIddleIcon(data, false);
         }
         this.scene.time.delayedCall(500, this.animateOffIcon, [], this);
     };
     vBattleIcons.prototype.activateDefensiveIcons = function (data) {
         if (data === void 0) { data = undefined; }
         if (data != undefined) {
-            this.loadIddleIcon(data);
+            this.loadIddleIcon(data, false);
         }
         this.scene.time.delayedCall(100, this.animateDefIcon, [], this);
     };

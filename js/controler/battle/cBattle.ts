@@ -6,6 +6,7 @@ class cBattle {
     private avaibleCrew:number; //cree with decimals 
 
     public arrayEnemy:cEnemy[] = [];
+    public arrayFights:mFights[] = [];
     private arrayCardsData:cBattleCard[] = [];
 
     public battleEnd:boolean = false;
@@ -16,11 +17,18 @@ class cBattle {
         public scene:Phaser.Scene) {
 
             this.arrayAvaibleCards = this.allPosibleCards.slice();
+            this.initFights();
             this.initEnemy();
             this.initCardsTypes();
 
             this.avaibleCrew = this.trip.healtyCrew;
 
+    }
+
+    private initFights() {
+        this.arrayFights.push(new mFights([0,0]));
+        this.arrayFights.push(new mFights([1]));
+        this.arrayFights.push(new mFights([2]));
     }
 
     public doTurn(card:cBattleCard, target:cEnemy) {
@@ -107,15 +115,27 @@ class cBattle {
         var data:any = {};
 
         var enemyData:mEnemy;
+        
+        var rnd = Phaser.Math.Between(0, this.arrayFights.length -1);
 
-        enemyData = this.boat.arrayEnemyData[0];
+        var fight = this.arrayFights[rnd];
 
-        this.arrayEnemy.push(new cEnemy(enemyData, 570, 490));
 
-        enemyData = this.boat.arrayEnemyData[0];
+        if (fight.numberOfEnemys == 1) {
+            //one enemy 
+            enemyData = this.boat.arrayEnemyData[fight.idEnemy[0]];
+            this.arrayEnemy.push(new cEnemy(enemyData, 570, 610));
+        } else if  (fight.numberOfEnemys == 2) {
+            //two enemies
+            enemyData = this.boat.arrayEnemyData[fight.idEnemy[0]];
+            this.arrayEnemy.push(new cEnemy(enemyData, 570, 490));
 
-        this.arrayEnemy.push(new cEnemy(enemyData, 570, 730));
+            enemyData = this.boat.arrayEnemyData[fight.idEnemy[1]];
+            this.arrayEnemy.push(new cEnemy(enemyData, 570, 730));
 
+        }
+
+        
     }
 
     public getSelectedCards():cBattleCard[] {

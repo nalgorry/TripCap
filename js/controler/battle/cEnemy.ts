@@ -2,7 +2,6 @@ class cEnemy{
 
     public mant:number;
     public crew;
-    public spriteName:string;
     public turnAtackAbilities:cBattleAbility[] = [];
     public turnDefenceAbilities:cBattleAbility[] = [];
     public isDead = false;
@@ -12,12 +11,8 @@ class cEnemy{
 
     constructor(public data:mEnemy, public x:number, public y:number) {
 
-        
-        this.spriteName = "enemy_1";
-
-
-        this.mant = Phaser.Math.Between(1, data.maxMant);
-        this.crew = Phaser.Math.Between(1, data.maxCrew);
+        this.mant = Phaser.Math.Between(data.minMant, data.maxMant);
+        this.crew = Phaser.Math.Between(data.minCrew, data.maxCrew);
 
         this.defineTurnAbilities();
     }
@@ -32,12 +27,27 @@ class cEnemy{
         this.atackData = undefined;
         this.damageData = undefined;
 
-        var rnd = Phaser.Math.Between(0, this.data.offAbilities.length - 1);
-        this.turnAtackAbilities.push(this.data.offAbilities[rnd]);
+        //lets define the new abilites
+        this.turnAtackAbilities.push(this.selectRandomAbility(this.data.offAbilities));
+        this.turnDefenceAbilities.push(this.selectRandomAbility(this.data.defAbilities));
 
-        var rnd = Phaser.Math.Between(0, this.data.defAbilities.length - 1);
-        this.turnDefenceAbilities.push(this.data.defAbilities[rnd]);
+    }
 
+    private selectRandomAbility(array:cBattleAbility[]):cBattleAbility {
+        var selectedResult:cBattleAbility;
+        var rand = Phaser.Math.Between(0, 100);
+        var probAcum:number = 0;
+        
+        array.some(function(element) {
+            probAcum += element.prob;
+            
+            if (rand  <= probAcum  ) {
+                selectedResult = element;
+                return true //this stop the loop
+            }
+        });
+
+        return selectedResult
     }
 
 

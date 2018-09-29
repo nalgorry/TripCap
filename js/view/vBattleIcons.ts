@@ -41,10 +41,10 @@ class vBattleIcons {
     }
 
     public loadIntention(data:cBattleAbility[]) {
-        this.loadIddleIcon(data);
+        this.loadIddleIcon(data, true);
     }
 
-    private loadIddleIcon(data:cBattleAbility[]) {
+    private loadIddleIcon(data:cBattleAbility[], showSplitCircle:boolean) {
 
         var iconSprites:Phaser.GameObjects.Sprite[] = []
 
@@ -65,6 +65,12 @@ class vBattleIcons {
             this.container.add(sprite);
 
         });
+
+        //show a circle to split enemy intentions
+        if (showSplitCircle == true) {
+            var circle = this.scene.add.circle(0, 0, 5, 0x6666ff);
+            this.container.add(circle);
+        }
 
         //lets put the icons in the right place
         if (data.length == 2) {
@@ -176,7 +182,7 @@ class vBattleIcons {
     public activateAtackIcon(data:cBattleAbility[] = undefined) {
 
         if (data != undefined){
-            this.loadIddleIcon(data);
+            this.loadIddleIcon(data, false);
         }
 
         this.scene.time.delayedCall(500, this.animateOffIcon, [], this);
@@ -186,7 +192,7 @@ class vBattleIcons {
     public activateDefensiveIcons(data:cBattleAbility[] = undefined) {
         
         if (data != undefined) {
-            this.loadIddleIcon(data);
+            this.loadIddleIcon(data, false);
         }
 
         this.scene.time.delayedCall(100, this.animateDefIcon, [], this);

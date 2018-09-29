@@ -7,7 +7,8 @@ var mEnemy = (function () {
         this.spriteName = JSONdata.spriteName;
         this.maxMant = JSONdata.maxMant;
         this.maxCrew = JSONdata.maxCrew;
-        console.log(JSONdata.offAbilities);
+        this.minMant = JSONdata.minMant;
+        this.minCrew = JSONdata.minCrew;
         JSONdata.offAbilities.forEach(function (e) {
             _this.offAbilities.push(new cBattleAbility(e.id, e.lvl, e.prob, e.value));
         });

@@ -3,7 +3,6 @@ var vEnemy = (function () {
         this.scene = scene;
         this.enemy = enemy;
         this.initEnemy();
-        console.log(this);
     }
     vEnemy.prototype.initEnemy = function () {
         this.container = this.scene.add.container(this.enemy.x, this.enemy.y);

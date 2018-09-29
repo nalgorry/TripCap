@@ -16,9 +16,6 @@ class vEnemy {
 
             this.initEnemy();
 
-            console.log(this);
-
-
     }
 
     private initEnemy() { 

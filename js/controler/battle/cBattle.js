@@ -6,13 +6,20 @@ var cBattle = (function () {
         this.arrayAvaibleCards = Array();
         this.allPosibleCards = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
         this.arrayEnemy = [];
+        this.arrayFights = [];
         this.arrayCardsData = [];
         this.battleEnd = false;
         this.arrayAvaibleCards = this.allPosibleCards.slice();
+        this.initFights();
         this.initEnemy();
         this.initCardsTypes();
         this.avaibleCrew = this.trip.healtyCrew;
     }
+    cBattle.prototype.initFights = function () {
+        this.arrayFights.push(new mFights([0, 0]));
+        this.arrayFights.push(new mFights([1]));
+        this.arrayFights.push(new mFights([2]));
+    };
     cBattle.prototype.doTurn = function (card, target) {
         //Own atack first
         if (target != undefined) {
@@ -74,10 +81,20 @@ var cBattle = (function () {
     cBattle.prototype.initEnemy = function () {
         var data = {};
         var enemyData;
-        enemyData = this.boat.arrayEnemyData[0];
-        this.arrayEnemy.push(new cEnemy(enemyData, 570, 490));
-        enemyData = this.boat.arrayEnemyData[0];
-        this.arrayEnemy.push(new cEnemy(enemyData, 570, 730));
+        var rnd = Phaser.Math.Between(0, this.arrayFights.length - 1);
+        var fight = this.arrayFights[rnd];
+        if (fight.numberOfEnemys == 1) {
+            //one enemy 
+            enemyData = this.boat.arrayEnemyData[fight.idEnemy[0]];
+            this.arrayEnemy.push(new cEnemy(enemyData, 570, 610));
+        }
+        else if (fight.numberOfEnemys == 2) {
+            //two enemies
+            enemyData = this.boat.arrayEnemyData[fight.idEnemy[0]];
+            this.arrayEnemy.push(new cEnemy(enemyData, 570, 490));
+            enemyData = this.boat.arrayEnemyData[fight.idEnemy[1]];
+            this.arrayEnemy.push(new cEnemy(enemyData, 570, 730));
+        }
     };
     cBattle.prototype.getSelectedCards = function () {
         var arrayCards = new Array();

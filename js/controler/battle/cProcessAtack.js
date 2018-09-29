@@ -57,7 +57,6 @@ var cProcessAtack = (function () {
                 }
             });
             this.processDefense();
-            console.log(this);
         }
         //lets correct the crew atack 
         this.crewDamage = this.crewDamage / 10;
@@ -81,97 +80,23 @@ var cProcessAtack = (function () {
         }
     };
     cProcessAtack.prototype.activateCannons = function (data) {
-        switch (data.lvl) {
-            case 1:
-                this.boatDamage = 12;
-                break;
-            case 2:
-                this.boatDamage = 18;
-                break;
-            case 3:
-                this.boatDamage = 22;
-                break;
-            default:
-                break;
-        }
+        this.boatDamage = data.lvl * 10;
     };
     cProcessAtack.prototype.activateArrows = function (data) {
-        switch (data.lvl) {
-            case 1:
-                this.crewDamage = 12;
-                break;
-            case 2:
-                this.crewDamage = 18;
-                break;
-            case 3:
-                this.crewDamage = 22;
-                break;
-            default:
-                break;
-        }
+        this.crewDamage = data.lvl * 10;
     };
     cProcessAtack.prototype.activateAxes = function (data) {
-        switch (data.lvl) {
-            case 1:
-                this.boatDamage = 8;
-                this.crewDamage = 8;
-                break;
-            case 2:
-                this.boatDamage = 12;
-                this.crewDamage = 12;
-                break;
-            case 3:
-                this.boatDamage = 16;
-                this.crewDamage = 16;
-                break;
-            default:
-                break;
-        }
+        this.crewDamage = data.lvl * 5;
+        this.boatDamage = data.lvl * 5;
     };
     cProcessAtack.prototype.activateDodge = function (data) {
-        switch (data.lvl) {
-            case 1:
-                this.missPorc = 0.2;
-                break;
-            case 2:
-                this.missPorc = 0.3;
-                break;
-            case 3:
-                this.missPorc = 0.4;
-                break;
-            default:
-                break;
-        }
+        this.missPorc = 0.2 + data.lvl * 0.05;
     };
     cProcessAtack.prototype.activateCrewDeff = function (data) {
-        switch (data.lvl) {
-            case 1:
-                this.crewDefense = 10;
-                break;
-            case 2:
-                this.crewDefense = 15;
-                break;
-            case 3:
-                this.crewDefense = 20;
-                break;
-            default:
-                break;
-        }
+        this.crewDefense = data.lvl * 8;
     };
     cProcessAtack.prototype.activateBoatDeff = function (data) {
-        switch (data.lvl) {
-            case 1:
-                this.boatDefense = 10;
-                break;
-            case 2:
-                this.boatDefense = 15;
-                break;
-            case 3:
-                this.boatDefense = 20;
-                break;
-            default:
-                break;
-        }
+        this.boatDefense = data.lvl * 8;
     };
     return cProcessAtack;
 }());
