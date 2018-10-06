@@ -1,9 +1,9 @@
 class vBattleIcons {
 
     public container:Phaser.GameObjects.Container;
-    public arrayDefSprite:Phaser.GameObjects.Sprite[] = [];
-    public arrayOffSprite:Phaser.GameObjects.Sprite[] = [];
-    public arrayIdAbility:Phaser.GameObjects.Sprite[] = [];
+    public arrayDefSprite:vBattleAbility[] = [];
+    public arrayOffSprite:vBattleAbility[] = [];
+    public arrayIdAbility:vBattleAbility[] = [];
 
     private moveTween:Phaser.Tweens.Tween;
 
@@ -41,41 +41,36 @@ class vBattleIcons {
     }
 
     public loadIntention(data:cBattleAbility[]) {
-        this.loadIddleIcon(data, true);
+        this.loadIddleIcon(data);
     }
 
-    private loadIddleIcon(data:cBattleAbility[], showSplitCircle:boolean) {
+    private loadIddleIcon(data:cBattleAbility[]) {
 
-        var iconSprites:Phaser.GameObjects.Sprite[] = []
+        var iconSprites:vBattleAbility[] = []
 
         //lets create one icon for each iconNumber
         data.forEach(e => {
-            var sprite = this.scene.add.sprite(0, 0, 'battle_icons', e.id)
+
+            var vAbility = new vBattleAbility(this.scene, 0, 0, 'battle_idle_icons', e )
 
             if (e.isDef == true) {
-                this.arrayDefSprite.push(sprite)
+                this.arrayDefSprite.push(vAbility)
             } else if (e.isAtack == true) {
-                this.arrayOffSprite.push(sprite)
+                this.arrayOffSprite.push(vAbility)
             }
             
-            this.arrayIdAbility[e.id] = sprite;
+            this.arrayIdAbility[e.id] = vAbility;
 
-            iconSprites.push(sprite);
+            iconSprites.push(vAbility);
 
-            this.container.add(sprite);
+            this.container.add(vAbility.cont);
 
         });
 
-        //show a circle to split enemy intentions
-        if (showSplitCircle == true) {
-            var circle = this.scene.add.circle(0, 0, 5, 0x6666ff);
-            this.container.add(circle);
-        }
-
         //lets put the icons in the right place
         if (data.length == 2) {
-            iconSprites[0].x -= iconSprites[0].width/2 + 15;
-            iconSprites[1].x += iconSprites[1].width/2 + 15;
+            iconSprites[0].cont.x -= iconSprites[0].sprite.width/2 + 15;
+            iconSprites[1].cont.x += iconSprites[1].sprite.width/2 + 15;
         } else if (data.length == 3) {
 
         }
@@ -166,8 +161,6 @@ class vBattleIcons {
 
     private hideDamage(data:any) {
 
-        console.log(data);
-
         var damContainer:Phaser.GameObjects.Container = data;
 
         var t = this.scene.tweens.add({
@@ -182,7 +175,7 @@ class vBattleIcons {
     public activateAtackIcon(data:cBattleAbility[] = undefined) {
 
         if (data != undefined){
-            this.loadIddleIcon(data, false);
+            this.loadIddleIcon(data);
         }
 
         this.scene.time.delayedCall(500, this.animateOffIcon, [], this);
@@ -192,7 +185,7 @@ class vBattleIcons {
     public activateDefensiveIcons(data:cBattleAbility[] = undefined) {
         
         if (data != undefined) {
-            this.loadIddleIcon(data, false);
+            this.loadIddleIcon(data);
         }
 
         this.scene.time.delayedCall(100, this.animateDefIcon, [], this);
@@ -202,7 +195,7 @@ class vBattleIcons {
 
         this.arrayOffSprite.forEach(e => { 
             this.scene.tweens.add({
-                targets: e,
+                targets: e.cont,
                 alpha: 0,
                 duration: 200,
                 ease: 'Power2'
@@ -213,10 +206,10 @@ class vBattleIcons {
 
     public activateDefIcon(id:enBattleAbilities) {
 
-        var sprite = this.arrayIdAbility[id];
+        var cont = this.arrayIdAbility[id].cont;
 
         var t = this.scene.tweens.add({
-            targets: sprite,
+            targets: cont,
             scaleX: 1.5,
             scaleY: 1.5,
             duration: 400,
@@ -224,7 +217,7 @@ class vBattleIcons {
         });
 
         var t = this.scene.tweens.add({
-            targets: sprite,
+            targets: cont,
             scaleX: 1,
             scaleY: 1,
             duration: 400,
@@ -245,12 +238,10 @@ class vBattleIcons {
             xActor = + this.actorSprite.width / 2
         }
 
-        console.log(xActor);
-
         this.arrayDefSprite.forEach(e => {
 
             var t = this.scene.tweens.add({
-                targets: this.arrayDefSprite ,
+                targets: e.cont ,
                 x: xActor,
                 duration: 500,
                 ease: 'Power2'
@@ -262,10 +253,10 @@ class vBattleIcons {
 
     private  animateOffIcon() {
 
-        this.arrayOffSprite.forEach(sprite => {
+        this.arrayOffSprite.forEach(vAbility => {
 
             var t = this.scene.tweens.add({
-                targets: sprite,
+                targets: vAbility.cont,
                 scaleX: 1.5,
                 scaleY: 1.5,
                 duration: 400,
@@ -273,7 +264,7 @@ class vBattleIcons {
             });
 
             var t = this.scene.tweens.add({
-                targets: sprite,
+                targets: vAbility.cont,
                 alpha: 0,
                 duration: 300,
                 ease: 'Linear',
@@ -288,7 +279,7 @@ class vBattleIcons {
 
         this.arrayOffSprite.forEach(e => { 
             this.scene.tweens.add({
-                targets: e,
+                targets: e.cont,
                 alpha: 0,
                 duration: 300,
                 ease: 'Linear',
@@ -298,7 +289,7 @@ class vBattleIcons {
 
         this.arrayDefSprite.forEach(e => { 
             this.scene.tweens.add({
-                targets: e,
+                targets: e.cont,
                 alpha: 0,
                 duration: 300,
                 ease: 'Linear',

@@ -20,6 +20,7 @@ var battle = (function (_super) {
         this.initScene();
         this.initCards();
         this.initEnemies();
+        var a = new vUpdateCard(this, 360, 500, this.boat); //to test the update card
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
         this.events.removeAllListeners('dragStart');
@@ -237,7 +238,7 @@ var battle = (function (_super) {
         var selCards = this.cBattle.getSelectedCards();
         var i = 0;
         selCards.forEach(function (card) {
-            _this.cards.push(new vBattleCard(_this, 140 + 214 * i, 1076, card));
+            _this.cards.push(new vBattleCard(_this, 140 + 214 * i, 1076, card, true));
             i += 1;
         });
     };

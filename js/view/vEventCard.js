@@ -1,5 +1,5 @@
-var cEventCards = (function () {
-    function cEventCards(scene, x, y, idOption, text, descText) {
+var vEventCards = (function () {
+    function vEventCards(scene, x, y, idOption, text, descText) {
         this.scene = scene;
         this.x = x;
         this.y = y;
@@ -8,7 +8,7 @@ var cEventCards = (function () {
         this.descText = descText;
         this.initCard();
     }
-    cEventCards.prototype.initCard = function () {
+    vEventCards.prototype.initCard = function () {
         var _this = this;
         this.card = this.scene.add.container(this.x, this.y);
         var cardBack = this.scene.add.sprite(0, 0, "eventCard").setInteractive();
@@ -25,8 +25,8 @@ var cEventCards = (function () {
             yLine += 40;
         });
     };
-    cEventCards.prototype.clickDown = function () {
+    vEventCards.prototype.clickDown = function () {
         this.scene.events.emit('clickUp', this.idOption, this.card, this.descText);
     };
-    return cEventCards;
+    return vEventCards;
 }());

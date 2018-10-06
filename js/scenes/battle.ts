@@ -38,6 +38,8 @@ class battle extends Phaser.Scene{
         this.initCards();
         this.initEnemies();
 
+        var a = new vUpdateCard(this, 360, 500, this.boat); //to test the update card
+
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
         this.events.removeAllListeners('dragStart');
@@ -363,7 +365,7 @@ class battle extends Phaser.Scene{
 
         var i = 0;
         selCards.forEach(card => {
-            this.cards.push(new vBattleCard(this, 140 + 214 * i, 1076, card));
+            this.cards.push(new vBattleCard(this, 140 + 214 * i, 1076, card, true));
             i += 1;
         });
 

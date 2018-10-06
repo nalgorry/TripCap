@@ -29,33 +29,28 @@ var vBattleIcons = (function () {
         this.scene.anims.create(config);
     };
     vBattleIcons.prototype.loadIntention = function (data) {
-        this.loadIddleIcon(data, true);
+        this.loadIddleIcon(data);
     };
-    vBattleIcons.prototype.loadIddleIcon = function (data, showSplitCircle) {
+    vBattleIcons.prototype.loadIddleIcon = function (data) {
         var _this = this;
         var iconSprites = [];
         //lets create one icon for each iconNumber
         data.forEach(function (e) {
-            var sprite = _this.scene.add.sprite(0, 0, 'battle_icons', e.id);
+            var vAbility = new vBattleAbility(_this.scene, 0, 0, 'battle_idle_icons', e);
             if (e.isDef == true) {
-                _this.arrayDefSprite.push(sprite);
+                _this.arrayDefSprite.push(vAbility);
             }
             else if (e.isAtack == true) {
-                _this.arrayOffSprite.push(sprite);
+                _this.arrayOffSprite.push(vAbility);
             }
-            _this.arrayIdAbility[e.id] = sprite;
-            iconSprites.push(sprite);
-            _this.container.add(sprite);
+            _this.arrayIdAbility[e.id] = vAbility;
+            iconSprites.push(vAbility);
+            _this.container.add(vAbility.cont);
         });
-        //show a circle to split enemy intentions
-        if (showSplitCircle == true) {
-            var circle = this.scene.add.circle(0, 0, 5, 0x6666ff);
-            this.container.add(circle);
-        }
         //lets put the icons in the right place
         if (data.length == 2) {
-            iconSprites[0].x -= iconSprites[0].width / 2 + 15;
-            iconSprites[1].x += iconSprites[1].width / 2 + 15;
+            iconSprites[0].cont.x -= iconSprites[0].sprite.width / 2 + 15;
+            iconSprites[1].cont.x += iconSprites[1].sprite.width / 2 + 15;
         }
         else if (data.length == 3) {
         }
@@ -119,7 +114,6 @@ var vBattleIcons = (function () {
         this.scene.time.delayedCall(2500 + delay, this.hideDamage, [damContainer], this);
     };
     vBattleIcons.prototype.hideDamage = function (data) {
-        console.log(data);
         var damContainer = data;
         var t = this.scene.tweens.add({
             targets: damContainer,
@@ -131,14 +125,14 @@ var vBattleIcons = (function () {
     vBattleIcons.prototype.activateAtackIcon = function (data) {
         if (data === void 0) { data = undefined; }
         if (data != undefined) {
-            this.loadIddleIcon(data, false);
+            this.loadIddleIcon(data);
         }
         this.scene.time.delayedCall(500, this.animateOffIcon, [], this);
     };
     vBattleIcons.prototype.activateDefensiveIcons = function (data) {
         if (data === void 0) { data = undefined; }
         if (data != undefined) {
-            this.loadIddleIcon(data, false);
+            this.loadIddleIcon(data);
         }
         this.scene.time.delayedCall(100, this.animateDefIcon, [], this);
     };
@@ -146,7 +140,7 @@ var vBattleIcons = (function () {
         var _this = this;
         this.arrayOffSprite.forEach(function (e) {
             _this.scene.tweens.add({
-                targets: e,
+                targets: e.cont,
                 alpha: 0,
                 duration: 200,
                 ease: 'Power2'
@@ -154,16 +148,16 @@ var vBattleIcons = (function () {
         });
     };
     vBattleIcons.prototype.activateDefIcon = function (id) {
-        var sprite = this.arrayIdAbility[id];
+        var cont = this.arrayIdAbility[id].cont;
         var t = this.scene.tweens.add({
-            targets: sprite,
+            targets: cont,
             scaleX: 1.5,
             scaleY: 1.5,
             duration: 400,
             ease: 'Power2',
         });
         var t = this.scene.tweens.add({
-            targets: sprite,
+            targets: cont,
             scaleX: 1,
             scaleY: 1,
             duration: 400,
@@ -181,10 +175,9 @@ var vBattleIcons = (function () {
         else {
             xActor = +this.actorSprite.width / 2;
         }
-        console.log(xActor);
         this.arrayDefSprite.forEach(function (e) {
             var t = _this.scene.tweens.add({
-                targets: _this.arrayDefSprite,
+                targets: e.cont,
                 x: xActor,
                 duration: 500,
                 ease: 'Power2'
@@ -193,16 +186,16 @@ var vBattleIcons = (function () {
     };
     vBattleIcons.prototype.animateOffIcon = function () {
         var _this = this;
-        this.arrayOffSprite.forEach(function (sprite) {
+        this.arrayOffSprite.forEach(function (vAbility) {
             var t = _this.scene.tweens.add({
-                targets: sprite,
+                targets: vAbility.cont,
                 scaleX: 1.5,
                 scaleY: 1.5,
                 duration: 400,
                 ease: 'Linear',
             });
             var t = _this.scene.tweens.add({
-                targets: sprite,
+                targets: vAbility.cont,
                 alpha: 0,
                 duration: 300,
                 ease: 'Linear',
@@ -214,7 +207,7 @@ var vBattleIcons = (function () {
         var _this = this;
         this.arrayOffSprite.forEach(function (e) {
             _this.scene.tweens.add({
-                targets: e,
+                targets: e.cont,
                 alpha: 0,
                 duration: 300,
                 ease: 'Linear',
@@ -223,7 +216,7 @@ var vBattleIcons = (function () {
         });
         this.arrayDefSprite.forEach(function (e) {
             _this.scene.tweens.add({
-                targets: e,
+                targets: e.cont,
                 alpha: 0,
                 duration: 300,
                 ease: 'Linear',

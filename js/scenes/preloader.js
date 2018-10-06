@@ -102,10 +102,14 @@ var preloader = (function (_super) {
         //anim try!
         this.load.atlas('boat_anim', 'assets/anim/boat_anim.png', 'assets/anim/boat_texture.json');
         this.load.json('boat_data', 'assets/animations/boat_anim.json');
+        this.load.image('update_card_back', 'assets/update_card_back.png');
+        this.load.image('skip_card', 'assets/skip_card.png');
         //all the battle elements
         this.load.image('battle_back', 'assets/battle/back.png');
         this.load.spritesheet('battle_cards', 'assets/battle/cards.png', { frameHeight: 278, frameWidth: 194 });
-        this.load.spritesheet('battle_icons', 'assets/battle/icons.png', { frameHeight: 50, frameWidth: 50 });
+        this.load.spritesheet('battle_idle_icons', 'assets/battle/idle_icons.png', { frameHeight: 50, frameWidth: 50 });
+        this.load.spritesheet('battle_icons_size_1', 'assets/battle/battle_icons_size_1.png', { frameHeight: 110, frameWidth: 110 });
+        this.load.spritesheet('battle_icons_size_2', 'assets/battle/battle_icons_size_2.png', { frameHeight: 80, frameWidth: 80 });
         this.load.image('battle_refresh', 'assets/battle/refresh.png');
         this.load.spritesheet('battle_crewHit', 'assets/battle/crewHit.png', { frameHeight: 192, frameWidth: 192 });
         this.load.spritesheet('battle_boatHit', 'assets/battle/boatHit.png', { frameHeight: 192, frameWidth: 192 });
@@ -115,6 +119,7 @@ var preloader = (function (_super) {
         this.load.image('enemy_3', 'assets/battle/enemy/enemy_3.png');
         this.load.image('boatDamage', 'assets/battle/boatDamage.png');
         this.load.image('crewDamage', 'assets/battle/crewDamage.png');
+        this.load.image('battleCardBack', 'assets/battle/card_back.png');
         //help sprites
         this.load.image('help1', 'assets/help1.png');
         this.load.image('help2', 'assets/help2.png');

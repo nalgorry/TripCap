@@ -7,7 +7,6 @@ class cBattle {
 
     public arrayEnemy:cEnemy[] = [];
     public arrayFights:mFights[] = [];
-    private arrayCardsData:cBattleCard[] = [];
 
     public battleEnd:boolean = false;
 
@@ -19,7 +18,6 @@ class cBattle {
             this.arrayAvaibleCards = this.allPosibleCards.slice();
             this.initFights();
             this.initEnemy();
-            this.initCardsTypes();
 
             this.avaibleCrew = this.trip.healtyCrew;
 
@@ -97,19 +95,6 @@ class cBattle {
         });
     }
 
-    private initCardsTypes() {
-
-        var data = this.scene.cache.json.get('battleCards'); 
-
-        //load the event data
-        data["battleCards"].forEach(element => {
-
-        var card = new cBattleCard(element);
-        this.arrayCardsData.push(card);
-
-    });
-    }
-
     private initEnemy() {
 
         var data:any = {};
@@ -143,9 +128,9 @@ class cBattle {
         var arrayCards:cBattleCard[] = new Array();
 
         //select three free cards
-        arrayCards.push(this.arrayCardsData[this.selectCard()]);
-        arrayCards.push(this.arrayCardsData[this.selectCard()]);
-        arrayCards.push(this.arrayCardsData[this.selectCard()]);
+        arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
 
         //lets reset the avaible cards if necesary
         if (this.arrayAvaibleCards.length == 0) {

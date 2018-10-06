@@ -24,6 +24,8 @@ var startMenu = (function (_super) {
             var boat = new cBoat(data);
             var enemyData = this.cache.json.get('enemys');
             boat.loadEnemyData(enemyData);
+            var data = this.cache.json.get('battleCards');
+            boat.initBattleCards(data);
             this.scene.start('tripGlobal', boat);
             //to the the city faster
             //this.scene.start("city", boat)

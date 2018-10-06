@@ -7,6 +7,8 @@ class cBoat {
     public numberOfTrips:number = 0; //cantidad de viajes que hizo el barco
     public tripData:cTripData
 
+    public arrayCardsData:cBattleCard[] = []; //battle cards data!
+
     // por ahorar las  ponemos aca, luego deberian venir de algun archivo o db
     public sails = 100 //velas
     public rows = 100//remos
@@ -52,6 +54,17 @@ class cBoat {
 
         });
 
+    }
+
+    public initBattleCards(data:any) {
+
+        //load the event data
+        data["battleCards"].forEach(element => {
+
+        var card = new cBattleCard(element);
+        this.arrayCardsData.push(card);
+
+    });
     }
     
 }

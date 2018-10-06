@@ -37,12 +37,12 @@ var tripEvent = (function (_super) {
         //lets add the border of the selected option
         this.cardBorder = this.add.sprite(0, 0, "cardBorder");
         this.cardBorder.alpha = 0;
-        this.cards.push(new cEventCards(this, 126, 730, 1, this.eventData.getOption(1).title, this.eventData.getOption(1).desc));
+        this.cards.push(new vEventCards(this, 126, 730, 1, this.eventData.getOption(1).title, this.eventData.getOption(1).desc));
         //the third opcion is not always present
         if (this.eventData.getOption(3) != undefined) {
-            this.cards.push(new cEventCards(this, 352, 730, 3, this.eventData.getOption(3).title, this.eventData.getOption(3).desc));
+            this.cards.push(new vEventCards(this, 352, 730, 3, this.eventData.getOption(3).title, this.eventData.getOption(3).desc));
         }
-        this.cards.push(new cEventCards(this, 579, 730, 2, this.eventData.getOption(2).title, this.eventData.getOption(2).desc));
+        this.cards.push(new vEventCards(this, 579, 730, 2, this.eventData.getOption(2).title, this.eventData.getOption(2).desc));
         //lets check if they click a button
         this.events.on('clickUp', this.cardClick, this);
         //lets add a text to show the desc of the card 
@@ -103,7 +103,7 @@ var tripEvent = (function (_super) {
         this.trip.updateAfterEvent(this.result);
         this.scene.resume('sTrip');
         this.scene.get('sTrip').cameras.main.fadeIn(500, 255, 255, 255);
-        this.scene.stop();
+        this.scene.stop(this.scene.key);
     };
     tripEvent.prototype.cardClick = function (cardId, card, text) {
         this.cardBorder.setPosition(card.x, card.y);

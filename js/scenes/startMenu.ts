@@ -36,6 +36,10 @@ class startMenu extends Phaser.Scene {
 
             boat.loadEnemyData(enemyData);
 
+            var data = this.cache.json.get('battleCards'); 
+
+            boat.initBattleCards(data);
+
             this.scene.start('tripGlobal', boat);
 
             //to the the city faster

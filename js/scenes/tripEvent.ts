@@ -11,7 +11,7 @@ class tripEvent extends Phaser.Scene {
     private trip:cTrip;
     private result:cEventResult;
 
-    private cards:cEventCards[] = [];
+    private cards:vEventCards[] = [];
 
     create(data:any) {
 
@@ -53,12 +53,12 @@ class tripEvent extends Phaser.Scene {
         this.cardBorder = this.add.sprite(0, 0, "cardBorder");
         this.cardBorder.alpha = 0;
 
-        this.cards.push(new cEventCards(this, 126, 730, 1, this.eventData.getOption(1).title,this.eventData.getOption(1).desc));
+        this.cards.push(new vEventCards(this, 126, 730, 1, this.eventData.getOption(1).title,this.eventData.getOption(1).desc));
         //the third opcion is not always present
         if (this.eventData.getOption(3) != undefined) {
-            this.cards.push(new cEventCards(this, 352, 730, 3,this.eventData.getOption(3).title,this.eventData.getOption(3).desc));
+            this.cards.push(new vEventCards(this, 352, 730, 3,this.eventData.getOption(3).title,this.eventData.getOption(3).desc));
         }
-        this.cards.push(new cEventCards(this, 579, 730, 2, this.eventData.getOption(2).title, this.eventData.getOption(2).desc));
+        this.cards.push(new vEventCards(this, 579, 730, 2, this.eventData.getOption(2).title, this.eventData.getOption(2).desc));
 
         //lets check if they click a button
         this.events.on('clickUp',this.cardClick, this);
@@ -149,7 +149,7 @@ class tripEvent extends Phaser.Scene {
 
         this.scene.resume('sTrip');
         this.scene.get('sTrip').cameras.main.fadeIn(500, 255, 255, 255);
-        this.scene.stop();
+        this.scene.stop(this.scene.key);
 
     }
 

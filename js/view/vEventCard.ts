@@ -1,4 +1,4 @@
-class cEventCards {
+class vEventCards {
 
     private card:Phaser.GameObjects.Container;
 

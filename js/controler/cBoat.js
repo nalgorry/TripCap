@@ -6,6 +6,7 @@ var cBoat = (function () {
         this.arrayTripData = new Array(); //data de todos los viajes
         this.arrayEnemyData = new Array(); //data de todos los posibles enemigos
         this.numberOfTrips = 0; //cantidad de viajes que hizo el barco
+        this.arrayCardsData = []; //battle cards data!
         // por ahorar las  ponemos aca, luego deberian venir de algun archivo o db
         this.sails = 100; //velas
         this.rows = 100; //remos
@@ -37,6 +38,14 @@ var cBoat = (function () {
         data["enemys"].forEach(function (element) {
             var enemy = new mEnemy(element);
             _this.arrayEnemyData.push(enemy);
+        });
+    };
+    cBoat.prototype.initBattleCards = function (data) {
+        var _this = this;
+        //load the event data
+        data["battleCards"].forEach(function (element) {
+            var card = new cBattleCard(element);
+            _this.arrayCardsData.push(card);
         });
     };
     return cBoat;

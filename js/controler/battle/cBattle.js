@@ -7,12 +7,10 @@ var cBattle = (function () {
         this.allPosibleCards = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
         this.arrayEnemy = [];
         this.arrayFights = [];
-        this.arrayCardsData = [];
         this.battleEnd = false;
         this.arrayAvaibleCards = this.allPosibleCards.slice();
         this.initFights();
         this.initEnemy();
-        this.initCardsTypes();
         this.avaibleCrew = this.trip.healtyCrew;
     }
     cBattle.prototype.initFights = function () {
@@ -69,15 +67,6 @@ var cBattle = (function () {
             }
         });
     };
-    cBattle.prototype.initCardsTypes = function () {
-        var _this = this;
-        var data = this.scene.cache.json.get('battleCards');
-        //load the event data
-        data["battleCards"].forEach(function (element) {
-            var card = new cBattleCard(element);
-            _this.arrayCardsData.push(card);
-        });
-    };
     cBattle.prototype.initEnemy = function () {
         var data = {};
         var enemyData;
@@ -99,9 +88,9 @@ var cBattle = (function () {
     cBattle.prototype.getSelectedCards = function () {
         var arrayCards = new Array();
         //select three free cards
-        arrayCards.push(this.arrayCardsData[this.selectCard()]);
-        arrayCards.push(this.arrayCardsData[this.selectCard()]);
-        arrayCards.push(this.arrayCardsData[this.selectCard()]);
+        arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
         //lets reset the avaible cards if necesary
         if (this.arrayAvaibleCards.length == 0) {
             this.arrayAvaibleCards = this.allPosibleCards.slice();
