@@ -89,6 +89,10 @@ class cBattle {
                 this.battleEnd = false;
             }
         });
+
+        if (this.battleEnd == true) {
+            this.boat.numBattles += 1;
+        }
     }
 
     private initEnemy() {

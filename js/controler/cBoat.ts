@@ -21,8 +21,9 @@ class cBoat {
     public gold = 300//oro
     public kg_capacity = 200 //capacidad barco
     public attack = 1//ataque barco
-    public reputationPirate = 0 //reputación pirata
-    public reputationHeroe = 0 //reputación heroe
+    public reputationPirate = 0; //reputación pirata
+    public reputationHeroe = 0; //reputación heroe
+    public numBattles:number = 0; // the total number of battle played
 
     public maxUsedWind:number = 0.8; //maxima eficacia de las velas, items la van a poder mejoraor despues
 

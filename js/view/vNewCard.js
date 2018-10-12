@@ -9,7 +9,7 @@ var vNewCard = (function () {
     }
     vNewCard.prototype.init = function () {
         this.cont = this.scene.add.container(this.x, this.y);
-        var back = this.scene.add.sprite(0, 0, 'update_card_back');
+        var back = this.scene.add.sprite(0, 0, 'new_card_back');
         this.cont.add(back);
         //lets create the skip button
         this.button = this.scene.add.sprite(0, 210, 'skip_card');
@@ -41,7 +41,21 @@ var vNewCard = (function () {
         return card;
     };
     vNewCard.prototype.createAbility = function () {
-        var lvl = Phaser.Math.Between(1, 5);
+        //to control the new abilities power
+        var max = 0;
+        if (this.boat.numBattles < 3) {
+            max = 2;
+        }
+        else if (this.boat.numBattles < 5) {
+            max = 3;
+        }
+        else if (this.boat.numBattles < 5) {
+            max = 4;
+        }
+        else if (this.boat.numBattles < 10) {
+            max = 6;
+        }
+        var lvl = Phaser.Math.Between(1, max);
         //lets define the ability that cant be no atack no def
         var posibleAbi = Object.keys(enBattleAbilities).length / 2;
         do {

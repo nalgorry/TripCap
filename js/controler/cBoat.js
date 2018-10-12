@@ -21,6 +21,7 @@ var cBoat = (function () {
         this.attack = 1; //ataque barco
         this.reputationPirate = 0; //reputación pirata
         this.reputationHeroe = 0; //reputación heroe
+        this.numBattles = 0; // the total number of battle played
         this.maxUsedWind = 0.8; //maxima eficacia de las velas, items la van a poder mejoraor despues
         //load the event data
         data["TripData"].forEach(function (element) {

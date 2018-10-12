@@ -38,8 +38,13 @@ class battle extends Phaser.Scene{
         this.initCards();
         this.initEnemies();
 
-        var a = new vNewCard(this, 360, 500, this.boat); //to test the update card
-
+        var rnd = Phaser.Math.Between(0,1);
+        if (rnd == 0) {
+            var b = new vUpdateCard(this, 360, 500, this.boat); //to test the update card
+        } else {
+            var a = new vNewCard(this, 360, 500, this.boat); //to test the new card
+        }
+        
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
         this.events.removeAllListeners('dragStart');

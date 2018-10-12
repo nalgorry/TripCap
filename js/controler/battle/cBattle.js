@@ -63,6 +63,9 @@ var cBattle = (function () {
                 _this.battleEnd = false;
             }
         });
+        if (this.battleEnd == true) {
+            this.boat.numBattles += 1;
+        }
     };
     cBattle.prototype.initEnemy = function () {
         var enemyData;
