@@ -111,6 +111,9 @@ class preloader extends Phaser.Scene {
         this.load.json('boat_data', 'assets/animations/boat_anim.json');
 
         this.load.image('update_card_back', 'assets/update_card_back.png');    
+        this.load.image('new_card_back', 'assets/new_card_back.png');    
+
+        
         this.load.image('skip_card', 'assets/skip_card.png');    
         
 

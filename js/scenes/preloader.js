@@ -103,6 +103,7 @@ var preloader = (function (_super) {
         this.load.atlas('boat_anim', 'assets/anim/boat_anim.png', 'assets/anim/boat_texture.json');
         this.load.json('boat_data', 'assets/animations/boat_anim.json');
         this.load.image('update_card_back', 'assets/update_card_back.png');
+        this.load.image('new_card_back', 'assets/new_card_back.png');
         this.load.image('skip_card', 'assets/skip_card.png');
         //all the battle elements
         this.load.image('battle_back', 'assets/battle/back.png');

@@ -20,7 +20,7 @@ var battle = (function (_super) {
         this.initScene();
         this.initCards();
         this.initEnemies();
-        var a = new vUpdateCard(this, 360, 500, this.boat); //to test the update card
+        var a = new vNewCard(this, 360, 500, this.boat); //to test the update card
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
         this.events.removeAllListeners('dragStart');
@@ -51,7 +51,7 @@ var battle = (function (_super) {
         this.initTurnHideElements();
         this.showDefensiveSkills();
         var time = 0;
-        time += 1000;
+        time += 500;
         this.time.delayedCall(time, this.showOwnAtackSkills, [], this);
         time += 1000;
         this.time.delayedCall(time, this.updateEnemies, [], this);
@@ -238,6 +238,7 @@ var battle = (function (_super) {
         var selCards = this.cBattle.getSelectedCards();
         var i = 0;
         selCards.forEach(function (card) {
+            console.log(card);
             _this.cards.push(new vBattleCard(_this, 140 + 214 * i, 1076, card, true));
             i += 1;
         });

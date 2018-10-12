@@ -4,11 +4,10 @@ var cBattle = (function () {
         this.boat = boat;
         this.scene = scene;
         this.arrayAvaibleCards = Array();
-        this.allPosibleCards = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
         this.arrayEnemy = [];
         this.arrayFights = [];
         this.battleEnd = false;
-        this.arrayAvaibleCards = this.allPosibleCards.slice();
+        this.arrayAvaibleCards = this.boat.allPosibleCards.slice();
         this.initFights();
         this.initEnemy();
         this.avaibleCrew = this.trip.healtyCrew;
@@ -47,8 +46,6 @@ var cBattle = (function () {
         });
         this.trip.updateMant(-shipDamage);
         this.avaibleCrew -= crewDamage;
-        console.log(Math.round(this.avaibleCrew));
-        console.log(this.trip.healtyCrew);
         if (Math.round(this.avaibleCrew) < this.trip.healtyCrew) {
             this.trip.addSickCrew(this.trip.healtyCrew - Math.round(this.avaibleCrew));
         }
@@ -68,7 +65,6 @@ var cBattle = (function () {
         });
     };
     cBattle.prototype.initEnemy = function () {
-        var data = {};
         var enemyData;
         var rnd = Phaser.Math.Between(0, this.arrayFights.length - 1);
         var fight = this.arrayFights[rnd];
@@ -89,13 +85,19 @@ var cBattle = (function () {
         var arrayCards = new Array();
         //select three free cards
         arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        this.resetCard(arrayCards);
         arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        this.resetCard(arrayCards);
         arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        this.resetCard(arrayCards);
+        return arrayCards;
+    };
+    cBattle.prototype.resetCard = function (selectCards) {
         //lets reset the avaible cards if necesary
         if (this.arrayAvaibleCards.length == 0) {
-            this.arrayAvaibleCards = this.allPosibleCards.slice();
+            this.arrayAvaibleCards = this.boat.allPosibleCards.slice();
         }
-        return arrayCards;
+        //TODO: lets remove the selected cards to avoid duplicated cards
     };
     //select a free card
     cBattle.prototype.selectCard = function () {

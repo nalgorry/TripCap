@@ -1,19 +1,18 @@
 var cBattleCard = (function () {
-    function cBattleCard(data) {
+    function cBattleCard(id, abilities) {
         var _this = this;
         this.atackAbilities = [];
         this.defendAbilities = [];
         this.hasAtack = false;
         this.hasDef = false;
-        this.id = data.id;
-        data.abilities.forEach(function (e) {
-            var ability = new cBattleAbility(e.id, e.lvl, 100, 10);
-            if (ability.isAtack == true) {
-                _this.atackAbilities.push(ability);
+        this.id = id;
+        abilities.forEach(function (e) {
+            if (e.isAtack == true) {
+                _this.atackAbilities.push(e);
                 _this.hasAtack = true;
             }
-            else if (ability.isDef == true) {
-                _this.defendAbilities.push(ability);
+            else if (e.isDef == true) {
+                _this.defendAbilities.push(e);
                 _this.hasDef = true;
             }
         });

@@ -7,19 +7,17 @@ class cBattleCard {
     public hasAtack:boolean = false;
     public hasDef:boolean = false;
 
-    constructor(data:any) {
+    constructor(id:number, abilities:cBattleAbility[]) {
 
-        this.id = data.id;
+        this.id = id;
 
-        data.abilities.forEach(e => {
+        abilities.forEach(e => {
 
-            var ability = new cBattleAbility(e.id, e.lvl, 100, 10)
-
-            if (ability.isAtack == true) {
-                this.atackAbilities.push(ability);
+            if (e.isAtack == true) {
+                this.atackAbilities.push(e);
                 this.hasAtack = true;
-            } else if (ability.isDef == true) {
-                this.defendAbilities.push(ability);
+            } else if (e.isDef == true) {
+                this.defendAbilities.push(e);
                 this.hasDef = true;
             }
             

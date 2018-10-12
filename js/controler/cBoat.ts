@@ -8,6 +8,7 @@ class cBoat {
     public tripData:cTripData
 
     public arrayCardsData:cBattleCard[] = []; //battle cards data!
+    public allPosibleCards:number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; //the card that can be selected
 
     // por ahorar las  ponemos aca, luego deberian venir de algun archivo o db
     public sails = 100 //velas
@@ -56,12 +57,28 @@ class cBoat {
 
     }
 
+    public addNewCard(card:cBattleCard) {
+        this.arrayCardsData.push(card);
+        this.allPosibleCards.push(this.arrayCardsData.length - 1);
+
+        console.log(this.allPosibleCards);
+        console.log(this.arrayCardsData)
+    }
+
     public initBattleCards(data:any) {
 
         //load the event data
         data["battleCards"].forEach(element => {
 
-        var card = new cBattleCard(element);
+            var abilities:cBattleAbility[] = [];
+
+            element.abilities.forEach(e => {
+                var ability = new cBattleAbility(e.id, e.lvl, 100, 10)
+                abilities.push(ability);
+
+            });
+
+        var card = new cBattleCard(element.id, abilities);
         this.arrayCardsData.push(card);
 
     });

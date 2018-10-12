@@ -51,7 +51,15 @@ class vBattleIcons {
         //lets create one icon for each iconNumber
         data.forEach(e => {
 
-            var vAbility = new vBattleAbility(this.scene, 0, 0, 'battle_idle_icons', e )
+            var vAbility = new vBattleAbility(this.scene, 0, 0, 'battle_idle_icons', e );
+            vAbility.cont.alpha = 0;
+
+            var t = this.scene.tweens.add({
+                targets: vAbility.cont,
+                alpha: 1,
+                duration: 500,
+                ease: 'Power2',
+            });
 
             if (e.isDef == true) {
                 this.arrayDefSprite.push(vAbility)

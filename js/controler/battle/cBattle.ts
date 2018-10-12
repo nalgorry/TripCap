@@ -1,7 +1,6 @@
 class cBattle {
 
     private arrayAvaibleCards:number[] = Array();
-    private allPosibleCards:number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     private avaibleCrew:number; //cree with decimals 
 
@@ -15,7 +14,7 @@ class cBattle {
         public boat:cBoat, 
         public scene:Phaser.Scene) {
 
-            this.arrayAvaibleCards = this.allPosibleCards.slice();
+            this.arrayAvaibleCards = this.boat.allPosibleCards.slice();
             this.initFights();
             this.initEnemy();
 
@@ -70,9 +69,6 @@ class cBattle {
 
         this.avaibleCrew -= crewDamage;
 
-        console.log(Math.round(this.avaibleCrew));
-        console.log(this.trip.healtyCrew);
-
         if (Math.round(this.avaibleCrew) < this.trip.healtyCrew) {            
             this.trip.addSickCrew(this.trip.healtyCrew -Math.round(this.avaibleCrew))
         }
@@ -96,8 +92,6 @@ class cBattle {
     }
 
     private initEnemy() {
-
-        var data:any = {};
 
         var enemyData:mEnemy;
         
@@ -129,15 +123,24 @@ class cBattle {
 
         //select three free cards
         arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        this.resetCard(arrayCards);
         arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        this.resetCard(arrayCards);
         arrayCards.push(this.boat.arrayCardsData[this.selectCard()]);
+        this.resetCard(arrayCards);
+        
+        return arrayCards;
+
+    }
+
+    public resetCard(selectCards:cBattleCard[]) {
 
         //lets reset the avaible cards if necesary
         if (this.arrayAvaibleCards.length == 0) {
-            this.arrayAvaibleCards = this.allPosibleCards.slice();
+            this.arrayAvaibleCards = this.boat.allPosibleCards.slice();
         }
-        
-        return arrayCards;
+
+        //TODO: lets remove the selected cards to avoid duplicated cards
 
     }
 
@@ -149,7 +152,8 @@ class cBattle {
         var cardId =this.arrayAvaibleCards[rnd];
 
         this.arrayAvaibleCards.splice(rnd, 1);
-        
+
+       
         return cardId
 
     }

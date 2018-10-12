@@ -37,6 +37,13 @@ var vBattleIcons = (function () {
         //lets create one icon for each iconNumber
         data.forEach(function (e) {
             var vAbility = new vBattleAbility(_this.scene, 0, 0, 'battle_idle_icons', e);
+            vAbility.cont.alpha = 0;
+            var t = _this.scene.tweens.add({
+                targets: vAbility.cont,
+                alpha: 1,
+                duration: 500,
+                ease: 'Power2',
+            });
             if (e.isDef == true) {
                 _this.arrayDefSprite.push(vAbility);
             }
