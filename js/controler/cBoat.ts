@@ -16,7 +16,7 @@ class cBoat {
     public leaderSystem = 100 //decorado
     public cleanSystem = 100//Sistema Limpieza
     public foodSystem = 100//Sistema Comida
-    public mantSystem = 5//Protección
+    public mantSystem = 100//Protección
     public crewman = 16//tripulantes
     public gold = 300//oro
     public kg_capacity = 200 //capacidad barco

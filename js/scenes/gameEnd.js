@@ -14,6 +14,23 @@ var gameEnd = (function (_super) {
     gameEnd.prototype.init = function () {
         var back = this.add.image(0, 0, 'backGameEnd');
         back.setOrigin(0);
+        this.initScene();
+    };
+    gameEnd.prototype.initScene = function () {
+        //lets create the  button to restart the game
+        this.button = this.add.sprite(540, 1200, 'helpNextButton').setInteractive();
+        this.button.on('pointerdown', this.buttonDown, this);
+        this.button.on('pointerout', this.buttonOut, this);
+        this.button.on('pointerup', this.restartGame, this);
+    };
+    gameEnd.prototype.buttonDown = function () {
+        this.button.setTint(0x15536b);
+    };
+    gameEnd.prototype.buttonOut = function () {
+        this.button.clearTint();
+    };
+    gameEnd.prototype.restartGame = function () {
+        this.scene.start('startMenu');
     };
     return gameEnd;
 }(Phaser.Scene));
