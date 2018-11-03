@@ -138,6 +138,10 @@ class preloader extends Phaser.Scene {
         this.load.image('boatDamage', 'assets/battle/boatDamage.png');    
         this.load.image('crewDamage', 'assets/battle/crewDamage.png');    
         this.load.image('battleCardBack', 'assets/battle/card_back.png');    
+        this.load.image('battlehelpButton', 'assets/battle/helpButton.png');    
+        this.load.image('battlehelp_1', 'assets/battle/help_1.png');    
+
+        
         
 
         

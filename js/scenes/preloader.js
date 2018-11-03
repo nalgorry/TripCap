@@ -121,6 +121,8 @@ var preloader = (function (_super) {
         this.load.image('boatDamage', 'assets/battle/boatDamage.png');
         this.load.image('crewDamage', 'assets/battle/crewDamage.png');
         this.load.image('battleCardBack', 'assets/battle/card_back.png');
+        this.load.image('battlehelpButton', 'assets/battle/helpButton.png');
+        this.load.image('battlehelp_1', 'assets/battle/help_1.png');
         //help sprites
         this.load.image('help1', 'assets/help1.png');
         this.load.image('help2', 'assets/help2.png');

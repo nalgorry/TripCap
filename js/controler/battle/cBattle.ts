@@ -1,3 +1,7 @@
+class cNextTurnAbilities {
+    public atackMult = 1;
+}
+
 class cBattle {
 
     private arrayAvaibleCards:number[] = Array();
@@ -8,6 +12,8 @@ class cBattle {
     public arrayFights:mFights[] = [];
 
     public battleEnd:boolean = false;
+
+    public nextTurnAbilites:cNextTurnAbilities = new cNextTurnAbilities();
 
   
     constructor(public trip:cTrip,
@@ -32,7 +38,10 @@ class cBattle {
 
         //Own atack first
         if (target != undefined) {
-            target.damageData = new cProcessAtack(card.atackAbilities, target.turnDefenceAbilities);
+            target.damageData = new cProcessAtack(card.atackAbilities, target.turnDefenceAbilities, this.nextTurnAbilites);
+
+            //lets define the mod for the next turn atacks
+            this.nextTurnAbilites.atackMult = target.damageData.nextTurnAtackMult;
     
             var a = target.damageData;
             
@@ -53,7 +62,7 @@ class cBattle {
 
         this.arrayEnemy.forEach(e => {
 
-            e.atackData = new cProcessAtack(e.turnAtackAbilities, card.defendAbilities);
+            e.atackData = new cProcessAtack(e.turnAtackAbilities, card.defendAbilities, new cNextTurnAbilities());
             var a = e.atackData;
 
             if (a.missAtack != true && e.isDead == false) {

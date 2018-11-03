@@ -6,12 +6,13 @@ class cProcessAtack {
     public missAtack:boolean = false;
     public boatDefended:boolean = false;
     public crewDefended:boolean = false;
+    public nextTurnAtackMult = 1;
 
     private boatDefense:number = 0;
     private crewDefense:number = 0;
     private missPorc:number = 0;
 
-    public constructor(atackerAbilites:cBattleAbility[], defenderAbilites:cBattleAbility[]) {
+    public constructor(atackerAbilites:cBattleAbility[], defenderAbilites:cBattleAbility[], lastTurnData:cNextTurnAbilities) {
 
         //process the defense abilities
         defenderAbilites.forEach(e => {
@@ -31,7 +32,33 @@ class cProcessAtack {
             }
 
         });
-    
+     
+        //process the atack abilities
+        atackerAbilites.forEach( e => {
+            switch (e.id) {
+                case enBattleAbilities.cannons:
+                    this.activateCannons(e);
+                    break;
+                case enBattleAbilities.arrows:
+                    this.activateArrows(e);
+                    break;
+                case enBattleAbilities.axes:
+                    this.activateAxes(e);
+                    break;
+                case enBattleAbilities.updateAtack:
+                    this.updateAtack(e);
+                    break;
+            
+                default:
+                    break;
+            }
+        })
+
+        //lets process all the last atack abilitys
+        this.processLastTurnAbilities(lastTurnData);
+
+        this.calculateDefense();
+
         //lets check the miss 
         if (this.missPorc != 0) {
 
@@ -45,40 +72,22 @@ class cProcessAtack {
             }
 
         } 
-        
-        if (this.missAtack == false) {
-            //if not miss we continue
-            //process the atack abilities
-            atackerAbilites.forEach( e => {
-                switch (e.id) {
-                    case enBattleAbilities.cannons:
-                        this.activateCannons(e);
-                        break;
-                    case enBattleAbilities.arrows:
-                        this.activateArrows(e);
-                        break;
-                    case enBattleAbilities.axes:
-                        this.activateAxes(e);
-                        break;
-                    case enBattleAbilities.updateAtack:
-                        
-                        break;
-                
-                    default:
-                        break;
-                }
-            })
-
-            this.processDefense();
-
-        }
 
         //lets correct the crew atack 
         this.crewDamage = this.crewDamage / 10;
 
     }
 
-    private processDefense() {
+    private processLastTurnAbilities(lastTurnData:cNextTurnAbilities) {
+        this.crewDamage = this.crewDamage * lastTurnData.atackMult;
+        this.boatDamage = this.boatDamage * lastTurnData.atackMult;
+    }
+
+    private updateAtack(data:cBattleAbility) {
+        this.nextTurnAtackMult += 1 + 0.2 * (data.lvl - 1);
+    }
+
+    private calculateDefense() {
 
         //lets process the boat defense 
         if (this.boatDefense > 0 && this.boatDamage > 0) {
@@ -97,38 +106,38 @@ class cProcessAtack {
 
     private activateCannons(data:cBattleAbility) {
 
-        this.boatDamage = data.lvl * 10;
+        this.boatDamage += data.lvl * 10;
         
     }
 
     private activateArrows(data:cBattleAbility) {
 
-        this.crewDamage = data.lvl * 10;
+        this.crewDamage += data.lvl * 10;
         
     }
 
     private activateAxes(data:cBattleAbility) {
 
-        this.crewDamage = data.lvl * 5;
-        this.boatDamage = data.lvl * 5;
+        this.crewDamage += data.lvl * 5;
+        this.boatDamage += data.lvl * 5;
 
     }
 
     private activateDodge(data:cBattleAbility) {
 
-        this.missPorc = 0.2 + data.lvl * 0.05;
+        this.missPorc += 0.2 + data.lvl * 0.05;
 
     }
 
     private activateCrewDeff(data:cBattleAbility) {
 
-        this.crewDefense = data.lvl * 8;
+        this.crewDefense += data.lvl * 8;
 
     }
 
     private activateBoatDeff(data:cBattleAbility) {
 
-        this.boatDefense = data.lvl * 8;
+        this.boatDefense += data.lvl * 8;
 
     }
 

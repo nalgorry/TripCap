@@ -102,6 +102,11 @@ var battle = (function (_super) {
                 this.refreshCount += 1;
             }
         }
+        //lets check if we are still alive
+        if (this.trip.currentStatus[1 /* maintenance */] <= 0 || this.trip.healtyCrew <= 0) {
+            console.log("llega");
+            this.scene.start('gameEnd');
+        }
     };
     battle.prototype.battleEnd = function () {
         //lets continue or trip
@@ -265,6 +270,18 @@ var battle = (function (_super) {
         this.refreshText = this.add.bitmapText(600, 880 - 8, 'Pfont', '3', 40);
         this.refreshText.setOrigin(0.5);
         this.refreshText.alpha = 0;
+        //lets add the help button
+        //lets create the helpButton button
+        var helpButton;
+        helpButton = this.add.sprite(100, 880, 'battlehelpButton').setInteractive();
+        helpButton.setOrigin(0.5);
+        helpButton.on('pointerup', this.changeScene, this);
+    };
+    battle.prototype.changeScene = function () {
+        this.cameras.main.fade(500, 255, 255, 255);
+        this.time.delayedCall(500, function () {
+            this.scene.launch('battleHelp', this.trip);
+        }, [], this);
     };
     battle.prototype.refreshCards = function () {
         console.log(this.refreshCount);

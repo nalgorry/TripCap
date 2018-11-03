@@ -182,13 +182,20 @@ var vBattleIcons = (function () {
         else {
             xActor = +this.actorSprite.width / 2;
         }
+        var xOffset = 0;
+        //to check if we have more than one defence
+        if (this.arrayDefSprite.length > 1) {
+            xOffset = -60;
+            console.log("entra aca");
+        }
         this.arrayDefSprite.forEach(function (e) {
             var t = _this.scene.tweens.add({
                 targets: e.cont,
-                x: xActor,
+                x: xActor + xOffset,
                 duration: 500,
                 ease: 'Power2'
             });
+            xOffset += 80;
         });
     };
     vBattleIcons.prototype.animateOffIcon = function () {

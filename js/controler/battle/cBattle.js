@@ -1,3 +1,9 @@
+var cNextTurnAbilities = (function () {
+    function cNextTurnAbilities() {
+        this.atackMult = 1;
+    }
+    return cNextTurnAbilities;
+}());
 var cBattle = (function () {
     function cBattle(trip, boat, scene) {
         this.trip = trip;
@@ -7,6 +13,7 @@ var cBattle = (function () {
         this.arrayEnemy = [];
         this.arrayFights = [];
         this.battleEnd = false;
+        this.nextTurnAbilites = new cNextTurnAbilities();
         this.arrayAvaibleCards = this.boat.allPosibleCards.slice();
         this.initFights();
         this.initEnemy();
@@ -20,7 +27,9 @@ var cBattle = (function () {
     cBattle.prototype.doTurn = function (card, target) {
         //Own atack first
         if (target != undefined) {
-            target.damageData = new cProcessAtack(card.atackAbilities, target.turnDefenceAbilities);
+            target.damageData = new cProcessAtack(card.atackAbilities, target.turnDefenceAbilities, this.nextTurnAbilites);
+            //lets define the mod for the next turn atacks
+            this.nextTurnAbilites.atackMult = target.damageData.nextTurnAtackMult;
             var a = target.damageData;
             if (a.missAtack != true) {
                 target.crew -= a.crewDamage;
@@ -34,7 +43,7 @@ var cBattle = (function () {
         var shipDamage = 0;
         var crewDamage = 0;
         this.arrayEnemy.forEach(function (e) {
-            e.atackData = new cProcessAtack(e.turnAtackAbilities, card.defendAbilities);
+            e.atackData = new cProcessAtack(e.turnAtackAbilities, card.defendAbilities, new cNextTurnAbilities());
             var a = e.atackData;
             if (a.missAtack != true && e.isDead == false) {
                 shipDamage += a.boatDamage;
