@@ -1,12 +1,20 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var tripPause = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var tripPause = /** @class */ (function (_super) {
     __extends(tripPause, _super);
     function tripPause() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     tripPause.prototype.create = function (trip) {
         this.initScene();
@@ -33,7 +41,7 @@ var tripPause = (function (_super) {
         //restart the trip
         this.scene.resume('sTrip');
         this.scene.get('sTrip').cameras.main.fadeIn(500, 255, 255, 255);
-        this.scene.stop();
+        this.scene.stop(this.scene.key);
     };
     return tripPause;
 }(Phaser.Scene));

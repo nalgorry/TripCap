@@ -1,4 +1,4 @@
-var vBattleCard = (function () {
+var vBattleCard = /** @class */ (function () {
     function vBattleCard(scene, x, y, cCard, isDragable) {
         this.scene = scene;
         this.x = x;

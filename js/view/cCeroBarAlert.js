@@ -1,4 +1,4 @@
-var cCeroBarAlert = (function () {
+var cCeroBarAlert = /** @class */ (function () {
     function cCeroBarAlert(scene, data) {
         this.scene = scene;
         this.data = data;

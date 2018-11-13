@@ -7,7 +7,7 @@ var enItemCard;
     enItemCard[enItemCard["pipe"] = 4] = "pipe";
     enItemCard[enItemCard["gold"] = 5] = "gold";
 })(enItemCard || (enItemCard = {}));
-var cItemCard = (function () {
+var cItemCard = /** @class */ (function () {
     function cItemCard(idObject, boat) {
         this.boat = boat;
         this.gold = 0;

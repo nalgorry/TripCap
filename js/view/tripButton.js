@@ -1,4 +1,4 @@
-var tripButton = (function () {
+var tripButton = /** @class */ (function () {
     function tripButton(scene, x, y, task) {
         this.scene = scene;
         this.x = x;

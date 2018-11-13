@@ -72,9 +72,9 @@ class vNewCard {
             max = 2;
         } else if (this.boat.numBattles < 5) {
             max = 3;
-        } else if (this.boat.numBattles < 5) {
+        } else if (this.boat.numBattles < 7) {
             max = 4;
-        }  else if (this.boat.numBattles < 10) {
+        }  else {
             max = 6;
         }
 

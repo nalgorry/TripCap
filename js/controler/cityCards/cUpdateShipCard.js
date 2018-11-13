@@ -7,7 +7,7 @@ var enUpdate;
     enUpdate[enUpdate["Sails"] = 4] = "Sails";
     enUpdate[enUpdate["Rows"] = 5] = "Rows";
 })(enUpdate || (enUpdate = {}));
-var cUpdateShipCard = (function () {
+var cUpdateShipCard = /** @class */ (function () {
     function cUpdateShipCard(updateTipe, boat) {
         this.updateTipe = updateTipe;
         this.boat = boat;

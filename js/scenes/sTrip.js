@@ -1,19 +1,28 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var sTrip = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var sTrip = /** @class */ (function (_super) {
     __extends(sTrip, _super);
     function sTrip() {
-        _super.apply(this, arguments);
-        this.distShipStartx = 44;
-        this.distShipEndx = 640;
-        this.statusBars = new Array();
-        this.ceroBarAlerts = new Array();
-        this.countCeroBarAlerts = 0;
-        this.interval = 5;
-        this.t = 0;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.distShipStartx = 44;
+        _this.distShipEndx = 640;
+        _this.statusBars = new Array();
+        _this.ceroBarAlerts = new Array();
+        _this.countCeroBarAlerts = 0;
+        _this.interval = 5;
+        _this.t = 0;
+        return _this;
     }
     sTrip.prototype.create = function (boat) {
         this.boat = boat;

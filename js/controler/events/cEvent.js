@@ -1,4 +1,4 @@
-var cEvent = (function () {
+var cEvent = /** @class */ (function () {
     function cEvent(JSONdata) {
         this.option = [];
         this.result = [];
@@ -35,7 +35,7 @@ var cEvent = (function () {
         if (posibleResult.length == 1) {
             return posibleResult[0];
         }
-        else {
+        else { //we chosse rand with the prob defineded for each result
             var rand = Phaser.Math.Between(0, 100);
             var probAcum = 0;
             var selectedResult;

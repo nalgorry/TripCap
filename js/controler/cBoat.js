@@ -1,4 +1,4 @@
-var cBoat = (function () {
+var cBoat = /** @class */ (function () {
     function cBoat(data) {
         var _this = this;
         //data of the trips

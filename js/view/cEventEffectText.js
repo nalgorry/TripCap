@@ -1,4 +1,4 @@
-var cEventEffectText = (function () {
+var cEventEffectText = /** @class */ (function () {
     function cEventEffectText(x, y, scene, value, text) {
         this.x = x;
         this.y = y;

@@ -1,4 +1,4 @@
-var cEventsControler = (function () {
+var cEventsControler = /** @class */ (function () {
     function cEventsControler(eventData, eventOptions, eventResult, eventEffect) {
         var _this = this;
         this.events = Array();

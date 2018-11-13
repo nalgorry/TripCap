@@ -1,4 +1,4 @@
-var cBattleCard = (function () {
+var cBattleCard = /** @class */ (function () {
     function cBattleCard(id, abilities) {
         var _this = this;
         this.atackAbilities = [];

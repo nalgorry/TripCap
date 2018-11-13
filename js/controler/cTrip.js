@@ -1,4 +1,4 @@
-var cTrip = (function () {
+var cTrip = /** @class */ (function () {
     function cTrip(boat, scene) {
         this.boat = boat;
         this.scene = scene;
@@ -85,13 +85,15 @@ var cTrip = (function () {
             delay: 50,
             callback: this.updateWind,
             callbackScope: this,
-            repeat: cycles - 1 });
+            repeat: cycles - 1
+        });
         //timer to update the wind speed again
         this.windTimer.reset({
             delay: Phaser.Math.Between(5000, 30000),
             callback: this.changeWind,
             callbackScope: this,
-            repeat: 1 });
+            repeat: 1
+        });
     };
     cTrip.prototype.updateWind = function () {
         this.windSpeed += this.windIncrement;
@@ -244,7 +246,8 @@ var cTrip = (function () {
             delay: time,
             callback: this.recoverSick,
             callbackScope: this,
-            repeat: 0 });
+            repeat: 0
+        });
         this.scene.events.emit('updateCrew');
     };
     cTrip.prototype.reduceAvaibleCrew = function (q) {

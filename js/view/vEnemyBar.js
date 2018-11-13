@@ -1,4 +1,4 @@
-var vEnemyBar = (function () {
+var vEnemyBar = /** @class */ (function () {
     function vEnemyBar(scene, x, y, color, enemyContainer, maxValue, value) {
         this.scene = scene;
         this.barWidth = 76;

@@ -1,4 +1,4 @@
-var cStatusBar = (function () {
+var cStatusBar = /** @class */ (function () {
     function cStatusBar(scene, x, y, showValues) {
         if (showValues === void 0) { showValues = false; }
         this.scene = scene;

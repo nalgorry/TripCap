@@ -1,13 +1,23 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var battleHelp = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var battleHelp = /** @class */ (function (_super) {
     __extends(battleHelp, _super);
     function battleHelp() {
-        _super.apply(this, arguments);
-        this.helpNumber = 1;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.helpNumber = 1;
+        _this.totalHelpNumber = 6;
+        return _this;
     }
     battleHelp.prototype.create = function () {
         this.initButtons();
@@ -31,7 +41,7 @@ var battleHelp = (function (_super) {
         this.button.clearTint();
     };
     battleHelp.prototype.nextHelp = function () {
-        if (this.helpNumber <= 1) {
+        if (this.helpNumber <= this.totalHelpNumber) {
             var back = this.add.image(0, 0, 'battlehelp_' + this.helpNumber);
             back.setOrigin(0);
             back.alpha = 0;

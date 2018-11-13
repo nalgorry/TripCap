@@ -1,4 +1,4 @@
-var cEventOption = (function () {
+var cEventOption = /** @class */ (function () {
     function cEventOption(JSONdata) {
         this.result = Array();
         this.id = JSONdata.id;

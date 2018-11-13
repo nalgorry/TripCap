@@ -1,4 +1,4 @@
-var cTripData = (function () {
+var cTripData = /** @class */ (function () {
     function cTripData(data) {
         this.eventsPosible = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         this.id = data.id;

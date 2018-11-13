@@ -1,4 +1,4 @@
-var updateCard = (function () {
+var updateCard = /** @class */ (function () {
     function updateCard(scene, cardData, x, y) {
         this.scene = scene;
         this.cardData = cardData;

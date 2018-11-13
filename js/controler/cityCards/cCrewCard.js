@@ -4,7 +4,7 @@ var enCrewAbily;
     enCrewAbily[enCrewAbily["rowsEff"] = 1] = "rowsEff";
     enCrewAbily[enCrewAbily["sailsEff"] = 2] = "sailsEff";
 })(enCrewAbily || (enCrewAbily = {}));
-var cCrewCard = (function () {
+var cCrewCard = /** @class */ (function () {
     function cCrewCard(boat) {
         this.boat = boat;
         this.cardType = "updateCrew";

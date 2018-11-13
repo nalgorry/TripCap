@@ -1,17 +1,24 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var battle = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var battle = /** @class */ (function (_super) {
     __extends(battle, _super);
     function battle() {
-        _super.apply(this, arguments);
-        this.cards = Array();
-        this.arrayEnemy = [];
-        this.statusBars = [];
-        this.refreshTurns = 3; //turns to have the refresh avaible again
-        this.refreshCount = 0; //actual turns
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.cards = Array();
+        _this.arrayEnemy = [];
+        _this.statusBars = [];
+        return _this;
     }
     battle.prototype.create = function (trip) {
         this.trip = trip;
@@ -90,16 +97,16 @@ var battle = (function (_super) {
             this.battleEnd();
         }
         //update the refresh cards button
-        if (this.refreshCount != 0) {
-            var turns = this.refreshTurns - this.refreshCount;
+        if (this.cBattle.refreshCount != 0) {
+            var turns = this.cBattle.refreshTurns - this.cBattle.refreshCount;
             this.refreshText.text = turns.toString();
-            if (this.refreshTurns == this.refreshCount) {
+            if (this.cBattle.refreshTurns == this.cBattle.refreshCount) {
                 this.refreshText.alpha = 0;
                 this.refreshButton.alpha = 1;
-                this.refreshCount = 0;
+                this.cBattle.refreshCount = 0;
             }
             else {
-                this.refreshCount += 1;
+                this.cBattle.refreshCount += 1;
             }
         }
         //lets check if we are still alive
@@ -196,7 +203,7 @@ var battle = (function (_super) {
     battle.prototype.initDragRect = function () {
         var _this = this;
         this.rectContainer = this.add.container(0, 0);
-        if (this.selCard.cCard.atackAbilities[0].id == enBattleAbilities.noAtack) {
+        if (this.selCard.cCard.atackAbilities[0].id == enBattleAbilities.noAtack) { //no need to get a target
             this.ownRect = new Phaser.Geom.Rectangle(0, 365, 760, 460);
             //this boat rectangle
             var ownGreenRect = this.add.graphics();
@@ -223,13 +230,13 @@ var battle = (function (_super) {
         this.targetAllowed = false;
         this.selEnemy = undefined;
         var mouseRect = new Phaser.Geom.Rectangle(this.input.x, this.input.y, 2, 2);
-        if (this.selCard.cCard.atackAbilities[0].id == enBattleAbilities.noAtack) {
+        if (this.selCard.cCard.atackAbilities[0].id == enBattleAbilities.noAtack) { //no need to get a target
             if (Phaser.Geom.Intersects.RectangleToRectangle(this.ownRect, mouseRect)) {
                 console.log("carta en cuadro verde");
                 this.targetAllowed = true;
             }
         }
-        else {
+        else { //need a target
             this.arrayEnemy.forEach(function (enemy) {
                 if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.selRect, mouseRect)) {
                     _this.targetAllowed = true;
@@ -284,13 +291,12 @@ var battle = (function (_super) {
         }, [], this);
     };
     battle.prototype.refreshCards = function () {
-        console.log(this.refreshCount);
-        if (this.refreshCount == 0) {
+        if (this.cBattle.refreshCount == 0) {
             this.initCards();
             this.refreshText.alpha = 1;
-            this.refreshText.text = "3";
+            this.refreshText.text = this.cBattle.refreshTurns.toString();
             this.refreshButton.alpha = 0.5;
-            this.refreshCount += 1;
+            this.cBattle.refreshCount += 1;
         }
     };
     battle.prototype.updateValues = function () {

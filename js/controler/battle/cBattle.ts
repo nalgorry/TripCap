@@ -15,6 +15,9 @@ class cBattle {
 
     public nextTurnAbilites:cNextTurnAbilities = new cNextTurnAbilities();
 
+    public refreshTurns:number = 3; //turns to have the refresh avaible again
+    public refreshCount:number = 0; //actual turns
+
   
     constructor(public trip:cTrip,
         public boat:cBoat, 
@@ -29,9 +32,16 @@ class cBattle {
     }
 
     private initFights() {
-        this.arrayFights.push(new mFights([0,0]));
+
         this.arrayFights.push(new mFights([1]));
-        this.arrayFights.push(new mFights([2]));
+
+        if (this.boat.numBattles >= 2) {
+            this.arrayFights.push(new mFights([2]));
+        }
+
+        if (this.boat.numBattles >= 5) {
+            this.arrayFights.push(new mFights([0,0]));
+        }
     }
 
     public doTurn(card:cBattleCard, target:cEnemy) {
@@ -74,7 +84,10 @@ class cBattle {
 
         });
 
-        this.trip.updateMant(-shipDamage);
+        //we need
+        if (shipDamage != 0) {
+            this.trip.updateMant(-shipDamage);
+        }
 
         this.avaibleCrew -= crewDamage;
 

@@ -1,4 +1,4 @@
-var vBattleIcons = (function () {
+var vBattleIcons = /** @class */ (function () {
     function vBattleIcons(scene, actorSprite, actorContainer, isEnemy) {
         this.scene = scene;
         this.actorSprite = actorSprite;

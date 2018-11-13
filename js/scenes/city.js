@@ -1,15 +1,24 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var city = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var city = /** @class */ (function (_super) {
     __extends(city, _super);
     function city() {
-        _super.apply(this, arguments);
-        this.cityButtons = new Array();
-        this.cardsToSelect = new Array();
-        this.animInProgress = false;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.cityButtons = new Array();
+        _this.cardsToSelect = new Array();
+        _this.animInProgress = false;
+        return _this;
     }
     city.prototype.create = function (boat) {
         this.city = new cCity(boat); //to control the logic of the city
@@ -213,7 +222,7 @@ var city = (function (_super) {
                 console.log("necesitas mas oro");
             }
         }
-        else {
+        else { //need more gold
             console.log("carta no seleccionada");
         }
     };

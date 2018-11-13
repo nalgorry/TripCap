@@ -18,7 +18,7 @@ var enumEffectType;
     enumEffectType[enumEffectType["PorcPerdidaMant"] = 16] = "PorcPerdidaMant";
     enumEffectType[enumEffectType["Enfermos"] = 17] = "Enfermos";
 })(enumEffectType || (enumEffectType = {}));
-var cEventEffect = (function () {
+var cEventEffect = /** @class */ (function () {
     function cEventEffect(JSONdata) {
         this.id = JSONdata.id;
         this.idEvent = JSONdata.idEvent;

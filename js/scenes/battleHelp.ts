@@ -2,6 +2,7 @@ class battleHelp extends Phaser.Scene {
 
     private button:Phaser.GameObjects.Sprite;
     private helpNumber:number = 1;
+    private totalHelpNumber: number = 6;
  
     create() { 
 
@@ -39,7 +40,7 @@ class battleHelp extends Phaser.Scene {
 
     private nextHelp() {
 
-    if (this.helpNumber <= 1) {
+    if (this.helpNumber <= this.totalHelpNumber) {
         var back = this.add.image(0, 0, 'battlehelp_' + this.helpNumber)
         back.setOrigin(0);
         back.alpha = 0;

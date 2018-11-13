@@ -1,4 +1,4 @@
-var crewControls = (function () {
+var crewControls = /** @class */ (function () {
     function crewControls(trip, scene) {
         this.trip = trip;
         this.scene = scene;
@@ -43,6 +43,7 @@ var crewControls = (function () {
         this.crewButtons.forEach(function (b) {
             var buttonRect = b.sDrag.getBounds();
             if (Phaser.Geom.Intersects.RectangleToRectangle(buttonRect, mouseRect)) {
+                //console.log(b)
             }
         });
     };

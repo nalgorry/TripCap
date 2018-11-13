@@ -43,7 +43,7 @@ class tripPause extends Phaser.Scene {
         //restart the trip
         this.scene.resume('sTrip');
         this.scene.get('sTrip').cameras.main.fadeIn(500, 255, 255, 255);
-        this.scene.stop();
+        this.scene.stop(this.scene.key);
         
     }
 

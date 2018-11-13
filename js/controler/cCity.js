@@ -1,4 +1,4 @@
-var cCity = (function () {
+var cCity = /** @class */ (function () {
     function cCity(boat) {
         this.boat = boat;
         this.arrayUpdateCards = Array();

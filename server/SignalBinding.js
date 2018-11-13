@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference path="Signal.ts" />
 /*
 *	@desc   	An object that represents a binding between a Signal and a listener function.
@@ -14,7 +15,7 @@
 *	@url		http://www.kiwijs.org
 *
 */
-var SignalBinding = (function () {
+var SignalBinding = /** @class */ (function () {
     /**
     * Object that represents a binding between a Signal and a listener function.
     * <br />- <strong>This is an internal constructor and shouldn't be called by regular users.</strong>

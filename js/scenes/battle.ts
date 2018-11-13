@@ -25,8 +25,7 @@ class battle extends Phaser.Scene{
 
     private refreshButton:Phaser.GameObjects.Sprite;
     private refreshText:Phaser.GameObjects.BitmapText;
-    private refreshTurns:number = 3; //turns to have the refresh avaible again
-    private refreshCount:number = 0; //actual turns
+
 
     create(trip:cTrip) {
 
@@ -148,17 +147,17 @@ class battle extends Phaser.Scene{
         }
 
         //update the refresh cards button
-        if (this.refreshCount != 0) {
+        if (this.cBattle.refreshCount != 0) {
             
-            var turns:number = this.refreshTurns - this.refreshCount;
+            var turns:number = this.cBattle.refreshTurns - this.cBattle.refreshCount;
             this.refreshText.text = turns.toString();
 
-            if (this.refreshTurns == this.refreshCount) {
+            if (this.cBattle.refreshTurns == this.cBattle.refreshCount) {
                 this.refreshText.alpha = 0;
                 this.refreshButton.alpha = 1;
-                this.refreshCount = 0;
+                this.cBattle.refreshCount = 0;
             } else {
-                this.refreshCount += 1;
+                this.cBattle.refreshCount += 1;
             }
             
         }
@@ -431,14 +430,12 @@ class battle extends Phaser.Scene{
 
     private refreshCards() {
 
-        console.log(this.refreshCount);
-
-        if (this.refreshCount == 0) {
+        if (this.cBattle.refreshCount == 0) {
             this.initCards();
             this.refreshText.alpha = 1;
-            this.refreshText.text = "3";
+            this.refreshText.text = this.cBattle.refreshTurns.toString();
             this.refreshButton.alpha = 0.5;
-            this.refreshCount += 1;
+            this.cBattle.refreshCount += 1;
         }
         
     }

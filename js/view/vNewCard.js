@@ -1,4 +1,4 @@
-var vNewCard = (function () {
+var vNewCard = /** @class */ (function () {
     function vNewCard(scene, x, y, boat) {
         this.scene = scene;
         this.x = x;
@@ -49,10 +49,10 @@ var vNewCard = (function () {
         else if (this.boat.numBattles < 5) {
             max = 3;
         }
-        else if (this.boat.numBattles < 5) {
+        else if (this.boat.numBattles < 7) {
             max = 4;
         }
-        else if (this.boat.numBattles < 10) {
+        else {
             max = 6;
         }
         var lvl = Phaser.Math.Between(1, max);

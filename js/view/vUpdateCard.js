@@ -1,4 +1,4 @@
-var vUpdateCard = (function () {
+var vUpdateCard = /** @class */ (function () {
     function vUpdateCard(scene, x, y, boat) {
         this.scene = scene;
         this.x = x;

@@ -1,204 +1,197 @@
-{ 
-    "enemys": [
-        {
-            "id":1,
-            "spriteName":"enemy_1",
-            "maxMant":100,
-            "minMant":15,
-            "maxCrew":10,
-            "minCrew":2,
-            "offAbilities": [
-                {
-                    "id":3,
-                    "name":"arrows",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+{
+    "enemys": [{
+            "id": 1,
+            "spriteName": "enemy_1",
+            "maxMant": 100,
+            "minMant": 15,
+            "maxCrew": 10,
+            "minCrew": 2,
+            "offAbilities": [{
+                    "id": 3,
+                    "name": "arrows",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":4,
-                    "name":"cannons",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+                    "id": 4,
+                    "name": "cannons",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":5,
-                    "name":"axes",
-                    "lvl":1,
-                    "prob":25,
-                    "value":6,
-                    "value_2":6
+                    "id": 5,
+                    "name": "axes",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 6,
+                    "value_2": 6
                 },
                 {
-                    "id":7,
-                    "name":"no atack",
-                    "lvl":1,
-                    "prob":25
-                }   
+                    "id": 7,
+                    "name": "no atack",
+                    "lvl": 1,
+                    "prob": 25
+                }
             ],
-            "defAbilities": [
-                {
-                    "id":0,
-                    "name":"dodge",
-                    "lvl":1,
-                    "prob":25,
-                    "value":20
+            "defAbilities": [{
+                    "id": 0,
+                    "name": "dodge",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 20
                 },
                 {
-                    "id":1,
-                    "name":"defend boat",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+                    "id": 1,
+                    "name": "defend boat",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":2,
-                    "name":"defend crew",
-                    "lvl":1,
-                    "prob":25,
-                    "value":6
+                    "id": 2,
+                    "name": "defend crew",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 6
                 },
                 {
-                    "id":8,
-                    "name":"no defense",
-                    "lvl":1,
-                    "prob":25
-                }     
+                    "id": 8,
+                    "name": "no defense",
+                    "lvl": 1,
+                    "prob": 25
+                }
             ]
         },
         {
-            "id":2,
-            "spriteName":"enemy_2",
-            "maxMant":100,
-            "minMant":15,
-            "maxCrew":10,
-            "minCrew":2,
-            "offAbilities": [
-                {
-                    "id":3,
-                    "name":"arrows",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+            "id": 2,
+            "spriteName": "enemy_2",
+            "maxMant": 80,
+            "minMant": 15,
+            "maxCrew": 10,
+            "minCrew": 2,
+            "offAbilities": [{
+                    "id": 3,
+                    "name": "arrows",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":4,
-                    "name":"cannons",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+                    "id": 4,
+                    "name": "cannons",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":5,
-                    "name":"axes",
-                    "lvl":1,
-                    "prob":25,
-                    "value":6,
-                    "value_2":6
+                    "id": 5,
+                    "name": "axes",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 6,
+                    "value_2": 6
                 },
                 {
-                    "id":7,
-                    "name":"no atack",
-                    "lvl":1,
-                    "prob":25
-                }   
+                    "id": 7,
+                    "name": "no atack",
+                    "lvl": 1,
+                    "prob": 25
+                }
             ],
-            "defAbilities": [
-                {
-                    "id":0,
-                    "name":"dodge",
-                    "lvl":1,
-                    "prob":25,
-                    "value":20
+            "defAbilities": [{
+                    "id": 0,
+                    "name": "dodge",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 20
                 },
                 {
-                    "id":1,
-                    "name":"defend boat",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+                    "id": 1,
+                    "name": "defend boat",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":2,
-                    "name":"defend crew",
-                    "lvl":1,
-                    "prob":25,
-                    "value":6
+                    "id": 2,
+                    "name": "defend crew",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 6
                 },
                 {
-                    "id":8,
-                    "name":"no defense",
-                    "lvl":1,
-                    "prob":25
-                }     
+                    "id": 8,
+                    "name": "no defense",
+                    "lvl": 1,
+                    "prob": 25
+                }
             ]
         },
         {
-            "id":3,
-            "spriteName":"enemy_3",
-            "maxMant":100,
-            "minMant":15,
-            "maxCrew":1000,
-            "minCrew":1000,
-            "offAbilities": [
-                {
-                    "id":3,
-                    "name":"arrows",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+            "id": 3,
+            "spriteName": "enemy_3",
+            "maxMant": 100,
+            "minMant": 15,
+            "maxCrew": 1000,
+            "minCrew": 1000,
+            "offAbilities": [{
+                    "id": 3,
+                    "name": "arrows",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":4,
-                    "name":"cannons",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+                    "id": 4,
+                    "name": "cannons",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":5,
-                    "name":"axes",
-                    "lvl":1,
-                    "prob":25,
-                    "value":6,
-                    "value_2":6
+                    "id": 5,
+                    "name": "axes",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 6,
+                    "value_2": 6
                 },
                 {
-                    "id":7,
-                    "name":"no atack",
-                    "lvl":1,
-                    "prob":25
-                }   
+                    "id": 7,
+                    "name": "no atack",
+                    "lvl": 1,
+                    "prob": 25
+                }
             ],
-            "defAbilities": [
-                {
-                    "id":0,
-                    "name":"dodge",
-                    "lvl":1,
-                    "prob":25,
-                    "value":20
+            "defAbilities": [{
+                    "id": 0,
+                    "name": "dodge",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 20
                 },
                 {
-                    "id":1,
-                    "name":"defend boat",
-                    "lvl":1,
-                    "prob":25,
-                    "value":10
+                    "id": 1,
+                    "name": "defend boat",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 10
                 },
                 {
-                    "id":2,
-                    "name":"defend crew",
-                    "lvl":1,
-                    "prob":25,
-                    "value":6
+                    "id": 2,
+                    "name": "defend crew",
+                    "lvl": 1,
+                    "prob": 25,
+                    "value": 6
                 },
                 {
-                    "id":8,
-                    "name":"no defense",
-                    "lvl":1,
-                    "prob":25
-                }     
+                    "id": 8,
+                    "name": "no defense",
+                    "lvl": 1,
+                    "prob": 25
+                }
             ]
         }
     ]

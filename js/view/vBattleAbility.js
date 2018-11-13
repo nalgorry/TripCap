@@ -1,4 +1,4 @@
-var vBattleAbility = (function () {
+var vBattleAbility = /** @class */ (function () {
     function vBattleAbility(scene, x, y, spriteName, ability) {
         this.scene = scene;
         this.x = x;

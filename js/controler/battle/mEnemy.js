@@ -1,4 +1,4 @@
-var mEnemy = (function () {
+var mEnemy = /** @class */ (function () {
     function mEnemy(JSONdata) {
         var _this = this;
         this.offAbilities = [];

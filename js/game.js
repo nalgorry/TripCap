@@ -1,4 +1,4 @@
-var InitGame = (function () {
+var InitGame = /** @class */ (function () {
     function InitGame() {
         var conf = {
             width: 720,

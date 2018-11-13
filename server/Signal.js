@@ -1,5 +1,6 @@
 "use strict";
-var SignalBinding_1 = require('./SignalBinding');
+Object.defineProperty(exports, "__esModule", { value: true });
+var SignalBinding_1 = require("./SignalBinding");
 /// <reference path="SignalBinding.ts" />
 /**
 *	@desc       A TypeScript conversion of JS Signals by Miller Medeiros
@@ -21,7 +22,7 @@ var SignalBinding_1 = require('./SignalBinding');
 * @author Miller Medeiros
 * @constructor
 */
-var Signal = (function () {
+var Signal = /** @class */ (function () {
     function Signal() {
         /**
         * @property _bindings
@@ -203,7 +204,7 @@ var Signal = (function () {
     Signal.prototype.dispatch = function () {
         var paramsArr = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            paramsArr[_i - 0] = arguments[_i];
+            paramsArr[_i] = arguments[_i];
         }
         if (!this.active) {
             return;

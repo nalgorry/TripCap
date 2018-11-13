@@ -1,10 +1,10 @@
-var cNextTurnAbilities = (function () {
+var cNextTurnAbilities = /** @class */ (function () {
     function cNextTurnAbilities() {
         this.atackMult = 1;
     }
     return cNextTurnAbilities;
 }());
-var cBattle = (function () {
+var cBattle = /** @class */ (function () {
     function cBattle(trip, boat, scene) {
         this.trip = trip;
         this.boat = boat;
@@ -14,15 +14,21 @@ var cBattle = (function () {
         this.arrayFights = [];
         this.battleEnd = false;
         this.nextTurnAbilites = new cNextTurnAbilities();
+        this.refreshTurns = 3; //turns to have the refresh avaible again
+        this.refreshCount = 0; //actual turns
         this.arrayAvaibleCards = this.boat.allPosibleCards.slice();
         this.initFights();
         this.initEnemy();
         this.avaibleCrew = this.trip.healtyCrew;
     }
     cBattle.prototype.initFights = function () {
-        this.arrayFights.push(new mFights([0, 0]));
         this.arrayFights.push(new mFights([1]));
-        this.arrayFights.push(new mFights([2]));
+        if (this.boat.numBattles >= 2) {
+            this.arrayFights.push(new mFights([2]));
+        }
+        if (this.boat.numBattles >= 5) {
+            this.arrayFights.push(new mFights([0, 0]));
+        }
     };
     cBattle.prototype.doTurn = function (card, target) {
         //Own atack first
@@ -53,7 +59,10 @@ var cBattle = (function () {
                 console.log("erraste el golpe! UPS");
             }
         });
-        this.trip.updateMant(-shipDamage);
+        //we need
+        if (shipDamage != 0) {
+            this.trip.updateMant(-shipDamage);
+        }
         this.avaibleCrew -= crewDamage;
         if (Math.round(this.avaibleCrew) < this.trip.healtyCrew) {
             this.trip.addSickCrew(this.trip.healtyCrew - Math.round(this.avaibleCrew));

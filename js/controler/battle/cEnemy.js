@@ -1,4 +1,4 @@
-var cEnemy = (function () {
+var cEnemy = /** @class */ (function () {
     function cEnemy(data, x, y) {
         this.data = data;
         this.x = x;

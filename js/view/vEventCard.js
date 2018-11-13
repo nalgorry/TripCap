@@ -1,4 +1,4 @@
-var vEventCards = (function () {
+var vEventCards = /** @class */ (function () {
     function vEventCards(scene, x, y, idOption, text, descText) {
         this.scene = scene;
         this.x = x;

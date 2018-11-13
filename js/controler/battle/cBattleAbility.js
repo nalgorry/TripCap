@@ -10,7 +10,7 @@ var enBattleAbilities;
     enBattleAbilities[enBattleAbilities["noAtack"] = 7] = "noAtack";
     enBattleAbilities[enBattleAbilities["noDefense"] = 8] = "noDefense";
 })(enBattleAbilities || (enBattleAbilities = {}));
-var cBattleAbility = (function () {
+var cBattleAbility = /** @class */ (function () {
     function cBattleAbility(id, lvl, prob, value) {
         this.id = id;
         this.lvl = lvl;

@@ -1,4 +1,4 @@
-var textWrapper = (function () {
+var textWrapper = /** @class */ (function () {
     function textWrapper() {
     }
     textWrapper.wrapText = function (fontData, scale, text, maxWidth) {

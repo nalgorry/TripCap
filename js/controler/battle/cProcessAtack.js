@@ -1,4 +1,4 @@
-var cProcessAtack = (function () {
+var cProcessAtack = /** @class */ (function () {
     function cProcessAtack(atackerAbilites, defenderAbilites, lastTurnData) {
         var _this = this;
         //atack results
