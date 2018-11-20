@@ -57,7 +57,8 @@ var battleHelp = /** @class */ (function (_super) {
         else {
             this.cameras.main.fade(500, 255, 255, 255);
             this.time.delayedCall(500, function () {
-                this.scene.get('battle').cameras.main.fadeIn(500, 255, 255, 255);
+                //this.scene.get('battle').cameras.main.fadeIn(500, 255, 255, 255);
+                this.scene.start('startMenu');
                 this.scene.stop();
             }, [], this);
         }

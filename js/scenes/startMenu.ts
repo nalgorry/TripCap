@@ -12,7 +12,7 @@ class startMenu extends Phaser.Scene {
         this.back.setOrigin(0);
 
         //lets create the start button
-        this.startButton =  this.add.sprite(720/2,1150,'startButton').setInteractive();
+        this.startButton =  this.add.sprite(720/2,1000,'startButton').setInteractive();
                 
         this.startButton.on('pointerdown', function (pointer) {
 
@@ -48,7 +48,7 @@ class startMenu extends Phaser.Scene {
         }, this);
 
         //lets create the helpButton button
-        this.helpButton =  this.add.sprite(720/2,1040,'howToPlayButton').setInteractive();
+        this.helpButton =  this.add.sprite(720/2,1200,'howToPlayButton').setInteractive();
         
         this.helpButton.on('pointerdown', function (pointer) {
 
@@ -58,7 +58,7 @@ class startMenu extends Phaser.Scene {
 
         this.helpButton.on('pointerout', function (pointer) {
 
-            this.helpButton.clearTint('helpTrip');
+            this.helpButton.clearTint();
     
         }, this);
 
@@ -68,7 +68,20 @@ class startMenu extends Phaser.Scene {
 
         }, this);
 
+        //help battle button 
+        var helpBattle =  this.add.sprite(720/2,1100,'battleHelpMain').setInteractive();
+        
+        helpBattle.on('pointerdown', function (pointer) {
+            this.setTint(0x15536b);
+        }, helpBattle);
 
+        helpBattle.on('pointerout', function (pointer) {
+            this.clearTint();
+        }, helpBattle);
+
+        helpBattle.on('pointerup', function (pointer) {
+            this.changeScene('battleHelp');
+        }, this);
 
         //this.changeScene(); //lo hago aca para saltearme el menu de inicio al dope
         this.textFps = this.add.bitmapText(10, 10, 'Pfont', "0", 30);

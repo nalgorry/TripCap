@@ -157,6 +157,7 @@ class preloader extends Phaser.Scene {
         this.load.image('help3', 'assets/help3.png');    
         this.load.image('helpNextButton', 'assets/helpNextButton.png');      
         this.load.image('howToPlayButton', 'assets/howToPlayButton.png');      
+        this.load.image('battleHelpMain', 'assets/battleHelp.png');      
  
         //lets add some fonts
         this.load.bitmapFont('Pfont', 'assets/fonts/Pfont.png', 'assets/fonts/Pfont.xml');
