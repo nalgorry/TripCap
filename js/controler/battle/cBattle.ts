@@ -178,10 +178,8 @@ class cBattle {
         var cardId =this.arrayAvaibleCards[rnd];
 
         this.arrayAvaibleCards.splice(rnd, 1);
-
        
-        return cardId
-
+        return cardId;
     }
 
 

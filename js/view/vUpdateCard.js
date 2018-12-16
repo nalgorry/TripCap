@@ -63,6 +63,7 @@ var vUpdateCard = /** @class */ (function () {
         this.scene.time.delayedCall(400, this.destroyUpdate, [], this);
     };
     vUpdateCard.prototype.destroyUpdate = function () {
+        this.scene.events.emit('updateFinish', this);
         this.cont.destroy(false);
     };
     return vUpdateCard;

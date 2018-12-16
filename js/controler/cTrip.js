@@ -7,8 +7,8 @@ var cTrip = /** @class */ (function () {
         this.finalWindSpeed = 0;
         this.windIncrement = 0;
         //Escala de Beaufort
-        this.windMinSpeed = 1; //nudos
-        this.windMaxSpeed = 22; //nudos - tormenta muy fuerte 64
+        this.windMinSpeed = 8; //nudos
+        this.windMaxSpeed = 28; //nudos - tormenta muy fuerte 64
         this.windMod = 0; //some events change the wind
         //remos
         this.rowsMaxSpeed = 8;
@@ -39,6 +39,7 @@ var cTrip = /** @class */ (function () {
         this.tripEndGold = boat.tripData.tripGold;
         this.healtyCrew = boat.crewman;
         this.sickCrew = 0;
+        console.log(this.healtyCrew);
         this.porcLostMant = boat.tripData.porcLostMant;
         this.porcLostClean = boat.tripData.porcLostClean;
         this.porcLostFood = boat.tripData.porcLostFood;
@@ -110,62 +111,64 @@ var cTrip = /** @class */ (function () {
     cTrip.prototype.updateAfterEvent = function (result) {
         this.numOfEvents += 1;
         //lets check what we have to change in the trip
-        for (var r in result.effect) {
-            var effect = result.effect[r];
-            var value = effect.getValue();
-            switch (effect.effectType) {
-                case enumEffectType.Autoridad:
-                    this.updateLeadership(value);
-                    break;
-                case enumEffectType.Comida:
-                    this.updateFood(value);
-                    break;
-                case enumEffectType.Limpieza:
-                    this.updateClean(value);
-                    break;
-                case enumEffectType.Mantenimiento:
-                    this.updateMant(value);
-                    break;
-                case enumEffectType.Marineros:
-                    this.updateAvaibleCrew(value);
-                    break;
-                case enumEffectType.Oro:
-                    this.boat.gold += value;
-                    break;
-                case enumEffectType.Reputacion_Justiciero:
-                    this.boat.reputationHeroe += value;
-                    if (this.boat.reputationHeroe < 0)
-                        this.boat.reputationHeroe = 0;
-                    break;
-                case enumEffectType.Reputacion_Pirata:
-                    this.boat.reputationPirate += value;
-                    if (this.boat.reputationPirate < 0)
-                        this.boat.reputationPirate = 0;
-                    break;
-                case enumEffectType.Marineros_Ocupados:
-                    this.reduceAvaibleCrew(value);
-                    break;
-                case enumEffectType.Viento:
-                    this.windMod += value;
-                    break;
-                case enumEffectType.PorcOro:
-                    this.boat.gold = Math.round(this.boat.gold * value);
-                    break;
-                case enumEffectType.Item:
-                    break;
-                case enumEffectType.PorcLargoViaje:
-                    this.tripTotalDist = this.tripTotalDist * (1 + value / 100);
-                    break;
-                case enumEffectType.ProbEnfermos:
-                    this.probSick += value / 100;
-                    break;
-                case enumEffectType.PorcPerdidaMant:
-                    this.porcLostMant += value / 100;
-                    break;
-                case enumEffectType.Enfermos:
-                    this.addSickCrew(value);
-                default:
-                    break;
+        if (result) {
+            for (var r in result.effect) {
+                var effect = result.effect[r];
+                var value = effect.getValue();
+                switch (effect.effectType) {
+                    case enumEffectType.Autoridad:
+                        this.updateLeadership(value);
+                        break;
+                    case enumEffectType.Comida:
+                        this.updateFood(value);
+                        break;
+                    case enumEffectType.Limpieza:
+                        this.updateClean(value);
+                        break;
+                    case enumEffectType.Mantenimiento:
+                        this.updateMant(value);
+                        break;
+                    case enumEffectType.Marineros:
+                        this.updateAvaibleCrew(value);
+                        break;
+                    case enumEffectType.Oro:
+                        this.boat.gold += value;
+                        break;
+                    case enumEffectType.Reputacion_Justiciero:
+                        this.boat.reputationHeroe += value;
+                        if (this.boat.reputationHeroe < 0)
+                            this.boat.reputationHeroe = 0;
+                        break;
+                    case enumEffectType.Reputacion_Pirata:
+                        this.boat.reputationPirate += value;
+                        if (this.boat.reputationPirate < 0)
+                            this.boat.reputationPirate = 0;
+                        break;
+                    case enumEffectType.Marineros_Ocupados:
+                        this.reduceAvaibleCrew(value);
+                        break;
+                    case enumEffectType.Viento:
+                        this.windMod += value;
+                        break;
+                    case enumEffectType.PorcOro:
+                        this.boat.gold = Math.round(this.boat.gold * value);
+                        break;
+                    case enumEffectType.Item:
+                        break;
+                    case enumEffectType.PorcLargoViaje:
+                        this.tripTotalDist = this.tripTotalDist * (1 + value / 100);
+                        break;
+                    case enumEffectType.ProbEnfermos:
+                        this.probSick += value / 100;
+                        break;
+                    case enumEffectType.PorcPerdidaMant:
+                        this.porcLostMant += value / 100;
+                        break;
+                    case enumEffectType.Enfermos:
+                        this.addSickCrew(value);
+                    default:
+                        break;
+                }
             }
         }
         //lets update all the variables
@@ -219,9 +222,16 @@ var cTrip = /** @class */ (function () {
         this.scene.events.emit('updateTrip');
     };
     cTrip.prototype.startEvent = function () {
-        var n = Phaser.Math.Between(0, this.eventsPosible.length - 1); //we chosse one of the possible events for this trip
-        this.scene.events.emit('eventStart', this.eventsPosible[n]);
-        this.eventsPosible.splice(n, 1);
+        //lets chose between a event or a fight
+        var number = Phaser.Math.Between(0, 1);
+        if (number == 0) {
+            var n = Phaser.Math.Between(0, this.eventsPosible.length - 1); //we chosse one of the possible events for this trip
+            this.scene.events.emit('eventStart', this.eventsPosible[n]);
+            this.eventsPosible.splice(n, 1);
+        }
+        else {
+            this.scene.events.emit('battleStart');
+        }
     };
     cTrip.prototype.crewSick = function () {
         var baseProbSick = 2; //probabilidad en 1000

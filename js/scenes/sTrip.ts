@@ -50,6 +50,7 @@ class sTrip extends Phaser.Scene {
         //init all the event to conect with the controler of the trip
         this.events.on('tripEnd', this.tripEnd, this);
         this.events.on('eventStart', this.startEvent, this);
+        this.events.on('battleStart', this.startBattle, this);
         this.events.on('updateTrip', this.updateTripText, this);
         this.events.on('updateCrew', this.crewControl.updateCrewText, this.crewControl);
         this.events.on('gameEnd', this.gameEnd, this);
@@ -87,9 +88,9 @@ class sTrip extends Phaser.Scene {
 
         //to test battles
 
-        this.time.delayedCall(500, function() {
-            this.scene.start('battle', this.trip);
-        }, [], this);
+        // this.time.delayedCall(500, function() {
+        //     this.scene.start('battle', this.trip);
+        // }, [], this);
 
         //to shop fps
         this.textFps = this.add.bitmapText(10, 10, 'Pfont', this.trip.healtyCrew.toString(), 25);
@@ -105,7 +106,6 @@ class sTrip extends Phaser.Scene {
 
 
     }
-
 
 
     private barInCero(data:{status:enumStatus, value:number, maxValue:number, numAlerts:number}) {
@@ -234,6 +234,32 @@ class sTrip extends Phaser.Scene {
             var data = {event:event, trip:trip}
 
             this.scene.launch('tripEvent', data);
+
+        }, [], this);
+
+        //lets mark the event in the traker
+        var circle = this.add.graphics();
+   
+        circle.fillStyle(0xb1160d, 1);
+        circle.fillCircle(this.distShip.x, this.distShip.y, 5);
+        circle.fillPath();
+
+    }
+
+    private startBattle() {
+
+        // shake the camera
+        this.cameras.main.shake(500, 0.001);
+
+        this.time.delayedCall(600, function() {
+            this.cameras.main.fade(400, 255, 255, 255);
+        }, [], this);
+
+        // start the event scene
+        this.time.delayedCall(1100, function() {
+            
+            this.scene.pause();
+            this.scene.launch('battle', this.trip);
 
         }, [], this);
 

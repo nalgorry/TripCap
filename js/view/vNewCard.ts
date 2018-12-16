@@ -122,6 +122,7 @@ class vNewCard {
     }
 
     private destroyUpdate() {
+        this.scene.events.emit('updateFinish', this);
         this.cont.destroy(false);
     }
 

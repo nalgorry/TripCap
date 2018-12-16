@@ -27,13 +27,6 @@ var battle = /** @class */ (function (_super) {
         this.initScene();
         this.initCards();
         this.initEnemies();
-        var rnd = Phaser.Math.Between(0, 1);
-        if (rnd == 0) {
-            var b = new vUpdateCard(this, 360, 500, this.boat); //to test the update card
-        }
-        else {
-            var a = new vNewCard(this, 360, 500, this.boat); //to test the new card
-        }
         this.events.removeAllListeners('dragCard');
         this.events.removeAllListeners('dragEnd');
         this.events.removeAllListeners('dragStart');
@@ -110,8 +103,8 @@ var battle = /** @class */ (function (_super) {
             }
         }
         //lets check if we are still alive
-        if (this.trip.currentStatus[1 /* maintenance */] <= 0 || this.trip.healtyCrew <= 0) {
-            console.log("llega");
+        console.log(this.trip);
+        if (this.trip.currentStatus[1 /* maintenance */] <= 0 || this.boat.crewman <= this.trip.sickCrew) {
             this.scene.start('gameEnd');
         }
     };
@@ -120,7 +113,7 @@ var battle = /** @class */ (function (_super) {
         this.trip.numOfBattles += 1;
         var numBattle = this.trip.numOfBattles + 1;
         //for test, we reset the fight now
-        var a = this.add.bitmapText(360, 600, 'Pfont', "Batalla Numero: " + numBattle, 60);
+        var a = this.add.bitmapText(360, 600, 'Pfont', "Ganaste la Batalla!", 60);
         a.setOrigin(0.5);
         this.add.tween({
             targets: a,
@@ -129,10 +122,27 @@ var battle = /** @class */ (function (_super) {
             duration: 1500,
             ease: 'Linear',
         });
-        this.time.delayedCall(2000, this.newBattle, [], this);
+        this.time.delayedCall(2000, this.showReward, [], this);
     };
-    battle.prototype.newBattle = function () {
-        this.scene.start('battle', this.trip);
+    battle.prototype.showReward = function () {
+        //lets show the reward for wining!
+        var rnd = Phaser.Math.Between(0, 1);
+        if (rnd == 0) {
+            var b = new vUpdateCard(this, 360, 500, this.boat);
+        }
+        else {
+            var a = new vNewCard(this, 360, 500, this.boat);
+        }
+        //lets listen for the result of the update
+        this.events.removeAllListeners('updateFinish');
+        this.events.on('updateFinish', this.returnTrip, this);
+        this.trip.updateAfterEvent();
+    };
+    battle.prototype.returnTrip = function () {
+        //this.scene.start('battle', this.trip); //to start another fight
+        this.scene.resume('sTrip');
+        this.scene.get('sTrip').cameras.main.fadeIn(500, 255, 255, 255);
+        this.scene.stop(this.scene.key);
     };
     battle.prototype.initTurnHideElements = function () {
         //hide the cards
@@ -152,11 +162,11 @@ var battle = /** @class */ (function (_super) {
     };
     battle.prototype.updateBoatDamage = function () {
         var _this = this;
-        this.statusBars[0 /* food */].updateBar(this.trip.currentStatus[0 /* food */], this.boat.foodSystem);
-        this.statusBars[2 /* clean */].updateBar(this.trip.currentStatus[2 /* clean */], this.boat.cleanSystem);
         this.statusBars[1 /* maintenance */].updateBar(this.trip.currentStatus[1 /* maintenance */], this.boat.mantSystem);
-        this.statusBars[3 /* leadership */].updateBar(this.trip.currentStatus[3 /* leadership */], this.boat.leaderSystem);
-        this.textHealtyCrew.text = this.trip.healtyCrew.toString();
+        //this.statusBars[enumStatus.food].updateBar(this.trip.currentStatus[enumStatus.food], this.boat.foodSystem);
+        //this.statusBars[enumStatus.clean].updateBar(this.trip.currentStatus[enumStatus.clean], this.boat.cleanSystem);
+        //this.statusBars[enumStatus.leadership].updateBar(this.trip.currentStatus[enumStatus.leadership], this.boat.leaderSystem);
+        this.textHealtyCrew.text = (this.boat.crewman - this.trip.sickCrew).toString();
         this.textSickCrew.text = this.trip.sickCrew.toString();
         //show the defense if used 
         this.arrayEnemy.forEach(function (e) {
@@ -306,9 +316,9 @@ var battle = /** @class */ (function (_super) {
     battle.prototype.showStats = function () {
         //complete the bars
         this.statusBars[1 /* maintenance */] = new cStatusBar(this, 208, 210, true);
-        this.statusBars[0 /* food */] = new cStatusBar(this, 208 + 132 * 1, 210, true);
-        this.statusBars[2 /* clean */] = new cStatusBar(this, 208 + 132 * 2, 210, true);
-        this.statusBars[3 /* leadership */] = new cStatusBar(this, 208 + 132 * 3, 210, true);
+        //this.statusBars[enumStatus.food] = new cStatusBar(this, 208 + 132 * 1, 210, true);
+        //this.statusBars[enumStatus.clean] = new cStatusBar(this, 208 + 132 * 2, 210, true);
+        //this.statusBars[enumStatus.leadership] = new cStatusBar(this, 208 + 132 * 3, 210, true);
         //lets show the avaible crew
         this.textHealtyCrew = this.add.bitmapText(66, 230 - 20, 'Pfont', this.trip.healtyCrew.toString(), 40);
         this.textHealtyCrew.setOrigin(0.5);
