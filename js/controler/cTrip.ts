@@ -99,7 +99,7 @@ class cTrip {
         //events control
         if (this.boat.numberOfTrips == 0) {
             //lets init the first event 
-            //this.scene.time.delayedCall(5000, this.startFirstEvent, [], this);    
+            this.scene.time.delayedCall(5000, this.startFirstEvent, [], this);    
         } else {
             this.startEventTimer();
         }
