@@ -34,9 +34,16 @@ class sTrip extends Phaser.Scene {
         this.trip = new cTrip(this.boat, this); //i send the scene to be able to generate events
 
         this.initScene();
-
+        
+        // init the bars
+        this.statusBars[enumStatus.maintenance] = new cStatusBar(this, 149, 899, false, 48 , 136);
+        this.statusBars[enumStatus.food] = new cStatusBar(this, 149 + 216, 899 + 191, false, 48 , 136);
+        this.statusBars[enumStatus.clean] = new cStatusBar(this, 149, 899 + 191, false, 48 , 136);
+        this.statusBars[enumStatus.leadership] = new cStatusBar(this, 149 + 216, 899, false, 48 , 136);
+        
         //init the comon controls
         this.crewControl = new crewControls(this.trip, this);
+
 
         //remove all the posible old events
         this.events.removeAllListeners('tripEnd');
@@ -59,13 +66,8 @@ class sTrip extends Phaser.Scene {
 
         this.createWindAndSpeedButtons();
 
-        this.statusBars[enumStatus.maintenance] = new cStatusBar(this, 60, 62);
-        this.statusBars[enumStatus.food] = new cStatusBar(this, 236, 62);
-        this.statusBars[enumStatus.clean] = new cStatusBar(this, 412, 62);
-        this.statusBars[enumStatus.leadership] = new cStatusBar(this, 588, 62);
-
          //lets add the trip boat
-        this.distShip = this.add.sprite(this.distShipStartx, 796, 'distanceShip');
+        this.distShip = this.add.sprite(this.distShipStartx, 585, 'distanceShip');
 
         //lets init the event controler to control the evets.
         var eventData = this.cache.json.get('eventData');
@@ -76,7 +78,7 @@ class sTrip extends Phaser.Scene {
         this.eventControler = new cEventsControler(eventData, eventOptions, eventResult, eventEffect);
 
         //lets add the pause button (super great!)
-        var button = this.add.sprite(360, 860, 'tripPauseButton' );
+        var button = this.add.sprite(360, 650, 'tripPauseButton' );
         button.setInteractive();
         button.on('pointerdown', this.pauseTrip , this);
         
@@ -97,12 +99,12 @@ class sTrip extends Phaser.Scene {
         this.textFps.setOrigin(0);
 
         //lets show the button to show the ship starts
-        var a = this.add.sprite(85, 278, 'showShipStatsButton');
+        var a = this.add.sprite(85, 130, 'showShipStatsButton');
         a.setInteractive();
         a.on('pointerdown', this.showShipStats, this);
 
         //lets add the boat, so great :P
-        this.mainTripShip = this.add.sprite(360, 450, 'tripShip');
+        this.mainTripShip = this.add.sprite(360, 280, 'tripShip');
 
 
     }
@@ -190,10 +192,10 @@ class sTrip extends Phaser.Scene {
     private createWindAndSpeedButtons() {
         
         //speed and wind
-        this.textBoatSpeed = this.add.bitmapText(125, 715, 'Pfont', Phaser.Math.RoundTo(this.trip.boatSpeed,1).toString(), 60);
+        this.textBoatSpeed = this.add.bitmapText(601, 702 - 10, 'Pfont', Phaser.Math.RoundTo(this.trip.boatSpeed,1).toString(), 60);
         this.textBoatSpeed.setOrigin(0.5);
 
-        this.textWindSpeed = this.add.bitmapText(515, 715, 'Pfont', Phaser.Math.RoundTo(this.trip.windSpeed,1).toString(), 60);
+        this.textWindSpeed = this.add.bitmapText(601, 765 - 10, 'Pfont', Phaser.Math.RoundTo(this.trip.windSpeed,1).toString(), 60);
         this.textWindSpeed.setOrigin(0.5);
 
     }

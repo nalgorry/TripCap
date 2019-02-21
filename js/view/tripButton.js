@@ -1,11 +1,16 @@
 var tripButton = /** @class */ (function () {
-    function tripButton(scene, x, y, task) {
+    function tripButton(scene, x, y, task, showBar) {
         this.scene = scene;
         this.x = x;
         this.y = y;
         this.task = task;
         this.value = "0";
         var container = this.scene.add.container(x, y);
+        //the back of the button to show the bar at the size of the button
+        if (showBar) {
+            var back = this.scene.add.sprite(-74, 0, 'navButtonBack');
+            container.add(back);
+        }
         //the text we show with the number
         this.text = this.scene.add.bitmapText(0, -30, 'Pfont', '0', 100);
         this.text.setOrigin(0.5);

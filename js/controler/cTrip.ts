@@ -96,9 +96,10 @@ class cTrip {
             callbackScope: this
         })
 
+        //events control
         if (this.boat.numberOfTrips == 0) {
             //lets init the first event 
-            this.scene.time.delayedCall(5000, this.startFirstEvent, [], this);    
+            //this.scene.time.delayedCall(5000, this.startFirstEvent, [], this);    
         } else {
             this.startEventTimer();
         }
@@ -148,10 +149,12 @@ class cTrip {
 
     private initTrip() {
 
-        this.currentStatus[enumStatus.food] = 0.8 * this.boat.foodSystem;
-        this.currentStatus[enumStatus.maintenance] = 0.8 * this.boat.mantSystem;
-        this.currentStatus[enumStatus.clean] = 0.8 * this.boat.cleanSystem;
-        this.currentStatus[enumStatus.leadership] = 0.8 * this.boat.leaderSystem;
+        var initPorc:number = 1 //0.8 is standar;
+
+        this.currentStatus[enumStatus.food] = initPorc * this.boat.foodSystem;
+        this.currentStatus[enumStatus.maintenance] = initPorc * this.boat.mantSystem;
+        this.currentStatus[enumStatus.clean] = initPorc * this.boat.cleanSystem;
+        this.currentStatus[enumStatus.leadership] = initPorc * this.boat.leaderSystem;
 
     }
 
@@ -301,7 +304,7 @@ class cTrip {
     private startEvent() {
 
         //lets chose between a event or a fight
-        var number = Phaser.Math.Between(0,1);
+        var number = 0 //Phaser.Math.Between(0,1);
 
         if (number == 0) {
             var n = Phaser.Math.Between(0,this.eventsPosible.length -1); //we chosse one of the possible events for this trip

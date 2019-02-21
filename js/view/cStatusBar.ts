@@ -15,32 +15,45 @@ class cStatusBar {
 
     private  valueText:Phaser.GameObjects.BitmapText;
 
+    private cointaner: Phaser.GameObjects.Container;
+
 
     public porcValue:number = 0.8; //the actual value of the bar
 
     constructor(public scene:Phaser.Scene,
         public x:number, 
         public y:number,
-        public showValues:boolean = false) {
+        public showValues:boolean = false,
+        public barWidth: number = 68,
+        public barHeight: number = 91) {
+
+        //here goes the bar so we can respect the z order
+        this.cointaner = scene.add.container(0, 0);
+
 
         //lets create the bar
         this.bar = this.scene.add.graphics();
 
         this.bar.fillStyle(this.greenColor);
-        this.bar.fillRect(x , y, 68, 91);
+        this.bar.fillRect(x , y, barWidth, barHeight);
         this.bar.fillPath();
+
+        this.cointaner.add(this.bar);
 
         //lets create the bar arrows
         this.barLeft = this.scene.add.sprite(x - 20, y, 'barArrow');
         this.barLeft.setOrigin(0, 0.5);
+        this.barLeft.y = this.y + this.barHeight / 2 ;
 
+        /*
         this.barRight = this.scene.add.sprite(x + 84 , y, 'barArrow');
         this.barRight.setOrigin(0.5);
         this.barRight.setAngle(180);
+        */
 
         //lets create the text to show value if needed
         if (this.showValues == true) {
-            this.valueText = this.scene.add.bitmapText(x + 68/2, y - 18, 'PfontRed', "80/100" , 28);
+            this.valueText = this.scene.add.bitmapText(x + barWidth/2, y - 18, 'PfontRed', "80/100" , 28);
             this.valueText.setOrigin(0.5);
         }
 
@@ -75,7 +88,7 @@ class cStatusBar {
             if (this.alertTimer != undefined) {
                 this.alertTimer.destroy();
                 this.barLeft.alpha = 1;
-                this.barRight.alpha = 1;
+                //this.barRight.alpha = 1;
             }
     
             if (porValue <= this.yellowPorc) {
@@ -88,22 +101,22 @@ class cStatusBar {
         //update the bar
         this.bar.clear();
         this.bar.fillStyle(color);
-        this.bar.fillRect(this.x , this.y + 91 * (1- porValue), 68, 91 * porValue);
+        this.bar.fillRect(this.x , this.y + this.barHeight * (1- porValue), this.barWidth, this.barHeight * porValue);
 
         //move the max indicator
-        this.barLeft.y = this.y + 91 * (1- porValue);
-        this.barRight.y = this.y + 91 * (1- porValue);
+        
+        //this.barRight.y = this.y + this.barHeight * (1- porValue);
 
         //rotate the arrows 
         if(porValue > this.porcValue) {
-            //this.barLeft.setAngle(-90);
-            this.barRight.setAngle(-90);
+            this.barLeft.setAngle(-90);
+            //this.barRight.setAngle(-90);
         } else if (porValue < this.porcValue) {
-            //this.barLeft.setAngle(90);
-            this.barRight.setAngle(90);
+            this.barLeft.setAngle(90);
+            //this.barRight.setAngle(90);
         } else {
-            //this.barLeft.setAngle(0);
-            this.barRight.setAngle(180);
+            this.barLeft.setAngle(0);
+            //this.barRight.setAngle(180);
         }
 
         this.porcValue = porValue;
@@ -117,10 +130,10 @@ class cStatusBar {
     private redAlert() {
         if (this.barLeft.alpha == 1) {
             this.barLeft.alpha = 0;
-            this.barRight.alpha = 0;
+            //this.barRight.alpha = 0;
         } else {
             this.barLeft.alpha = 1;
-            this.barRight.alpha = 1;
+           //this.barRight.alpha = 1;
         }
     }
 

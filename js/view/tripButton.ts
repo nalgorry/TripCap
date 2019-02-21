@@ -17,11 +17,18 @@ class tripButton {
     constructor(public scene:Phaser.Scene,
         public x:number, 
         public y:number,
-        public task:enumTask) {
+        public task:enumTask,
+        showBar: boolean) {
 
             var container = this.scene.add.container(x, y);
 
-              
+
+            //the back of the button to show the bar at the size of the button
+            if (showBar) {
+                var back = this.scene.add.sprite(-74, 0, 'navButtonBack' );
+                container.add(back);
+            }
+            
             //the text we show with the number
             this.text = this.scene.add.bitmapText(0, -30, 'Pfont', '0', 100);
             this.text.setOrigin(0.5);

@@ -57,9 +57,10 @@ var cTrip = /** @class */ (function () {
             callback: this.changeWind,
             callbackScope: this
         });
+        //events control
         if (this.boat.numberOfTrips == 0) {
             //lets init the first event 
-            this.scene.time.delayedCall(5000, this.startFirstEvent, [], this);
+            //this.scene.time.delayedCall(5000, this.startFirstEvent, [], this);    
         }
         else {
             this.startEventTimer();
@@ -100,10 +101,11 @@ var cTrip = /** @class */ (function () {
         this.windSpeed += this.windIncrement;
     };
     cTrip.prototype.initTrip = function () {
-        this.currentStatus[0 /* food */] = 0.8 * this.boat.foodSystem;
-        this.currentStatus[1 /* maintenance */] = 0.8 * this.boat.mantSystem;
-        this.currentStatus[2 /* clean */] = 0.8 * this.boat.cleanSystem;
-        this.currentStatus[3 /* leadership */] = 0.8 * this.boat.leaderSystem;
+        var initPorc = 1; //0.8 is standar;
+        this.currentStatus[0 /* food */] = initPorc * this.boat.foodSystem;
+        this.currentStatus[1 /* maintenance */] = initPorc * this.boat.mantSystem;
+        this.currentStatus[2 /* clean */] = initPorc * this.boat.cleanSystem;
+        this.currentStatus[3 /* leadership */] = initPorc * this.boat.leaderSystem;
     };
     cTrip.prototype.startFirstEvent = function () {
         this.scene.events.emit('eventStart', 1);
@@ -223,7 +225,7 @@ var cTrip = /** @class */ (function () {
     };
     cTrip.prototype.startEvent = function () {
         //lets chose between a event or a fight
-        var number = Phaser.Math.Between(0, 1);
+        var number = 0; //Phaser.Math.Between(0,1);
         if (number == 0) {
             var n = Phaser.Math.Between(0, this.eventsPosible.length - 1); //we chosse one of the possible events for this trip
             this.scene.events.emit('eventStart', this.eventsPosible[n]);

@@ -22,10 +22,12 @@ class tripPause extends Phaser.Scene {
         this.back = this.add.sprite(0, 0,'tripPauseBack');
         this.back.setOrigin(0);
 
+        this.back.alpha = 0 //just to test the new desing
+
         //this.cameras.main.fadeIn(500, 255, 255, 255);
 
         //create the play button
-        var button = this.add.sprite(360, 860, 'tripPlayButton' );
+        var button = this.add.sprite(360, 650, 'tripPlayButton' );
         button.setInteractive();
         button.on('pointerdown', this.startPress , this);
 
