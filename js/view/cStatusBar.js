@@ -1,14 +1,16 @@
 var cStatusBar = /** @class */ (function () {
-    function cStatusBar(scene, x, y, showValues, barWidth, barHeight) {
+    function cStatusBar(scene, x, y, showValues, barWidth, barHeight, barXOffset) {
         if (showValues === void 0) { showValues = false; }
         if (barWidth === void 0) { barWidth = 68; }
         if (barHeight === void 0) { barHeight = 91; }
+        if (barXOffset === void 0) { barXOffset = 0; }
         this.scene = scene;
         this.x = x;
         this.y = y;
         this.showValues = showValues;
         this.barWidth = barWidth;
         this.barHeight = barHeight;
+        this.barXOffset = barXOffset;
         this.redColor = 0xb1160d;
         this.yellowColor = 0xc3b500;
         this.greenColor = 0x1ab500;
@@ -27,6 +29,8 @@ var cStatusBar = /** @class */ (function () {
         this.barLeft = this.scene.add.sprite(x - 20, y, 'barArrow');
         this.barLeft.setOrigin(0, 0.5);
         this.barLeft.y = this.y + this.barHeight / 2;
+        this.barLeft.x += barXOffset;
+        this.cointaner.add(this.barLeft);
         /*
         this.barRight = this.scene.add.sprite(x + 84 , y, 'barArrow');
         this.barRight.setOrigin(0.5);

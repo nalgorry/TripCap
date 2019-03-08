@@ -18,7 +18,8 @@ class tripButton {
         public x:number, 
         public y:number,
         public task:enumTask,
-        showBar: boolean) {
+        showBar: boolean, 
+        mirrorX: boolean) {
 
             var container = this.scene.add.container(x, y);
 
@@ -39,6 +40,12 @@ class tripButton {
             this.arrowUp = this.scene.add.sprite(40, 0, 'buttonArrow');
             container.add(this.arrowUp);
             this.arrowUp.setScale(0.6);
+
+            
+            if (mirrorX) {
+                back.scaleX = -1;
+                back.x += 146; //we need to move the bar to the other side (like the song)
+            }
 
             //back when up
             this.backUp = this.scene.add.graphics();

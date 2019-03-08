@@ -37,9 +37,9 @@ class sTrip extends Phaser.Scene {
         
         // init the bars
         this.statusBars[enumStatus.maintenance] = new cStatusBar(this, 149, 899, false, 48 , 136);
-        this.statusBars[enumStatus.food] = new cStatusBar(this, 149 + 216, 899 + 191, false, 48 , 136);
+        this.statusBars[enumStatus.food] = new cStatusBar(this, 149 + 216 + 156, 899 + 191, false, 48 , 136, 85);
         this.statusBars[enumStatus.clean] = new cStatusBar(this, 149, 899 + 191, false, 48 , 136);
-        this.statusBars[enumStatus.leadership] = new cStatusBar(this, 149 + 216, 899, false, 48 , 136);
+        this.statusBars[enumStatus.leadership] = new cStatusBar(this, 149 + 216 + 156, 899, false, 48 , 136, 85);
         
         //init the comon controls
         this.crewControl = new crewControls(this.trip, this);
@@ -204,8 +204,7 @@ class sTrip extends Phaser.Scene {
         //i must do it with a timer if not the scene will not pause
         
         
-
-        this.time.delayedCall(40, function() {
+        this.time.delayedCall(100, function() {
             this.mainTripShip.alpha = 0.3;
 
             this.scene.pause();

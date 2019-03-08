@@ -1,5 +1,5 @@
 var tripButton = /** @class */ (function () {
-    function tripButton(scene, x, y, task, showBar) {
+    function tripButton(scene, x, y, task, showBar, mirrorX) {
         this.scene = scene;
         this.x = x;
         this.y = y;
@@ -19,6 +19,10 @@ var tripButton = /** @class */ (function () {
         this.arrowUp = this.scene.add.sprite(40, 0, 'buttonArrow');
         container.add(this.arrowUp);
         this.arrowUp.setScale(0.6);
+        if (mirrorX) {
+            back.scaleX = -1;
+            back.x += 146; //we need to move the bar to the other side (like the song)
+        }
         //back when up
         this.backUp = this.scene.add.graphics();
         container.add(this.backUp);

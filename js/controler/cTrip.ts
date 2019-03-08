@@ -149,7 +149,7 @@ class cTrip {
 
     private initTrip() {
 
-        var initPorc:number = 1 //0.8 is standar;
+        var initPorc:number = 0.5;
 
         this.currentStatus[enumStatus.food] = initPorc * this.boat.foodSystem;
         this.currentStatus[enumStatus.maintenance] = initPorc * this.boat.mantSystem;

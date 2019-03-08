@@ -101,7 +101,7 @@ var cTrip = /** @class */ (function () {
         this.windSpeed += this.windIncrement;
     };
     cTrip.prototype.initTrip = function () {
-        var initPorc = 1; //0.8 is standar;
+        var initPorc = 0.5;
         this.currentStatus[0 /* food */] = initPorc * this.boat.foodSystem;
         this.currentStatus[1 /* maintenance */] = initPorc * this.boat.mantSystem;
         this.currentStatus[2 /* clean */] = initPorc * this.boat.cleanSystem;

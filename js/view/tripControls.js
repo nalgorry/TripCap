@@ -3,7 +3,6 @@ var crewControls = /** @class */ (function () {
         this.trip = trip;
         this.scene = scene;
         this.crewButtons = new Array();
-        this.statusBars = new Array();
         this.createCrewButtons();
     }
     crewControls.prototype.updateCrewText = function () {
@@ -26,11 +25,11 @@ var crewControls = /** @class */ (function () {
         this.textSickCrew = this.scene.add.bitmapText(190, 777 - 25, 'Pfont', this.trip.sickCrew.toString(), 60);
         this.textSickCrew.setOrigin(0.5);
         //lets create all the options for the crew
-        this.crewButtons[2 /* maintenance */] = new tripButton(this.scene, 251, 968, 2 /* maintenance */, true);
-        this.crewButtons[3 /* clean */] = new tripButton(this.scene, 251, 1159, 3 /* clean */, true);
-        this.crewButtons[1 /* leadership */] = new tripButton(this.scene, 468, 968, 1 /* leadership */, true);
-        this.crewButtons[4 /* fish */] = new tripButton(this.scene, 468, 1159, 4 /* fish */, true);
-        this.crewButtons[0 /* navigation */] = new tripButton(this.scene, 360, 784, 0 /* navigation */, false);
+        this.crewButtons[2 /* maintenance */] = new tripButton(this.scene, 251, 968, 2 /* maintenance */, true, false);
+        this.crewButtons[3 /* clean */] = new tripButton(this.scene, 251, 1159, 3 /* clean */, true, false);
+        this.crewButtons[1 /* leadership */] = new tripButton(this.scene, 468, 968, 1 /* leadership */, true, true);
+        this.crewButtons[4 /* fish */] = new tripButton(this.scene, 468, 1159, 4 /* fish */, true, true);
+        this.crewButtons[0 /* navigation */] = new tripButton(this.scene, 360, 784, 0 /* navigation */, false, false);
         //lets check if they click a button
         this.scene.events.on('clickUp', this.buttonClick, this);
         this.scene.events.on('dragCrew', this.dragCrew, this);

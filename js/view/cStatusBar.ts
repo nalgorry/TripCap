@@ -25,7 +25,8 @@ class cStatusBar {
         public y:number,
         public showValues:boolean = false,
         public barWidth: number = 68,
-        public barHeight: number = 91) {
+        public barHeight: number = 91,
+        public barXOffset:number = 0) {
 
         //here goes the bar so we can respect the z order
         this.cointaner = scene.add.container(0, 0);
@@ -44,6 +45,10 @@ class cStatusBar {
         this.barLeft = this.scene.add.sprite(x - 20, y, 'barArrow');
         this.barLeft.setOrigin(0, 0.5);
         this.barLeft.y = this.y + this.barHeight / 2 ;
+
+        this.barLeft.x += barXOffset;
+
+        this.cointaner.add(this.barLeft);
 
         /*
         this.barRight = this.scene.add.sprite(x + 84 , y, 'barArrow');

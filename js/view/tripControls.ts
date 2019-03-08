@@ -6,7 +6,7 @@ class crewControls {
 
     public textWindSpeed:Phaser.GameObjects.BitmapText;
     public textBoatSpeed:Phaser.GameObjects.BitmapText;
-    public statusBars:cStatusBar[] = new Array();
+    
 
     constructor(public trip:cTrip, public scene:Phaser.Scene) {
         this.createCrewButtons();
@@ -39,13 +39,13 @@ class crewControls {
         this.textSickCrew.setOrigin(0.5);
 
         //lets create all the options for the crew
-        this.crewButtons[enumTask.maintenance] = new tripButton(this.scene, 251, 968, enumTask.maintenance, true);
-        this.crewButtons[enumTask.clean] = new tripButton(this.scene, 251, 1159, enumTask.clean, true);
+        this.crewButtons[enumTask.maintenance] = new tripButton(this.scene, 251, 968, enumTask.maintenance, true, false);
+        this.crewButtons[enumTask.clean] = new tripButton(this.scene, 251, 1159, enumTask.clean, true, false);
 
-        this.crewButtons[enumTask.leadership] = new tripButton(this.scene, 468, 968, enumTask.leadership, true);
-        this.crewButtons[enumTask.fish] = new tripButton(this.scene, 468, 1159, enumTask.fish, true);
+        this.crewButtons[enumTask.leadership] = new tripButton(this.scene, 468, 968, enumTask.leadership, true, true);
+        this.crewButtons[enumTask.fish] = new tripButton(this.scene, 468, 1159, enumTask.fish, true, true);
 
-        this.crewButtons[enumTask.navigation] = new tripButton(this.scene, 360, 784, enumTask.navigation, false);
+        this.crewButtons[enumTask.navigation] = new tripButton(this.scene, 360, 784, enumTask.navigation, false, false);
 
         //lets check if they click a button
         this.scene.events.on('clickUp',this.buttonClick, this);

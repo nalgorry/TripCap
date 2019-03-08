@@ -30,9 +30,9 @@ var sTrip = /** @class */ (function (_super) {
         this.initScene();
         // init the bars
         this.statusBars[1 /* maintenance */] = new cStatusBar(this, 149, 899, false, 48, 136);
-        this.statusBars[0 /* food */] = new cStatusBar(this, 149 + 216, 899 + 191, false, 48, 136);
+        this.statusBars[0 /* food */] = new cStatusBar(this, 149 + 216 + 156, 899 + 191, false, 48, 136, 85);
         this.statusBars[2 /* clean */] = new cStatusBar(this, 149, 899 + 191, false, 48, 136);
-        this.statusBars[3 /* leadership */] = new cStatusBar(this, 149 + 216, 899, false, 48, 136);
+        this.statusBars[3 /* leadership */] = new cStatusBar(this, 149 + 216 + 156, 899, false, 48, 136, 85);
         //init the comon controls
         this.crewControl = new crewControls(this.trip, this);
         //remove all the posible old events
@@ -146,7 +146,7 @@ var sTrip = /** @class */ (function (_super) {
     };
     sTrip.prototype.pauseTrip = function () {
         //i must do it with a timer if not the scene will not pause
-        this.time.delayedCall(40, function () {
+        this.time.delayedCall(100, function () {
             this.mainTripShip.alpha = 0.3;
             this.scene.pause();
             this.scene.launch('tripPause', this.trip);
