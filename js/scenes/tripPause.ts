@@ -13,6 +13,18 @@ class tripPause extends Phaser.Scene {
         this.crewControls = new crewControls(this.trip, this);
 
         this.scene.get('sTrip').events.on('updateCrew', this.updateCrewText, this);    
+
+        var map = this.add.sprite(0, 600, 'mapaGrande');
+        map.setOrigin(0,1);
+
+
+        var border = this.add.sprite(0,20,'mapMask');
+        border.setOrigin(0,0);
+        border.visible = false;
+
+        map.mask = new Phaser.Display.Masks.BitmapMask(this, border);
+
+                        
         
     }
 

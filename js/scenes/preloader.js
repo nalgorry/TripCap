@@ -108,6 +108,8 @@ var preloader = /** @class */ (function (_super) {
         this.load.image('backGameEnd', 'assets/backGameEnd.png');
         this.load.image('tripDrag', 'assets/tripDrag.png');
         this.load.image('navButtonBack', 'assets/navButtonBack.png');
+        this.load.image('mapaGrande', 'assets/mapaGrande.png');
+        this.load.image('mapMask', 'assets/mapMask.png');
         //anim try!
         this.load.atlas('boat_anim', 'assets/anim/boat_anim.png', 'assets/anim/boat_texture.json');
         this.load.json('boat_data', 'assets/animations/boat_anim.json');
