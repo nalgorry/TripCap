@@ -1,74 +1,77 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>TripCap</title>
 
-        <script src="js/phaser.min.js"></script>
-        <script src="js/game.js"></script>
+<head>
+    <meta charset="UTF-8" />
+    <title>TripCap</title>
 
-        <script src="js/view/cStatusBar.js"></script>
-        <script src="js/view/tripButton.js"></script>
-        <script src="js/view/vEventCard.js"></script>
-        <script src="js/view/cEventEffectText.js"></script>
-        <script src="js/view/tripControls.js"></script>
-        <script src="js/view/updateCard.js"></script>
-        <script src="js/view/cCeroBarAlert.js"></script>    
-        <script src="js/view/vBattleCard.js"></script>    
-        <script src="js/view/vBattleIcons.js"></script>    
-        <script src="js/view/vEnemy.js"></script>    
-        <script src="js/view/vEnemyBar.js"></script>    
-        <script src="js/view/vBattleAbility.js"></script>    
-        <script src="js/view/vUpdateCard.js"></script>    
-        <script src="js/view/vNewCard.js"></script>    
+    <script src="js/phaser.min.js"></script>
+    <script src="js/game.js"></script>
 
-        <script src="js/scenes/boot.js"></script>
-        <script src="js/scenes/preloader.js"></script>
-        <script src="js/scenes/startMenu.js"></script>
-        <script src="js/scenes/sTrip.js"></script>
-        <script src="js/scenes/tripEvent.js"></script>
-        <script src="js/scenes/tripEnd.js"></script>
-        <script src="js/scenes/tripPause.js"></script>
-        <script src="js/scenes/city.js"></script>
-        <script src="js/scenes/tripHelp.js"></script>
-        <script src="js/scenes/battleHelp.js"></script>
-        <script src="js/scenes/tripGlobal.js"></script>
-        <script src="js/scenes/shipStats.js"></script>
-        <script src="js/scenes/gameEnd.js"></script>
-        <script src="js/scenes/battle.js"></script>
+    <script src="js/view/cStatusBar.js"></script>
+    <script src="js/view/tripButton.js"></script>
+    <script src="js/view/vEventCard.js"></script>
+    <script src="js/view/cEventEffectText.js"></script>
+    <script src="js/view/tripControls.js"></script>
+    <script src="js/view/updateCard.js"></script>
+    <script src="js/view/cCeroBarAlert.js"></script>
+    <script src="js/view/vBattleCard.js"></script>
+    <script src="js/view/vBattleIcons.js"></script>
+    <script src="js/view/vEnemy.js"></script>
+    <script src="js/view/vEnemyBar.js"></script>
+    <script src="js/view/vBattleAbility.js"></script>
+    <script src="js/view/vUpdateCard.js"></script>
+    <script src="js/view/vNewCard.js"></script>
+    <script src="js/view/vMap.js"></script>
 
-        <script src="js/controler/cBoat.js"></script>
-        <script src="js/controler/cTrip.js"></script>
-        <script src="js/controler/cCity.js"></script>
-        <script src="js/controler/cTripData.js"></script> 
-        
-        <script src="js/controler/cityCards/cUpdateShipCard.js"></script>
-        <script src="js/controler/cityCards/cCrewCard.js"></script>
-        <script src="js/controler/cityCards/cItemCard.js"></script>
 
-        <script src="js/controler/battle/cBattle.js"></script>
-        <script src="js/controler/battle/cBattleCard.js"></script>
-        <script src="js/controler/battle/cEnemy.js"></script>
-        <script src="js/controler/battle/cBattleAbility.js"></script>
-        <script src="js/controler/battle/cProcessAtack.js"></script>      
-        <script src="js/controler/battle/mEnemy.js"></script>
-        <script src="js/controler/battle/mFights.js"></script>
-        
+    <script src="js/scenes/boot.js"></script>
+    <script src="js/scenes/preloader.js"></script>
+    <script src="js/scenes/startMenu.js"></script>
+    <script src="js/scenes/sTrip.js"></script>
+    <script src="js/scenes/tripEvent.js"></script>
+    <script src="js/scenes/tripEnd.js"></script>
+    <script src="js/scenes/tripPause.js"></script>
+    <script src="js/scenes/city.js"></script>
+    <script src="js/scenes/tripHelp.js"></script>
+    <script src="js/scenes/battleHelp.js"></script>
+    <script src="js/scenes/tripGlobal.js"></script>
+    <script src="js/scenes/shipStats.js"></script>
+    <script src="js/scenes/gameEnd.js"></script>
+    <script src="js/scenes/battle.js"></script>
 
-        <script src="js/controler/events/cEvent.js"></script>
-        <script src="js/controler/events/cEventOption.js"></script>
-        <script src="js/controler/events/cEventEffect.js"></script>
-        <script src="js/controler/events/cEventResult.js"></script>
-        <script src="js/controler/events/cEventsControler.js"></script>
+    <script src="js/controler/cBoat.js"></script>
+    <script src="js/controler/cTrip.js"></script>
+    <script src="js/controler/cCity.js"></script>
+    <script src="js/controler/cTripData.js"></script>
 
-        
+    <script src="js/controler/cityCards/cUpdateShipCard.js"></script>
+    <script src="js/controler/cityCards/cCrewCard.js"></script>
+    <script src="js/controler/cityCards/cItemCard.js"></script>
 
-        <script src="js/plugins/textWrapper.js"></script>
+    <script src="js/controler/battle/cBattle.js"></script>
+    <script src="js/controler/battle/cBattleCard.js"></script>
+    <script src="js/controler/battle/cEnemy.js"></script>
+    <script src="js/controler/battle/cBattleAbility.js"></script>
+    <script src="js/controler/battle/cProcessAtack.js"></script>
+    <script src="js/controler/battle/mEnemy.js"></script>
+    <script src="js/controler/battle/mFights.js"></script>
 
-    </head>
-    <body>
-        <div id="content" style="position: fixed; top: 50%; left: 50%;transform: translate(-50%, -50%);"></div>
-    </body>
+
+    <script src="js/controler/events/cEvent.js"></script>
+    <script src="js/controler/events/cEventOption.js"></script>
+    <script src="js/controler/events/cEventEffect.js"></script>
+    <script src="js/controler/events/cEventResult.js"></script>
+    <script src="js/controler/events/cEventsControler.js"></script>
+
+
+
+    <script src="js/plugins/textWrapper.js"></script>
+
+</head>
+
+<body>
+    <div id="content" style="position: fixed; top: 50%; left: 50%;transform: translate(-50%, -50%);"></div>
+</body>
+
 </html>
-
-

@@ -67,6 +67,7 @@ var startMenu = /** @class */ (function (_super) {
         window.addEventListener('resize', this.resize);
         this.resize();
         this.cameras.main.fadeIn(500, 255, 255, 255);
+        var a = new vMap(this, []);
     };
     startMenu.prototype.resize = function () {
         var canvas = document.getElementById("content").getElementsByTagName("canvas")[0];

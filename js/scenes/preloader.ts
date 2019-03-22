@@ -111,6 +111,8 @@ class preloader extends Phaser.Scene {
 
         this.load.image('mapaGrande', 'assets/mapaGrande.png');
         this.load.image('mapMask', 'assets/mapMask.png');
+        this.load.image('mapBoat', 'assets/mapBoat.png');
+        
         
         
         //anim try!
