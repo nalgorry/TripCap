@@ -15,8 +15,6 @@ var sTrip = /** @class */ (function (_super) {
     __extends(sTrip, _super);
     function sTrip() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.distShipStartx = 44;
-        _this.distShipEndx = 640;
         _this.statusBars = new Array();
         _this.ceroBarAlerts = new Array();
         _this.countCeroBarAlerts = 0;
@@ -53,8 +51,6 @@ var sTrip = /** @class */ (function (_super) {
         this.events.on('barInCero', this.barInCero, this);
         this.events.on('barRecoverFromCero', this.barRecoverFromCero, this);
         this.createWindAndSpeedButtons();
-        //lets add the trip boat
-        this.distShip = this.add.sprite(this.distShipStartx, 585, 'distanceShip');
         //lets init the event controler to control the evets.
         var eventData = this.cache.json.get('eventData');
         var eventOptions = this.cache.json.get('eventOption');
@@ -81,7 +77,9 @@ var sTrip = /** @class */ (function (_super) {
         a.setInteractive();
         a.on('pointerdown', this.showShipStats, this);
         //lets add the boat, so great :P
-        this.mainTripShip = this.add.sprite(360, 280, 'tripShip');
+        //this.mainTripShip = this.add.sprite(360, 280, 'tripShip');
+        //lets add the new map
+        this.map = new vMap(this, []);
     };
     sTrip.prototype.barInCero = function (data) {
         if (this.ceroBarAlerts["a" + data.status] == undefined) {
@@ -123,7 +121,7 @@ var sTrip = /** @class */ (function (_super) {
         this.statusBars[1 /* maintenance */].updateBar(this.trip.currentStatus[1 /* maintenance */], this.boat.mantSystem);
         this.statusBars[3 /* leadership */].updateBar(this.trip.currentStatus[3 /* leadership */], this.boat.leaderSystem);
         //lets update the position of the ship
-        this.distShip.x = (this.distShipEndx - this.distShipStartx) * this.trip.tripDistancePorc + this.distShipStartx;
+        this.map.updateBoat(this.trip.tripDistancePorc);
     };
     sTrip.prototype.tripEnd = function () {
         this.cameras.main.fadeOut(500, 255, 255, 255);
@@ -147,7 +145,6 @@ var sTrip = /** @class */ (function (_super) {
     sTrip.prototype.pauseTrip = function () {
         //i must do it with a timer if not the scene will not pause
         this.time.delayedCall(100, function () {
-            this.mainTripShip.alpha = 0.3;
             this.scene.pause();
             this.scene.launch('tripPause', this.trip);
             this.firstPause = false;
@@ -167,11 +164,6 @@ var sTrip = /** @class */ (function (_super) {
             var data = { event: event, trip: trip };
             this.scene.launch('tripEvent', data);
         }, [], this);
-        //lets mark the event in the traker
-        var circle = this.add.graphics();
-        circle.fillStyle(0xb1160d, 1);
-        circle.fillCircle(this.distShip.x, this.distShip.y, 5);
-        circle.fillPath();
     };
     sTrip.prototype.startBattle = function () {
         // shake the camera
@@ -184,21 +176,12 @@ var sTrip = /** @class */ (function (_super) {
             this.scene.pause();
             this.scene.launch('battle', this.trip);
         }, [], this);
-        //lets mark the event in the traker
-        var circle = this.add.graphics();
-        circle.fillStyle(0xb1160d, 1);
-        circle.fillCircle(this.distShip.x, this.distShip.y, 5);
-        circle.fillPath();
     };
     sTrip.prototype.update = function () {
         //there is no need to update everything all the time
         if (this.t == this.interval) {
             //lets make the magic of the game happen
             this.trip.updateTrip();
-            //lets reset the alpha if we were in a pause before 
-            if (this.mainTripShip.alpha == 0.3) {
-                this.mainTripShip.alpha = 1;
-            }
             this.t = 0;
         }
         else {

@@ -94,9 +94,7 @@ class startMenu extends Phaser.Scene {
 
         this.cameras.main.fadeIn(500,255,255,255);
 
-        var a = new vMap(this, []);
-
-    }
+      }
 
     resize() {
         

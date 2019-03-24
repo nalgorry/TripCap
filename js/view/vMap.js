@@ -32,6 +32,10 @@ var vMap = /** @class */ (function () {
             loop: true,
         });
         this.calculatePoints(points);
+        var lastX = this.map.x + points[points.length - 1].x;
+        var lastY = this.map.y + points[points.length - 1].y;
+        var finish = scene.add.sprite(lastX, lastY, 'mapFinish');
+        this.mapGroup.add(finish);
     }
     vMap.prototype.calculatePoints = function (points) {
         var _this = this;
@@ -40,6 +44,13 @@ var vMap = /** @class */ (function () {
         var lastPoint;
         var xPoints = [];
         var yPoints = [];
+        //to draw the path
+        var line = this.scene.add.graphics();
+        line.lineStyle(5, 0xd66c50, 1.0);
+        line.beginPath();
+        line.moveTo(xPoints[0], yPoints[0]);
+        this.mapGroup.add(line);
+        var curve = new Phaser.Curves.Spline();
         points.forEach(function (e) {
             //lests create the points for the interpolation
             xPoints.push(e.x + _this.map.x);
@@ -50,8 +61,9 @@ var vMap = /** @class */ (function () {
             else {
                 lastPoint = e;
             }
+            curve.addPoint(e.x + _this.map.x, e.y + _this.map.y);
+            console.log('agrega punto');
         });
-        console.log(xPoints);
         var catmullPath = [];
         //lets uses a catmull interpolation to make the path where the monster move
         var x = 1 / 10000;
@@ -61,16 +73,10 @@ var vMap = /** @class */ (function () {
             var py = Phaser.Math.Interpolation.CatmullRom(yPoints, i);
             catmullPath.push(new Phaser.Geom.Point(px, py));
         }
-        //we make an array of the point equidistant to move the boat
-        //to draw the path
-        var line = this.scene.add.graphics();
-        line.lineStyle(5, 0xFF00FF, 1.0);
-        line.beginPath();
-        line.moveTo(xPoints[0], yPoints[0]);
-        this.mapGroup.add(line);
         var n = 0;
         distance = 0;
         var maxDistance = 0.2;
+        //we make an array of the point equidistant to move the boat        
         catmullPath.forEach(function (point) {
             if (distance >= maxDistance) {
                 //lets add this point to the array 
@@ -82,19 +88,16 @@ var vMap = /** @class */ (function () {
                     distance += Phaser.Math.Distance.Between(catmullPath[n - 1].x, catmullPath[n - 1].y, point.x, point.y);
                 }
             }
-            if (n % 200 == 0) {
-                console.log("entra");
+            if (n % 800 == 0) {
                 //draw the line
-                line.lineTo(point.x, point.y);
+                //curve.addPoint(point.x, point.y);
             }
             n++;
         });
-        line.strokePath();
-        console.log(this.boatPath);
+        curve.draw(line);
     };
     vMap.prototype.updateBoat = function (tripPorc) {
-        this.tripPorc += 0.01;
-        tripPorc = this.tripPorc;
+        this.tripPorc = tripPorc;
         if (this.tripPorc <= 1) {
             var arrayPoint = Math.round(tripPorc * this.boatPath.length);
             this.mapGroup.x = this.boatPath[0].x - this.boatPath[arrayPoint].x;
@@ -103,6 +106,13 @@ var vMap = /** @class */ (function () {
         else {
             this.tripPorc = 0;
         }
+    };
+    vMap.prototype.addEventMark = function (x, y) {
+        //lets mark the event in the traker
+        var circle = this.scene.add.graphics();
+        circle.fillStyle(0xb1160d, 1);
+        circle.fillCircle(x, y, 5);
+        circle.fillPath();
     };
     return vMap;
 }());

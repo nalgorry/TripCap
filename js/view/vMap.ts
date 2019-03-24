@@ -42,8 +42,6 @@ class vMap {
 
         var boat = scene.add.sprite(border.x + border.width/2, border.y + border.height/2, 'mapBoat');
 
-        
-
         var timer = this.scene.time.addEvent({
             delay: 50,
             callback: this.updateBoat,
@@ -53,7 +51,12 @@ class vMap {
 
 
         this.calculatePoints(points);
-        
+
+        var lastX = this.map.x + points[points.length - 1].x
+        var lastY = this.map.y + points[points.length - 1].y
+
+        var finish = scene.add.sprite(lastX, lastY, 'mapFinish' )
+        this.mapGroup.add(finish);
                       
     }
 
@@ -66,6 +69,14 @@ class vMap {
         var xPoints:number[] = [];
         var yPoints:number[] = [];
 
+        //to draw the path
+        var line = this.scene.add.graphics();
+        line.lineStyle(5, 0xd66c50, 1.0);
+        line.beginPath();
+        line.moveTo(xPoints[0], yPoints[0]);
+        this.mapGroup.add(line);
+        var curve = new Phaser.Curves.Spline();
+
         points.forEach(e => {
 
             //lests create the points for the interpolation
@@ -77,9 +88,10 @@ class vMap {
             } else {
                 lastPoint = e;
             }
-        });
 
-        console.log(xPoints);
+            curve.addPoint(e.x + this.map.x, e.y + this.map.y);
+            console.log('agrega punto')
+        });
 
         var catmullPath:Phaser.Geom.Point[] = [];
 
@@ -97,24 +109,12 @@ class vMap {
             
 
         }
-
-        
-        //we make an array of the point equidistant to move the boat
-
-        //to draw the path
-        var line = this.scene.add.graphics();
-        line.lineStyle(5, 0xFF00FF, 1.0);
-        line.beginPath();
-        line.moveTo(xPoints[0], yPoints[0]);
-        
-        this.mapGroup.add(line);
-
-
+       
         var n:number = 0;
         distance = 0;
         var maxDistance:number = 0.2;
 
-        
+        //we make an array of the point equidistant to move the boat        
         catmullPath.forEach(point => {
              
              if (distance  >= maxDistance) {
@@ -131,33 +131,23 @@ class vMap {
                 }
              }
 
-             if (n%200 == 0) {
+             if (n%800 == 0) {
 
-                console.log("entra");
                 //draw the line
-                line.lineTo(point.x, point.y);   
+                //curve.addPoint(point.x, point.y);
              }
 
              n ++;
             
         });
 
-        line.strokePath();
-        
-
-        
-
-
-        console.log(this.boatPath);
-
-
+        curve.draw(line);    
 
     }
 
-    updateBoat(tripPorc:number) {
+    public updateBoat(tripPorc:number) {
 
-        this.tripPorc += 0.01;
-        tripPorc = this.tripPorc;
+        this.tripPorc = tripPorc;
 
         if (this.tripPorc <= 1) {
 
@@ -169,6 +159,15 @@ class vMap {
         } else {
             this.tripPorc = 0;
         }
+    }
+
+    public addEventMark(x:number, y:number) {
+                //lets mark the event in the traker
+                var circle = this.scene.add.graphics();
+   
+                circle.fillStyle(0xb1160d, 1);
+                circle.fillCircle(x, y, 5);
+                circle.fillPath();
     }
 
 
